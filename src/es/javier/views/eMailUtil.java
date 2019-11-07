@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 public class eMailUtil {
 
-    private static Scanner teclado=new Scanner(System.in);
+    private static Scanner teclado = new Scanner(System.in);
 
     public static void sendMail(String recepient) {
 
