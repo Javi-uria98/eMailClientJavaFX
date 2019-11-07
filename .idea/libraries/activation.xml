@@ -13,8 +13,6 @@
       <root url="jar://C:/Program Files/Java/javafx-sdk-13/lib/javax.mail.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES>
-      <root url="file://$PROJECT_DIR$/src" />
-    </SOURCES>
+    <SOURCES />
   </library>
 </component>

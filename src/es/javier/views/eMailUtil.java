@@ -3,7 +3,6 @@ package es.javier.views;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.net.ssl.SSLSession;
 import java.util.Properties;
 
 public class eMailUtil {
@@ -18,8 +17,8 @@ public class eMailUtil {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
 
-        String cuentaEmail = "xxxxx@gmail.com";
-        String contraseña = "xxxx";
+        String cuentaEmail = "pruebajavi98@gmail.com";
+        String contraseña = "Holahola1";
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
@@ -46,6 +45,7 @@ public class eMailUtil {
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("Prueba de email");
             message.setText("Holaaaaa \n ¿Se ha enviado bien? ");
+            return message;
         } catch (MessagingException e) {
             e.printStackTrace();
         }
