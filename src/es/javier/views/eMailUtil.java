@@ -6,9 +6,11 @@ import javax.mail.internet.MimeMessage;
 import javax.net.ssl.SSLSession;
 import java.util.Properties;
 
-public class JavaMail {
+public class eMailUtil {
 
     public static void sendMail(String recepient) {
+        System.out.println("Preparando el envío del correo");
+
         Properties properties = new Properties();
 
         properties.put("mail.smtp.auth", "true");
@@ -27,6 +29,14 @@ public class JavaMail {
         });
 
         Message message = prepareMessage(session, cuentaEmail, recepient);
+
+
+        try {
+            Transport.send(message);
+            System.out.println("El correo se ha enviado correctamente");
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 
     public static Message prepareMessage(Session session, String cuentaEmail, String recepient) {
@@ -35,9 +45,12 @@ public class JavaMail {
             message.setFrom(new InternetAddress(cuentaEmail));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(recepient));
             message.setSubject("Prueba de email");
+            message.setText("Holaaaaa \n ¿Se ha enviado bien? ");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        return null;
     }
+
 
 }
