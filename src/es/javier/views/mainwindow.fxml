@@ -30,11 +30,11 @@
             </menus>
         </MenuBar>
         <TreeView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="25.0" />
-        <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <TableView fx:id="tableViewEmail" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-                <TableColumn prefWidth="75.0" text="C3" />
+                <TableColumn prefWidth="75.0" text="Remitente" />
+                <TableColumn prefWidth="75.0" text="Asunto" />
+                <TableColumn prefWidth="75.0" text="Fecha" />
             </columns>
         </TableView>
     </children>
