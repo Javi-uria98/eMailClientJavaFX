@@ -19,19 +19,18 @@ public class eMailUtil {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
 
-        //String cuentaEmail = "pruebajavi98@gmail.com";
         System.out.println("Introduzca su cuenta de email");
         String cuentaEmail = teclado.nextLine();
-        //String contraseña = "Holahola1";
+
         System.out.println("Introduzca su contraseña");
-        String contraseña = teclado.nextLine();
+        String contrasena = teclado.nextLine();
 
         System.out.println("Preparando el envío del correo...");
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(cuentaEmail, contraseña);
+                return new PasswordAuthentication(cuentaEmail, contrasena);
             }
         });
 
@@ -46,7 +45,7 @@ public class eMailUtil {
         }
     }
 
-    public static Message prepareMessage(Session session, String cuentaEmail, String recepient) {
+    private static Message prepareMessage(Session session, String cuentaEmail, String recepient) {
         Message message = new MimeMessage(session);
         try {
             message.setFrom(new InternetAddress(cuentaEmail));
