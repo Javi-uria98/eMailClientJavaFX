@@ -4,11 +4,13 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class eMailUtil {
 
+    private static Scanner teclado=new Scanner(System.in);
+
     public static void sendMail(String recepient) {
-        System.out.println("Preparando el envío del correo");
 
         Properties properties = new Properties();
 
@@ -17,8 +19,14 @@ public class eMailUtil {
         properties.put("mail.smtp.host", "smtp.gmail.com");
         properties.put("mail.smtp.port", "587");
 
-        String cuentaEmail = "pruebajavi98@gmail.com";
-        String contraseña = "Holahola1";
+        //String cuentaEmail = "pruebajavi98@gmail.com";
+        System.out.println("Introduzca su cuenta de email");
+        String cuentaEmail = teclado.nextLine();
+        //String contraseña = "Holahola1";
+        System.out.println("Introduzca su contraseña");
+        String contraseña = teclado.nextLine();
+
+        System.out.println("Preparando el envío del correo...");
 
         Session session = Session.getInstance(properties, new Authenticator() {
             @Override

@@ -16,6 +16,7 @@ import javafx.stage.WindowEvent;
 public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        String destinarario="javi.uria98@gmail.com";
         HBox root = new HBox(5);
         TextField textField = new TextField("correo@ejemplo.com");
         Button button = new Button("Enviar");
@@ -23,7 +24,7 @@ public class Launcher extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                eMailUtil.sendMail("pruebajavi98@gmail.com");
+                eMailUtil.sendMail(destinarario);
             }
 
         };
