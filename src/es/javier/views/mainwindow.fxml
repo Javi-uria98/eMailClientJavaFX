@@ -29,7 +29,7 @@
                 </Menu>
             </menus>
         </MenuBar>
-        <TreeView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="25.0" />
+        <TreeView fx:id="treeViewEmail" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="400.0" AnchorPane.topAnchor="25.0" />
         <TableView fx:id="tableViewEmail" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
             <columns>
                 <TableColumn prefWidth="75.0" text="Remitente" />
