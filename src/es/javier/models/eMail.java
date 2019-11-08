@@ -6,37 +6,28 @@ import java.util.Properties;
 
 public class eMail {
 
-    private String remitente;
-    private String asunto;
-    private LocalDate fecha;
+    private String direccion;
+    private String contrasena;
 
-    public eMail(String remitente, String asunto, LocalDate fecha){
-        this.remitente=remitente;
-        this.asunto=asunto;
-        this.fecha=fecha;
+    public eMail(String direccion, String contrasena){
+        this.direccion=direccion;
+        this.contrasena=contrasena;
     }
 
-    public String getRemitente() {
-        return remitente;
+    public String getDireccion() {
+        return direccion;
     }
 
-    public void setRemitente(String remitente) {
-        this.remitente = remitente;
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 
-    public String getAsunto() {
-        return asunto;
+    public String getContrasena() {
+        return contrasena;
     }
 
-    public void setAsunto(String asunto) {
-        this.asunto = asunto;
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
 }
