@@ -1,31 +1,41 @@
 package es.javier.models;
 
+import java.util.Date;
 import java.util.Properties;
 
 public class eMail {
 
-    private String address;
-    private String password;
+    private String remitente;
+    private String asunto;
+    private Date fecha;
 
-    public eMail(String address, String password){
-        setAddress(address);
-        setPassword(password);
+    public eMail(String remitente, String asunto, Date fecha){
+        this.remitente=remitente;
+        this.asunto=asunto;
+        this.fecha=fecha;
     }
 
-    public String getAddress() {
-        return address;
+    public String getRemitente() {
+        return remitente;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setRemitente(String remitente) {
+        this.remitente = remitente;
     }
 
-    public String getPassword() {
-        return password;
+    public String getAsunto() {
+        return asunto;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setAsunto(String asunto) {
+        this.asunto = asunto;
     }
 
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
 }

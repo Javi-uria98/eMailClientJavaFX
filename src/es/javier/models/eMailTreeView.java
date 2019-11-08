@@ -9,8 +9,9 @@ public class eMailTreeView {
     public eMailTreeView (eMail  email){
         rootItem.setValue("e-mail");
 
-        rootItem.getChildren().add(new TreeItem("Correo: "+email.getAddress()));
-        rootItem.getChildren().add(new TreeItem("Contraseña: "+email.getPassword()));
+        rootItem.getChildren().add(new TreeItem("Remitente: "+email.getRemitente()));
+        rootItem.getChildren().add(new TreeItem("Asunto: "+email.getAsunto()));
+        rootItem.getChildren().add(new TreeItem("Fecha: "+email.getFecha()));
     }
 
     public TreeItem<String>getRootItem(){

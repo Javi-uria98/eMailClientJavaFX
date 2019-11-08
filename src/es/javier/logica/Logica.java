@@ -14,7 +14,7 @@ import java.util.List;
 public class Logica {
 
     private static Logica INSTANCE = null;
-    private ObservableList<Message> listaEmail;
+    private ObservableList<eMail> listaEmail;
     private List<TreeItem<String>> treeItemsContainer;
 
     private Logica() {
@@ -30,11 +30,15 @@ public class Logica {
         return INSTANCE;
     }
 
-    public ObservableList<Message> getListaEmail() {
+    public ObservableList<eMail> getListaEmail() {
         return listaEmail;
     }
 
     public List<TreeItem<String>> getTreeItemsContainer() {
         return treeItemsContainer;
+    }
+
+    public void addEmail(eMail email) {
+        listaEmail.add(email);
     }
 }

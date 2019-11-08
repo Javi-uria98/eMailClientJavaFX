@@ -9,8 +9,7 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.BorderPane?>
 
-
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javier.views.MainWindowController">
    <top>
         <MenuBar prefHeight="26.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <menus>
@@ -45,6 +44,6 @@
         </TableView>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="600.0" text="Logearse" BorderPane.alignment="CENTER" />
+      <Button fx:id="Botonnuevoemail" mnemonicParsing="false" onAction="#altaEmail" prefHeight="25.0" prefWidth="600.0" text="Nuevo mensaje" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>
