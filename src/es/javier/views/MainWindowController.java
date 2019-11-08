@@ -38,16 +38,10 @@ import static java.lang.System.Logger.*;
 public class MainWindowController  implements Initializable {
 
     @FXML
-    private TableView<Message> table = new TableView<Message>();
+    private TableView<eMail> table;
 
     @FXML
     private TreeView treeViewEmail;
-
-    @FXML
-    private Label Idlabel;
-
-    @FXML
-    private Button Botonnuevoemail;
 
     @FXML
     void altaEmail(ActionEvent event) {
@@ -63,10 +57,9 @@ public class MainWindowController  implements Initializable {
         }
     }
 
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        table.setItems(Logica.getInstance().getListaEmail());
 
     }
 }
