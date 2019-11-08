@@ -6,12 +6,10 @@ public class eMail {
 
     private String address;
     private String password;
-    private Properties properties;
 
     public eMail(String address, String password){
         setAddress(address);
         setPassword(password);
-        properties=new Properties();
     }
 
     public String getAddress() {

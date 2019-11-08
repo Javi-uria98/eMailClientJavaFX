@@ -4,6 +4,8 @@ import es.javier.views.eMailUtil;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -14,7 +16,7 @@ import javafx.stage.Stage;
 public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws Exception {
-        HBox root = new HBox(5);
+        /*HBox root = new HBox(5);
         TextField textField = new TextField("correo@ejemplo.com");
         Button button = new Button("Enviar");
         EventHandler<ActionEvent> goHandler = new EventHandler<ActionEvent>() {
@@ -32,6 +34,10 @@ public class Launcher extends Application {
         root.getChildren().addAll(button, textField);
         Scene scene = new Scene(root, 250, 150);
         stage.setScene(scene);
+        stage.show();*/
+        Parent root = FXMLLoader.load(getClass().getResource("views/mainwindow.fxml"));
+        stage.setTitle("Pantalla principal");
+        stage.setScene(new Scene(root, 300, 275));
         stage.show();
     }
 
