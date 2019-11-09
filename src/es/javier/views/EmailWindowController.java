@@ -25,6 +25,7 @@ public class EmailWindowController {
     @FXML
     private DatePicker fechaTF;
 
+    /*
     @FXML
     void crearEmail (ActionEvent actionEvent){
         String remitente=remitenteTF.getText();
@@ -34,6 +35,6 @@ public class EmailWindowController {
         Logica.getInstance().addEmail(email);
         Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         stage.close();
-    }
+    } */
 
 }
