@@ -26,7 +26,7 @@ public class LoginWindowController {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setTitle("Cuenta de gmail de "+titulo);
-            stage.setScene(new Scene(root, 500, 500));
+            stage.setScene(new Scene(root, 750, 500));
             stage.show();
     }
 

@@ -7,58 +7,60 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TreeView?>
-<?import javafx.scene.layout.BorderPane?>
-
 <?import javafx.scene.control.cell.PropertyValueFactory?>
-<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="es.javier.views.MainWindowController">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane prefHeight="426.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javier.views.MainWindowController">
     <top>
         <MenuBar prefHeight="26.0" prefWidth="600.0" BorderPane.alignment="CENTER">
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close"/>
+                        <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
+                        <MenuItem mnemonicParsing="false" text="About" />
                     </items>
                 </Menu>
             </menus>
         </MenuBar>
     </top>
     <left>
-        <TreeView fx:id="treeViewEmail" prefHeight="375.0" prefWidth="195.0" BorderPane.alignment="CENTER"/>
+        <TreeView fx:id="treeViewEmail" prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
     </left>
     <center>
-        <TableView fx:id="tableMessages" prefHeight="375.0" prefWidth="406.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="tableMessages" prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="columnaremitente" prefWidth="75.0" text="Remitente">
                     <cellValueFactory>
-                        <PropertyValueFactory property="remitente"/>
+                        <PropertyValueFactory property="remitente" />
                     </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="columnaasunto" prefWidth="75.0" text="Asunto">
                         <cellValueFactory>
-                            <PropertyValueFactory property="asunto"/>
+                            <PropertyValueFactory property="asunto" />
                         </cellValueFactory>
                 </TableColumn>
                 <TableColumn fx:id="columnafecha" prefWidth="75.0" text="Fecha">
                     <cellValueFactory>
-                        <PropertyValueFactory property="fecha"/>
+                        <PropertyValueFactory property="fecha" />
                     </cellValueFactory>
                 </TableColumn>
             </columns>
         </TableView>
     </center>
     <bottom>
-        <Button mnemonicParsing="false" onAction="#altaEmail" prefHeight="25.0" prefWidth="600.0" text="Nuevo mensaje"
-                BorderPane.alignment="CENTER"/>
+        <Button mnemonicParsing="false" onAction="#altaEmail" prefHeight="25.0" prefWidth="600.0" text="Nuevo mensaje" BorderPane.alignment="CENTER" />
     </bottom>
+   <right>
+      <WebView prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </right>
 </BorderPane>
