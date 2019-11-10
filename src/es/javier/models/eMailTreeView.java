@@ -8,12 +8,11 @@ public class eMailTreeView {
 
     private final TreeItem<String> rootItem = new TreeItem();
 
-    public eMailTreeView (Mensaje  mensaje) throws MessagingException {
+    public eMailTreeView (eMail email) throws MessagingException {
         rootItem.setValue("e-mail");
 
-        rootItem.getChildren().add(new TreeItem("Remitente: "+mensaje.getRemitente()));
-        rootItem.getChildren().add(new TreeItem("Asunto: "+mensaje.getAsunto()));
-        rootItem.getChildren().add(new TreeItem("Fecha: "+mensaje.getFecha()));
+        rootItem.getChildren().add(new TreeItem("Cuenta: "+email.getDireccion()));
+        rootItem.getChildren().add(new TreeItem("Contraseña: "+email.getContrasena()));
     }
 
     public TreeItem<String>getRootItem(){
