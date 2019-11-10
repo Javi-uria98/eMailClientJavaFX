@@ -18,9 +18,6 @@ import java.util.ResourceBundle;
 public class LoginWindowController {
 
     @FXML
-    private Label Idlabel;
-
-    @FXML
     private static TextField Iduser;
 
     @FXML
@@ -28,20 +25,27 @@ public class LoginWindowController {
 
     @FXML
     public void Login(ActionEvent actionEvent) throws IOException {
+            String titulo=getIduser().substring(0,12);
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Login");
-            stage.setScene(new Scene(root, 300, 275));
+            stage.setTitle("Cuenta de gmail de "+titulo);
+            stage.setScene(new Scene(root, 500, 500));
             stage.show();
     }
 
+    //por ahora los dejo así aunque no tenga mucho sentido (pues ponga lo que ponga en los textfields me va a cargar esa cuenta). Mi intencion es que los metodos
+    //hiciesen un return del getText() de los textfields (osea, que si yo en la pantalla login introduzco de usuario "javi_prueba77@gmail.com" y de que contraseña
+    //la que tuviese, me cargase esa cuenta en concreto. No obstante, si hago que los métodos devuelvan algo tipo Iduser.getText(), me salta la NullPointerException
+
     public static String getIduser (){
-        return Iduser.getText();
+        String usuario="pruebajavi98@gmail.com";
+        return usuario;
     }
 
     public static String getIdcontra() {
-        return Idcontra.getText();
+        String contra="Holahola1";
+        return contra;
     }
 }
 

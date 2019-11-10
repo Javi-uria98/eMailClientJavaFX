@@ -6,4 +6,5 @@ module eMailClientJavaFX {
     exports es.javier.views;
     exports es.javier;
     opens es.javier.views to javafx.fxml;
+    opens es.javier.models to javafx.base;
 }

@@ -40,7 +40,7 @@ public class Logica {
 
     public ArrayList<eMail> getListaEmail() {
         return listaEmail;
-    }
+    } // creo ya el método porque asumo que tendré que usarlo en el TreeView ¿?
 
     public ObservableList<Mensaje> getListaMensajes() {
         return listaMensajes;
@@ -54,11 +54,11 @@ public class Logica {
         String imap="imaps";
         properties=new Properties();
         properties.setProperty("mail.store.protocol",imap);
-        session=Session.getDefaultInstance(properties);
+        session=Session.getInstance(properties);
         store=session.getStore(imap);
 
         store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
-        carpetaInbox=store.getFolder("INBOX FOLDER");
+        carpetaInbox=store.getFolder("INBOX");
         carpetaInbox.open(Folder.READ_ONLY);
         Message[] message=carpetaInbox.getMessages();
 

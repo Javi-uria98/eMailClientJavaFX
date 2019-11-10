@@ -36,7 +36,7 @@ public class Launcher extends Application {
         stage.setScene(scene);
         stage.show();*/
         Parent root = FXMLLoader.load(getClass().getResource("views/loginwindow.fxml"));
-        stage.setTitle("Pantalla principal");
+        stage.setTitle("Login");
         stage.setScene(new Scene(root, 300, 275));
         stage.show();
     }

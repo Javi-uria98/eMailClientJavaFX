@@ -47,15 +47,13 @@ public class MainWindowController  implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        String usuario=LoginWindowController.getIduser();
-        String contra=LoginWindowController.getIdcontra();
-        listaMensajes=Logica.getInstance().getListaMensajes();
-        email=new eMail(usuario,contra);
+        email=new eMail(LoginWindowController.getIduser(),LoginWindowController.getIdcontra());
         try {
             Logica.getInstance().cargarCuentaGmail(email);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+        listaMensajes=Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
 
     }
