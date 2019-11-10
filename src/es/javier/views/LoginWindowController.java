@@ -21,25 +21,27 @@ public class LoginWindowController {
     private Label Idlabel;
 
     @FXML
-    private TextField Iduser;
+    private static TextField Iduser;
 
     @FXML
-    private TextField Idcontra;
+    private static TextField Idcontra;
 
     @FXML
     public void Login(ActionEvent actionEvent) throws IOException {
-        if (Iduser.getText().equalsIgnoreCase("Usuario") && Idcontra.getText().equalsIgnoreCase("contra")) {
-            Idlabel.setText("Logueado correctamente");
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Pantalla principal");
+            stage.setTitle("Login");
             stage.setScene(new Scene(root, 300, 275));
             stage.show();
-        } else {
-            Idlabel.setText("Introduzca el usuario y contraseña correctos");
-        }
     }
 
+    public static String getIduser (){
+        return Iduser.getText();
+    }
+
+    public static String getIdcontra() {
+        return Idcontra.getText();
+    }
 }
 

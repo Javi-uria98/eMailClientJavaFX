@@ -5,10 +5,8 @@ import es.javier.models.eMail;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 
 import javax.mail.*;
-import javax.mail.internet.MimeMessage;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
@@ -18,7 +16,7 @@ public class Logica {
     private static Logica INSTANCE = null;
 
     private ArrayList<eMail>listaEmail;
-    private ObservableList<Mensaje>listaMensaje;
+    private ObservableList<Mensaje> listaMensajes;
     private List<TreeItem<String>> treeItemsContainer;
 
     private Mensaje m;
@@ -29,7 +27,7 @@ public class Logica {
 
     private Logica() {
         listaEmail=new ArrayList<>();
-        listaMensaje = FXCollections.observableArrayList();
+        listaMensajes = FXCollections.observableArrayList();
         treeItemsContainer = new ArrayList<>();
     }
 
@@ -44,8 +42,8 @@ public class Logica {
         return listaEmail;
     }
 
-    public ObservableList<Mensaje> getListaMensaje() {
-        return listaMensaje;
+    public ObservableList<Mensaje> getListaMensajes() {
+        return listaMensajes;
     }
 
     public List<TreeItem<String>> getTreeItemsContainer() {
@@ -66,7 +64,7 @@ public class Logica {
 
         for (int i=0;i<message.length;i++){
             m=new Mensaje(message[i]);
-            listaMensaje.add(m);
+            listaMensajes.add(m);
         }
 
 
