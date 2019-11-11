@@ -60,6 +60,20 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void pantallaEstilos(ActionEvent event){
+        try {
+            FXMLLoader fxmlLoader=new FXMLLoader(getClass().getResource("styleswindow.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage=new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root, 300, 300));
+            stage.show();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void seleccionarFila(MouseEvent event) {
         mensaje = tableMessages.getSelectionModel().getSelectedItem();
         try {

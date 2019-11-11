@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javier.views.StylesWindowController">
+   <children>
+      <Button fx:id="btn_estilomis" layoutX="25.0" layoutY="55.0" mnemonicParsing="false" text="Estilo Misterioso" />
+      <Button fx:id="btn_estiloimp" layoutX="163.0" layoutY="55.0" mnemonicParsing="false" text="Estilo Impactante" />
+      <Button fx:id="btn_estiloinc" layoutX="30.0" layoutY="217.0" mnemonicParsing="false" text="Estilo Increible" />
+      <Button fx:id="btn_estilomar" layoutX="162.0" layoutY="217.0" mnemonicParsing="false" text="Estilo Maravilloso" />
+      <Button fx:id="btn_estilosinpre" layoutX="84.0" layoutY="138.0" mnemonicParsing="false" text="Estilo Sin Precedentes" />
+   </children>
+</AnchorPane>
