@@ -4,7 +4,9 @@ import es.javier.models.Mensaje;
 import es.javier.models.eMail;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
+import javafx.scene.text.Text;
 
 import javax.mail.*;
 import java.util.ArrayList;
@@ -68,6 +70,35 @@ public class Logica {
         }
 
 
+    }
+
+    //metodo para que las columnas tengan el tamaño de su contenido
+    public static void autoResizeColumns( TableView<?> table )
+    {
+        //Set the right policy
+        table.setColumnResizePolicy( TableView.UNCONSTRAINED_RESIZE_POLICY);
+        table.getColumns().stream().forEach( (column) ->
+        {
+            //Minimal width = columnheader
+            Text t = new Text( column.getText() );
+            double max = t.getLayoutBounds().getWidth();
+            for ( int i = 0; i < table.getItems().size(); i++ )
+            {
+                //cell must not be empty
+                if ( column.getCellData( i ) != null )
+                {
+                    t = new Text( column.getCellData( i ).toString() );
+                    double calcwidth = t.getLayoutBounds().getWidth();
+                    //remember new max-width
+                    if ( calcwidth > max )
+                    {
+                        max = calcwidth;
+                    }
+                }
+            }
+            //set the new max-widht with some extra space
+            column.setPrefWidth( max + 10.0d );
+        } );
     }
 
 

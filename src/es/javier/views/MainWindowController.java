@@ -3,7 +3,7 @@ package es.javier.views;
 import es.javier.logica.Logica;
 import es.javier.models.Mensaje;
 import es.javier.models.eMail;
-import es.javier.models.eMailTreeItem;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -21,8 +22,12 @@ import javafx.scene.web.WebEngine;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import static es.javier.logica.Logica.autoResizeColumns;
 
 public class MainWindowController implements Initializable {
 
@@ -83,6 +88,7 @@ public class MainWindowController implements Initializable {
         }
         listaMensajes = Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
+        autoResizeColumns(tableMessages);
     }
 
     //crear una pantalla de opciones donde se pueda cambiar el diseño de la app (darle a un botón llamado estilos y que me abra una nueva ventana donde seleccionar que estilo poner)
