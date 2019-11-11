@@ -2,20 +2,24 @@ package es.javier.models;
 
 import javafx.scene.control.TreeItem;
 
+import javax.mail.Folder;
 import javax.mail.MessagingException;
 
-public class eMailTreeView {
+public class eMailTreeView extends TreeItem<String> {
 
-    private final TreeItem<String> rootItem = new TreeItem();
+    private Folder folder;
+    private eMail email;
+    private String name;
 
-    public eMailTreeView (eMail email) throws MessagingException {
-        rootItem.setValue("e-mail");
 
-        rootItem.getChildren().add(new TreeItem("Cuenta: "+email.getDireccion()));
-        rootItem.getChildren().add(new TreeItem("Contraseña: "+email.getContrasena()));
+    public eMailTreeView (String name, eMail email, Folder folder) throws MessagingException {
+        super(name);
+        this.name=name;
+        this.email=email;
+        this.folder=folder;
     }
 
-    public TreeItem<String>getRootItem(){
-        return rootItem;
+    public eMail getEmail(){
+        return email;
     }
 }

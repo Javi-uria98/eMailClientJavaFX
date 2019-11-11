@@ -79,6 +79,12 @@ public class MainWindowController  implements Initializable {
         tableMessages.setItems(listaMensajes);
     }
 
-    //crear una pantalla de opciones donde se pueda cambiar el diseño de la app
+    //crear una pantalla de opciones donde se pueda cambiar el diseño de la app (darle a un botón llamado estilos y que me abra una nueva ventana donde seleccionar que estilo poner)
+
+    //los botones que hay que poner (nuevo, responder, reenviar y eliminar) tienen que ir en un componente llamado toolbar
+
+    //buscar como ajustar automáticamente las columnas de una tabla
+
+    //debería cambiar el diseño de la app y que en vez de usar un borderpane use un splitpane (dos en realidad, uno horizontal general y otro vertical en la parte derecha)
 
 }
