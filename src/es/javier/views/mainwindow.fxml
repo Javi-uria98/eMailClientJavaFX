@@ -37,7 +37,7 @@
         <TreeView fx:id="treeViewEmail" prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
     </left>
     <center>
-        <TableView fx:id="tableMessages" prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <TableView fx:id="tableMessages" onMouseClicked="#seleccionarFila" prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <columns>
                 <TableColumn fx:id="columnaremitente" prefWidth="75.0" text="Remitente">
                     <cellValueFactory>
@@ -54,11 +54,6 @@
                         <PropertyValueFactory property="fecha" />
                     </cellValueFactory>
                 </TableColumn>
-            <TableColumn fx:id="columnacontenido" prefWidth="75.0" text="Contenido">
-                <cellValueFactory>
-                    <PropertyValueFactory property="messageContent"/>
-                </cellValueFactory>
-            </TableColumn>
             </columns>
         </TableView>
     </center>

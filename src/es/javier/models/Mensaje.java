@@ -25,7 +25,7 @@ public class Mensaje {
         return sdf.format(message.getReceivedDate());
     }
 
-    public String getMessageContent() throws MessagingException {
+    public String getMessageContent(Mensaje mensaje) throws MessagingException {
         try {
             Object content = message.getContent();
             if (content instanceof Multipart) {
