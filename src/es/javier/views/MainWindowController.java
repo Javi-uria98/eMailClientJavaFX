@@ -3,6 +3,7 @@ package es.javier.views;
 import es.javier.logica.Logica;
 import es.javier.models.Mensaje;
 import es.javier.models.eMail;
+import es.javier.models.eMailTreeItem;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -23,7 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainWindowController  implements Initializable {
+public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
     private eMail email;
@@ -55,27 +56,32 @@ public class MainWindowController  implements Initializable {
 
     @FXML
     void seleccionarFila(MouseEvent event) {
-        mensaje=tableMessages.getSelectionModel().getSelectedItem();
+        mensaje = tableMessages.getSelectionModel().getSelectedItem();
         try {
             int index = tableMessages.getSelectionModel().getSelectedIndex();
             webView.getEngine().loadContent(mensaje.getMessageContent(Logica.getInstance().getListaMensajes().get(index)));
-        } catch (MessagingException  e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
-        } catch (IndexOutOfBoundsException ignored){
+        } catch (IndexOutOfBoundsException ignored) {
 
         }
 
     }
 
+    /*private eMailTreeItem getFolders (eMail email) throws MessagingException {
+        eMailTreeItem treeItem = new eMailTreeItem(email.getDireccion(), email.getContrasena(), null);
+        Folder[] folders
+    }*/
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        email=new eMail(LoginWindowController.getIduser(),LoginWindowController.getIdcontra());
+        email = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
         try {
             Logica.getInstance().cargarCuentaGmail(email);
         } catch (MessagingException e) {
             e.printStackTrace();
         }
-        listaMensajes=Logica.getInstance().getListaMensajes();
+        listaMensajes = Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
     }
 
