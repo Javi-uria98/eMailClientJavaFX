@@ -5,14 +5,14 @@ import javafx.scene.control.TreeItem;
 import javax.mail.Folder;
 import javax.mail.MessagingException;
 
-public class eMailTreeView extends TreeItem<String> {
+public class eMailTreeItem extends TreeItem<String> {
 
     private Folder folder;
     private eMail email;
     private String name;
 
 
-    public eMailTreeView (String name, eMail email, Folder folder) throws MessagingException {
+    public eMailTreeItem(String name, eMail email, Folder folder) throws MessagingException {
         super(name);
         this.name=name;
         this.email=email;
