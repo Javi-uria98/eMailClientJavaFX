@@ -61,7 +61,7 @@ public class MainWindowController  implements Initializable {
             webView.getEngine().loadContent(mensaje.getMessageContent(Logica.getInstance().getListaMensajes().get(index)));
         } catch (MessagingException  e) {
             e.printStackTrace();
-        } catch (IndexOutOfBoundsException e){
+        } catch (IndexOutOfBoundsException ignored){
 
         }
 
