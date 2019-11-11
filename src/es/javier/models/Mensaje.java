@@ -1,6 +1,7 @@
 package es.javier.models;
 
 import javax.mail.*;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 public class Mensaje {
@@ -22,6 +23,28 @@ public class Mensaje {
     public String getFecha() throws MessagingException {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
         return sdf.format(message.getReceivedDate());
+    }
+
+    public String getMessageContent() throws MessagingException {
+        try {
+            Object content = message.getContent();
+            if (content instanceof Multipart) {
+                StringBuffer messageContent = new StringBuffer();
+                Multipart multipart = (Multipart) content;
+                for (int i = 0; i < multipart.getCount(); i++) {
+                    Part part = multipart.getBodyPart(i);
+                    if (part.isMimeType("text/plain")) {
+                        messageContent.append(part.getContent().toString());
+                    }
+                }
+                return messageContent.toString();
+            }
+            return content.toString();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
 }

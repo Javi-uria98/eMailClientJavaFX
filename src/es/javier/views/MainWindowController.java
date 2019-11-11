@@ -11,9 +11,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import javafx.scene.web.WebEngine;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.net.URL;
@@ -23,13 +25,17 @@ public class MainWindowController  implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
     private eMail email;
-
+    private WebEngine webEngine;
+    private Mensaje mensaje;
 
     @FXML
     private TableView<Mensaje> tableMessages;
 
     @FXML
     private TreeView treeViewEmail;
+
+    @FXML
+    private WebView webView;
 
     @FXML
     void altaEmail(ActionEvent event) {
@@ -55,6 +61,14 @@ public class MainWindowController  implements Initializable {
         }
         listaMensajes=Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
-
+        webView.setId("webView");
+        webEngine=webView.getEngine();
+        /*mensaje=tableMessages.getSelectionModel().getSelectedItem();
+        try {
+            webEngine.loadContent(mensaje.getMessageContent());
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }*/
+        webEngine.load("http://www.example.org");
     }
 }

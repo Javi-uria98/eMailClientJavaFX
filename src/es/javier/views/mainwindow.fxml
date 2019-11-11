@@ -54,6 +54,11 @@
                         <PropertyValueFactory property="fecha" />
                     </cellValueFactory>
                 </TableColumn>
+            <TableColumn fx:id="columnacontenido" prefWidth="75.0" text="Contenido">
+                <cellValueFactory>
+                    <PropertyValueFactory property="messageContent"/>
+                </cellValueFactory>
+            </TableColumn>
             </columns>
         </TableView>
     </center>
@@ -61,6 +66,6 @@
         <Button mnemonicParsing="false" onAction="#altaEmail" prefHeight="25.0" prefWidth="600.0" text="Nuevo mensaje" BorderPane.alignment="CENTER" />
     </bottom>
    <right>
-      <WebView prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+       <WebView fx:id="webView" prefHeight="375.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
    </right>
 </BorderPane>
