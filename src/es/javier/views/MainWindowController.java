@@ -61,6 +61,8 @@ public class MainWindowController  implements Initializable {
             webView.getEngine().loadContent(mensaje.getMessageContent(Logica.getInstance().getListaMensajes().get(index)));
         } catch (MessagingException  e) {
             e.printStackTrace();
+        } catch (IndexOutOfBoundsException e){
+
         }
 
     }
@@ -76,5 +78,7 @@ public class MainWindowController  implements Initializable {
         listaMensajes=Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
     }
+
+    //crear una pantalla de opciones donde se pueda cambiar el diseño de la app
 
 }
