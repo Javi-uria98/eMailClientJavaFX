@@ -34,14 +34,12 @@ public class LoginWindowController {
     //hiciesen un return del getText() de los textfields (osea, que si yo en la pantalla login introduzco de usuario "javi_prueba77@gmail.com" y de que contraseña
     //la que tuviese, me cargase esa cuenta en concreto. No obstante, si hago que los métodos devuelvan algo tipo Iduser.getText(), me salta la NullPointerException
 
-    public static String getIduser (){
-        String usuario="pruebajavi98@gmail.com";
-        return usuario;
+    static String getIduser(){
+        return "pruebajavi98@gmail.com";
     }
 
-    public static String getIdcontra() {
-        String contra="Holahola1";
-        return contra;
+    static String getIdcontra() {
+        return "Holahola1";
     }
 }
 

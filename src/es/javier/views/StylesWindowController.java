@@ -30,12 +30,10 @@ public class StylesWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.setOnAction((e) -> {
-
             if (comboBox.getSelectionModel().getSelectedItem().equals("Caspian")) {
-                Scene scene=new Scene(comboBox);
-                scene.getStylesheets().add(getClass().getResource("resources/estilomisterioso.css").toExternalForm());
+                Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
             } else
-                System.out.println("Adsios??!");
+                Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
 
         });
     }
