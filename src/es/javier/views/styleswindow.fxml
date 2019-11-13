@@ -10,13 +10,13 @@
       <ComboBox fx:id="comboBox" layoutX="35.0" layoutY="43.0" prefWidth="150.0" promptText="Elija un estilo ...">
          <items>
             <FXCollections fx:factory="observableArrayList">
-               <String fx:value="Caspian"/>
                <String fx:value="Modena"/>
+               <String fx:value="Caspian"/>
             </FXCollections>
          </items>
          <value>
-            <String fx:id="caspian"/>
             <String fx:id="modena"/>
+            <String fx:id="caspian"/>
          </value>
       </ComboBox>
    </children>

@@ -29,6 +29,7 @@ public class StylesWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        comboBox.getSelectionModel().selectFirst();
         comboBox.setOnAction((e) -> {
             if (comboBox.getSelectionModel().getSelectedItem().equals("Caspian")) {
                 Application.setUserAgentStylesheet(Application.STYLESHEET_CASPIAN);
