@@ -11,8 +11,15 @@ public class eMailTreeItem extends TreeItem<String> {
     private eMail email;
     private String name;
 
+    public Folder getFolder() {
+        return folder;
+    }
 
-    public eMailTreeItem(String name, eMail email, Folder folder) throws MessagingException {
+    public void setFolder(Folder folder) {
+        this.folder = folder;
+    }
+
+    public eMailTreeItem(String name, eMail email, Folder folder){
         super(name);
         this.name=name;
         this.email=email;

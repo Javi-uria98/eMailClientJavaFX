@@ -2,6 +2,8 @@ package es.javier.logica;
 
 import es.javier.models.Mensaje;
 import es.javier.models.eMail;
+import es.javier.models.eMailTreeItem;
+import es.javier.views.LoginWindowController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -72,6 +74,17 @@ public class Logica {
 
     }
 
+    public Folder getFolder() throws MessagingException {
+        return store.getDefaultFolder();
+    }
+
+    public void getFolder(Folder[] folders, eMailTreeItem e1) throws MessagingException {
+        eMail email=new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
+        for (Folder f:folders){
+            eMailTreeItem e2=new eMailTreeItem(f.getName(), email,f);
+            e1.getChildren().add(e2);
+        }
+    }
 
     //metodo del EmailTreeView
     //EmailTreeItem cargarCarpetas (CuentaEmail c) {
@@ -85,6 +98,7 @@ public class Logica {
     // y luego, lo que devuelva este método, será puesto al setRoot del treeview (en plan Logica.getInstance.cargarCarpetas
 
     //metodo para que las columnas tengan el tamaño de su contenido
+
     public static void autoResizeColumns( TableView<?> table )
     {
         //Set the right policy

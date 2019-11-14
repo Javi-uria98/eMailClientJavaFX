@@ -3,6 +3,7 @@ package es.javier.views;
 import es.javier.logica.Logica;
 import es.javier.models.Mensaje;
 import es.javier.models.eMail;
+import es.javier.models.eMailTreeItem;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 
 import javafx.scene.web.WebEngine;
 
+import javax.mail.Folder;
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
@@ -84,13 +86,20 @@ public class MainWindowController implements Initializable {
         } catch (IndexOutOfBoundsException ignored) {
 
         }
-
     }
 
-    /*private eMailTreeItem getFolders (eMail email) throws MessagingException {
-        eMailTreeItem treeItem = new eMailTreeItem(email.getDireccion(), email.getContrasena(), null);
-        Folder[] folders
-    }*/
+    @FXML
+    private eMailTreeItem generateTreeView() throws MessagingException {
+
+        eMail eMail = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
+        String nombre = LoginWindowController.getIduser().substring(0,12);
+        Folder folder = Logica.getInstance().getFolder();
+
+        eMailTreeItem e = new eMailTreeItem(nombre, eMail, folder);
+
+        Logica.getInstance().getFolder(e.getFolder().list(), e);
+        return e;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -103,6 +112,12 @@ public class MainWindowController implements Initializable {
         listaMensajes = Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
         autoResizeColumns(tableMessages);
+        try {
+            eMailTreeItem e = generateTreeView();
+            treeViewEmail.setRoot(e);
+        } catch (MessagingException ex) {
+            ex.printStackTrace();
+        }
     }
 
 }
