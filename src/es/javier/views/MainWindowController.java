@@ -93,10 +93,10 @@ public class MainWindowController implements Initializable {
         String nombre = LoginWindowController.getIduser().substring(0, 12);
         Folder folder = Logica.getInstance().getFolder();
 
-        eMailTreeItem e = new eMailTreeItem(nombre, eMail, folder);
+        eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
 
-        Logica.getInstance().llenarTreeView(e.getFolder().list(), e);
-        return e;
+        Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem, eMail);
+        return eMailTreeItem;
     }
 
     @Override
@@ -118,8 +118,8 @@ public class MainWindowController implements Initializable {
                 public void changed(ObservableValue observable, Object oldValue,
                                     Object newValue) {
                     try {
+                        eMailTreeItem selectedItem = (eMailTreeItem) newValue;
                         tableMessages.getItems().clear();
-                        TreeItem<String> selectedItem = (TreeItem<String>) newValue;
                         System.out.println("Selected Text : " + selectedItem.getValue());
                         Logica.getInstance().cargarCuentaGmail(email, selectedItem.getValue());
                     } catch (Exception e) {

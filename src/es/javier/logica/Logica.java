@@ -3,7 +3,6 @@ package es.javier.logica;
 import es.javier.models.Mensaje;
 import es.javier.models.eMail;
 import es.javier.models.eMailTreeItem;
-import es.javier.views.LoginWindowController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -27,7 +26,7 @@ public class Logica {
     private Properties properties;
     private Session session;
     private Store store;
-    private Folder carpetaInbox;
+    private Folder folder;
 
     private Logica() {
         listaEmail = new ArrayList<>();
@@ -46,10 +45,20 @@ public class Logica {
         return listaMensajes;
     }
 
+    public ArrayList<eMail> getListaEmail() {
+        return listaEmail;
+    }
+
     public List<TreeItem<String>> getTreeItemsContainer() {
         return treeItemsContainer;
     }
 
+    /**
+     *
+     * @param email cuenta que introduzco (usuario y contraseña) para que me la cargue el programa
+     * @param s
+     * @throws MessagingException
+     */
     public void cargarCuentaGmail(eMail email, String s) throws MessagingException {
         String imap = "imaps";
         properties = new Properties();
@@ -58,9 +67,9 @@ public class Logica {
         store = session.getStore(imap);
 
         store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
-        carpetaInbox = store.getFolder(s);
-        carpetaInbox.open(Folder.READ_ONLY);
-        Message[] message = carpetaInbox.getMessages();
+        folder = store.getFolder(s);
+        folder.open(Folder.READ_ONLY);
+        Message[] message = folder.getMessages();
 
         for (int i = 0; i < message.length; i++) {
             m = new Mensaje(message[i]);
@@ -73,18 +82,17 @@ public class Logica {
     }
 
     //otro metodo getFolders (eMail email)
-    //crea un nuevo treeItem con email.getDireccion, email y null
+    //crea un nuevo treeItem con email.getDireccion, el parametro email y como carpteta null
     //crea un array de carpetas con email.getStore.getDefaultFolder().list();
-    //llama a getFolders
+    //llama a llenarTreeView
     //retorna el treeItem
 
-    public void llenarTreeView(Folder[] folders, eMailTreeItem e1) throws MessagingException {
-        eMail email = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
+    public void llenarTreeView(Folder[] folders, eMailTreeItem e1, eMail email) throws MessagingException {
         for (Folder f : folders) {
             eMailTreeItem e2 = new eMailTreeItem(f.getName(), email, f);
             e1.getChildren().add(e2);
             if (f.getType()==Folder.HOLDS_FOLDERS)
-                llenarTreeView(f.list(),e2);
+                llenarTreeView(f.list(),e2,email);
         }
     }
 
