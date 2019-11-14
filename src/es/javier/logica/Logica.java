@@ -42,10 +42,6 @@ public class Logica {
         return INSTANCE;
     }
 
-    public ArrayList<eMail> getListaEmail() {
-        return listaEmail;
-    } // creo ya el método porque asumo que tendré que usarlo en el TreeView ¿?
-
     public ObservableList<Mensaje> getListaMensajes() {
         return listaMensajes;
     }
@@ -54,7 +50,7 @@ public class Logica {
         return treeItemsContainer;
     }
 
-    public void cargarCuentaGmail(eMail email) throws MessagingException {
+    public void cargarCuentaGmail(eMail email, String s) throws MessagingException {
         String imap="imaps";
         properties=new Properties();
         properties.setProperty("mail.store.protocol",imap);
@@ -62,7 +58,7 @@ public class Logica {
         store=session.getStore(imap);
 
         store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
-        carpetaInbox=store.getFolder("INBOX");
+        carpetaInbox=store.getFolder(s);
         carpetaInbox.open(Folder.READ_ONLY);
         Message[] message=carpetaInbox.getMessages();
 
@@ -70,15 +66,13 @@ public class Logica {
             m=new Mensaje(message[i]);
             listaMensajes.add(m);
         }
-
-
     }
 
     public Folder getFolder() throws MessagingException {
         return store.getDefaultFolder();
     }
 
-    public void getFolder(Folder[] folders, eMailTreeItem e1) throws MessagingException {
+    public void llenarTreeView(Folder[] folders, eMailTreeItem e1) throws MessagingException {
         eMail email=new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
         for (Folder f:folders){
             eMailTreeItem e2=new eMailTreeItem(f.getName(), email,f);
@@ -86,19 +80,7 @@ public class Logica {
         }
     }
 
-    //metodo del EmailTreeView
-    //EmailTreeItem cargarCarpetas (CuentaEmail c) {
-    //  Paso 0, crear el EmailtreeItem raiz
-    //  Primero, conectar con store, tal y como hice a la hora de recuperar los mensajes
-    //  Segundo, obtener las carpetas de primer nivel
-    //  Tercero, crear un EmailTreeItem por cada carpeta (con un for, por ejemplo)
-    //  Cuarto, añadir cada uno como hijo del EmailTreeItem raiz
-    //  ...
-    //  Paso final, devolver el EmailtreeItem raiz -el del paso 0-
-    // y luego, lo que devuelva este método, será puesto al setRoot del treeview (en plan Logica.getInstance.cargarCarpetas
-
     //metodo para que las columnas tengan el tamaño de su contenido
-
     public static void autoResizeColumns( TableView<?> table )
     {
         //Set the right policy

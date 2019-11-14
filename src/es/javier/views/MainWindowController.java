@@ -4,7 +4,8 @@ import es.javier.logica.Logica;
 import es.javier.models.Mensaje;
 import es.javier.models.eMail;
 import es.javier.models.eMailTreeItem;
-import javafx.collections.ListChangeListener;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,19 +15,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import javafx.scene.web.WebEngine;
 
-import javax.mail.Folder;
-import javax.mail.MessagingException;
+import javax.mail.*;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URL;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import static es.javier.logica.Logica.autoResizeColumns;
@@ -92,12 +90,12 @@ public class MainWindowController implements Initializable {
     private eMailTreeItem generateTreeView() throws MessagingException {
 
         eMail eMail = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
-        String nombre = LoginWindowController.getIduser().substring(0,12);
+        String nombre = LoginWindowController.getIduser().substring(0, 12);
         Folder folder = Logica.getInstance().getFolder();
 
         eMailTreeItem e = new eMailTreeItem(nombre, eMail, folder);
 
-        Logica.getInstance().getFolder(e.getFolder().list(), e);
+        Logica.getInstance().llenarTreeView(e.getFolder().list(), e);
         return e;
     }
 
@@ -105,7 +103,7 @@ public class MainWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         email = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
         try {
-            Logica.getInstance().cargarCuentaGmail(email);
+            Logica.getInstance().cargarCuentaGmail(email, "INBOX");
         } catch (MessagingException e) {
             e.printStackTrace();
         }
@@ -115,6 +113,22 @@ public class MainWindowController implements Initializable {
         try {
             eMailTreeItem e = generateTreeView();
             treeViewEmail.setRoot(e);
+            treeViewEmail.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+                @Override
+                public void changed(ObservableValue observable, Object oldValue,
+                                    Object newValue) {
+                    try {
+                        TreeItem<String> selectedItem = (TreeItem<String>) newValue;
+                        System.out.println("Selected Text : " + selectedItem.getValue());
+                        if (tableMessages.getItems()==null) {
+                            Logica.getInstance().cargarCuentaGmail(email, selectedItem.getValue());
+                        }
+                    } catch (Exception e) {
+                    }
+                    tableMessages.setItems(listaMensajes);
+                }
+
+            });
         } catch (MessagingException ex) {
             ex.printStackTrace();
         }
