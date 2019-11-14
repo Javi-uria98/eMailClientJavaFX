@@ -118,11 +118,10 @@ public class MainWindowController implements Initializable {
                 public void changed(ObservableValue observable, Object oldValue,
                                     Object newValue) {
                     try {
+                        tableMessages.getItems().clear();
                         TreeItem<String> selectedItem = (TreeItem<String>) newValue;
                         System.out.println("Selected Text : " + selectedItem.getValue());
-                        if (tableMessages.getItems()==null) {
-                            Logica.getInstance().cargarCuentaGmail(email, selectedItem.getValue());
-                        }
+                        Logica.getInstance().cargarCuentaGmail(email, selectedItem.getValue());
                     } catch (Exception e) {
                     }
                     tableMessages.setItems(listaMensajes);

@@ -45,6 +45,16 @@ public class Mensaje {
             e.printStackTrace();
         }
         return "";
+
+
+        /*Para cuando importe la libreria commons-email1.5
+
+        String content = parser.getHtmlContent();
+        if (content==null)
+            return parser.getPlainContent();
+        else
+            return content;
+        */
     }
 
 }
