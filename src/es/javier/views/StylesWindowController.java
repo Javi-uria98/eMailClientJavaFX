@@ -37,6 +37,14 @@ public class StylesWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.setPromptText("Elija su estilo ...");
         comboBox.setOnAction((e) -> {
+
+            if (comboBox.getSelectionModel().getSelectedItem().equals("Caspian"))
+                StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilomisterioso.css").toExternalForm());
+            else {
+                if (comboBox.getSelectionModel().getSelectedItem().equals("Modena"))
+                    StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estiloimpactante.css").toExternalForm());
+
+            }
            /*
             switch (comboBox.getSelectionModel().getSelectedItem()) {
                 case "Caspian":
@@ -48,14 +56,6 @@ public class StylesWindowController implements Initializable {
                 default:
                     break;
             }*/
-            /*if (comboBox.getSelectionModel().getSelectedItem().equals("Caspian"))
-                StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilomisterioso.css").toExternalForm());
-            else {
-                if (comboBox.getSelectionModel().getSelectedItem().equals("Modena"))
-                    StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estiloimpactante.css").toExternalForm());
-            }*/
-
-
         });
     }
 
