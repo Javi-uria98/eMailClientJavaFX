@@ -14,6 +14,9 @@ import java.io.IOException;
 public class LoginWindowController {
 
     @FXML
+    private Parent root;
+
+    @FXML
     private static TextField Iduser;
 
     @FXML

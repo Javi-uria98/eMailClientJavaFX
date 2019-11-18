@@ -37,6 +37,9 @@ public class MainWindowController implements Initializable {
     private Mensaje mensaje;
 
     @FXML
+    SplitPane root;
+
+    @FXML
     private TableView<Mensaje> tableMessages;
 
     @FXML
