@@ -124,7 +124,7 @@ public class MainWindowController implements Initializable {
                         eMailTreeItem selectedItem = (eMailTreeItem) newValue;
                         tableMessages.getItems().clear();
                         System.out.println("Selected Text : " + selectedItem.getValue());
-                        Logica.getInstance().cargarCuentaGmail(email, selectedItem.getValue());
+                        Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString());
                     } catch (Exception e) {
                     }
                     tableMessages.setItems(listaMensajes);

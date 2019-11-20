@@ -56,7 +56,7 @@ public class Logica {
     /**
      *
      * @param email cuenta que introduzco (usuario y contraseña) para que me la cargue el programa
-     * @param s
+     * @param s nombre de la carpeta que quiero visualizar
      * @throws MessagingException
      */
     public void cargarCuentaGmail(eMail email, String s) throws MessagingException {

@@ -16,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class StylesWindowController implements Initializable {
@@ -38,6 +39,7 @@ public class StylesWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.setPromptText("Elija su estilo ...");
         comboBox.setOnAction((e) -> {
+            Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
             switch (comboBox.getSelectionModel().getSelectedItem()) {
                 case "Misterioso":
                     StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilomisterioso.css").toExternalForm());
