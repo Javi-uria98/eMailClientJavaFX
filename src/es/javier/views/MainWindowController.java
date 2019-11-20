@@ -123,9 +123,9 @@ public class MainWindowController implements Initializable {
                     try {
                         eMailTreeItem selectedItem = (eMailTreeItem) newValue;
                         tableMessages.getItems().clear();
-                        System.out.println("Selected Text : " + selectedItem.getValue());
-                        Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString());
-                    } catch (Exception e) {
+                        System.out.println("Selected Text : " + selectedItem.getFolder().toString());
+                        Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta
+                    } catch (Exception e) {                                                                 //no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
                     }
                     tableMessages.setItems(listaMensajes);
                 }
