@@ -20,6 +20,7 @@ import java.util.ResourceBundle;
 
 public class StylesWindowController implements Initializable {
 
+
     @FXML
     private AnchorPane root;
 
@@ -37,27 +38,30 @@ public class StylesWindowController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         comboBox.setPromptText("Elija su estilo ...");
         comboBox.setOnAction((e) -> {
-
-            if (comboBox.getSelectionModel().getSelectedItem().equals("Caspian"))
-                StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilomisterioso.css").toExternalForm());
-            else {
-                if (comboBox.getSelectionModel().getSelectedItem().equals("Modena"))
-                    StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estiloimpactante.css").toExternalForm());
-
-            }
-           /*
             switch (comboBox.getSelectionModel().getSelectedItem()) {
-                case "Caspian":
+                case "Misterioso":
                     StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilomisterioso.css").toExternalForm());
                     break;
-                case "Modena":
+                case "Impactante":
                     StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estiloimpactante.css").toExternalForm());
+                    break;
+                case "Increible":
+                    StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estiloincreible.css").toExternalForm());
+                    break;
+                case "Maravilloso":
+                    StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilomaravilloso.css").toExternalForm());
+                    break;
+                case "Fantastico":
+                    StyleManager.getInstance().addUserAgentStylesheet(getClass().getResource("resources/estilofantastico.css").toExternalForm());
                     break;
                 default:
                     break;
-            }*/
+            }
         });
     }
 
 
 }
+
+
+

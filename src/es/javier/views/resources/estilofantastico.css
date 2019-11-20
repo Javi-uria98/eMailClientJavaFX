@@ -1,32 +1,32 @@
 .background {
-    -fx-background-color: #086788;
+    -fx-background-color: #216717;
 }
 
 .label {
-    -fx-font-size: 12pt;
-    -fx-font-family: "Times New Roman";
-    -fx-text-fill: red;
-    -fx-opacity: 0.7;
+    -fx-font-size: 11pt;
+    -fx-font-family: "Chiller";
+    -fx-text-fill: white;
+    -fx-opacity: 0.6;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Chiller";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Chiller";
     -fx-text-fill: white;
     -fx-opacity: 1;
 }
 
 .table-view {
-    -fx-base: #086788;
-    -fx-control-inner-background: #086788;
-    -fx-background-color: #086788;
+    -fx-base: #2BF517;
+    -fx-control-inner-background: #216717;
+    -fx-background-color: #216717;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -50,7 +50,7 @@
 
 .table-view .column-header .label {
     -fx-font-size: 20pt;
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Chiller";
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-opacity: 1;
@@ -61,8 +61,8 @@
 }
 
 .split-pane:horizontal > .split-pane-divider {
-    -fx-border-color: transparent #086788 transparent #086788;
-    -fx-background-color: transparent, derive(#086788,20%);
+    -fx-border-color: transparent #216717 transparent #216717;
+    -fx-background-color: transparent, derive(#216717,20%);
 }
 
 .split-pane {
@@ -70,27 +70,27 @@
 }
 
 .menu-bar {
-    -fx-background-color: derive(#086788,20%);
+    -fx-background-color: derive(#216717,20%);
 }
 
 .context-menu {
-    -fx-background-color: derive(#086788,50%);
+    -fx-background-color: derive(#216717,50%);
 }
 
 .menu-bar .label {
     -fx-font-size: 14pt;
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Chiller";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
 
 .menu .left-container {
-    -fx-background-color: purple;
+    -fx-background-color: black;
 }
 
 .text-field {
     -fx-font-size: 12pt;
-    -fx-font-family: "Times New Roman";
+    -fx-font-family: "Chiller";
 }
 
 /*
@@ -103,8 +103,8 @@
     -fx-border-color: #e2e2e2;
     -fx-border-width: 2;
     -fx-background-radius: 0;
-    -fx-background-color: #086788;
-    -fx-font-family: "Times New Roman", Helvetica, Arial, sans-serif;
+    -fx-background-color: #216717;
+    -fx-font-family: "Chiller", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -116,7 +116,7 @@
 
 .button:pressed, .button:default:hover:pressed {
   -fx-background-color: white;
-  -fx-text-fill: #086788;
+  -fx-text-fill: #216717;
 }
 
 .button:focused {
@@ -129,12 +129,12 @@
 
 .button:disabled, .button:default:disabled {
     -fx-opacity: 0.4;
-    -fx-background-color: #086788;
+    -fx-background-color: #216717;
     -fx-text-fill: white;
 }
 
 .button:default {
-    -fx-background-color: #086788;
+    -fx-background-color: -fx-focus-color;
     -fx-text-fill: #ffffff;
 }
 
