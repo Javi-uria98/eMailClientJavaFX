@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -18,8 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import javafx.scene.web.WebEngine;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -33,7 +32,6 @@ public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
     private eMail email;
-    private WebEngine webEngine;
     private Mensaje mensaje;
 
     @FXML
@@ -91,9 +89,8 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private eMailTreeItem generateTreeView() throws MessagingException {
-
         eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
-        String nombre = LoginWindowController.usuario.substring(0, 12);
+        String nombre = LoginWindowController.usuario;
         Folder folder = Logica.getInstance().getFolder();
 
         eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
@@ -104,6 +101,17 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginwindow.fxml"));
+        Parent root = null;
+        try {
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 300, 300));
+        stage.showAndWait();
         email = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
         try {
             Logica.getInstance().cargarCuentaGmail(email, "INBOX");
