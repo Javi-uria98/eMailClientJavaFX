@@ -54,9 +54,8 @@ public class Logica {
     }
 
     /**
-     *
      * @param email cuenta que introduzco (usuario y contraseña) para que me la cargue el programa
-     * @param s nombre de la carpeta que quiero visualizar
+     * @param s     nombre de la carpeta que quiero visualizar
      * @throws MessagingException
      */
     public void cargarCuentaGmail(eMail email, String s) throws MessagingException {
@@ -87,16 +86,24 @@ public class Logica {
     //llama a llenarTreeView
     //retorna el treeItem
 
+    /**
+     * @param folders las carpetas que tiene la cuenta de email y que cargaré en el treeview
+     * @param e1      cualquier treeitem que tenga hijos (la cuenta, INBOX y [Gmail]
+     * @param email   cuenta de email que indico, junto con el nombre de la carpeta y el propio objeto carpeta para crear el treeitem hijo
+     * @throws MessagingException
+     */
     public void llenarTreeView(Folder[] folders, eMailTreeItem e1, eMail email) throws MessagingException {
         for (Folder f : folders) {
             eMailTreeItem e2 = new eMailTreeItem(f.getName(), email, f);
             e1.getChildren().add(e2);
-            if (f.getType()==Folder.HOLDS_FOLDERS)
-                llenarTreeView(f.list(),e2,email);
+            if (f.getType() == Folder.HOLDS_FOLDERS)
+                llenarTreeView(f.list(), e2, email);
         }
     }
 
-    //metodo para que las columnas tengan el tamaño de su contenido
+    /**
+     * @param table tabla que le paso para que me haga el autoResize (metodo para que las columnas tengan el tamaño de su contenido)
+     */
     public static void autoResizeColumns(TableView<?> table) {
         //Set the right policy
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);

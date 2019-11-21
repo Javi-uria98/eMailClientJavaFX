@@ -22,9 +22,14 @@ public class LoginWindowController {
     @FXML
     private static TextField Idcontra;
 
+    public static String usuario;
+    public static String contra;
+
     @FXML
     public void Login(ActionEvent actionEvent) throws IOException {
             String titulo=getIduser().substring(0,12);
+            usuario=getIduser();
+            contra=getIdcontra();
             Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -39,10 +44,12 @@ public class LoginWindowController {
 
     public static String getIduser(){
         return "pruebajavi98@gmail.com";
+        //return Iduser.getText();
     }
 
     public static String getIdcontra() {
         return "Holahola1";
+        //return Idcontra.getText();
     }
 }
 

@@ -92,8 +92,8 @@ public class MainWindowController implements Initializable {
     @FXML
     private eMailTreeItem generateTreeView() throws MessagingException {
 
-        eMail eMail = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
-        String nombre = LoginWindowController.getIduser().substring(0, 12);
+        eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
+        String nombre = LoginWindowController.usuario.substring(0, 12);
         Folder folder = Logica.getInstance().getFolder();
 
         eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
@@ -104,7 +104,7 @@ public class MainWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        email = new eMail(LoginWindowController.getIduser(), LoginWindowController.getIdcontra());
+        email = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
         try {
             Logica.getInstance().cargarCuentaGmail(email, "INBOX");
         } catch (MessagingException e) {

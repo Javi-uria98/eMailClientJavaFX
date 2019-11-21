@@ -21,19 +21,8 @@ import java.util.ResourceBundle;
 
 public class StylesWindowController implements Initializable {
 
-
-    @FXML
-    private AnchorPane root;
-
     @FXML
     private ComboBox<String> comboBox;
-
-    @FXML
-    private String caspian;
-
-    @FXML
-    private String modena;
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
