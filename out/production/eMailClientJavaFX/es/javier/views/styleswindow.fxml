@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+<AnchorPane fx:id="root" prefHeight="300.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javier.views.StylesWindowController">
+   <children>
+      <ComboBox fx:id="comboBox" layoutX="35.0" layoutY="43.0" prefWidth="150.0" promptText="Elija un estilo ...">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Misterioso"/>
+               <String fx:value="Impactante"/>
+               <String fx:value="Increible"/>
+               <String fx:value="Maravilloso"/>
+               <String fx:value="Fantastico"/>
+            </FXCollections>
+         </items>
+         <value>
+            <String fx:id="modena"/>
+            <String fx:id="caspian"/>
+            <String fx:id="modena3"/>
+            <String fx:id="caspian4"/>
+            <String fx:id="modena5"/>
+         </value>
+      </ComboBox>
+   </children>
+</AnchorPane>
