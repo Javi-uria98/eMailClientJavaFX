@@ -39,10 +39,10 @@ public class SendWindowController {
         properties.put("mail.smtp.port", "587");
 
         System.out.println("Introduzca su cuenta de email");
-        String cuentaEmail = teclado.nextLine();
+        final String cuentaEmail = teclado.nextLine();
 
         System.out.println("Introduzca su contraseña");
-        String contrasena = teclado.nextLine();
+        final String contrasena = teclado.nextLine();
 
         System.out.println("Preparando el envío del correo...");
 
