@@ -5,22 +5,19 @@
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Chiller";
-    -fx-text-fill: white;
-    -fx-opacity: 0.6;
+    -fx-text-fill: black;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
     -fx-font-family: "Chiller";
     -fx-text-fill: white;
-    -fx-opacity: 1;
 }
 
 .label-header {
     -fx-font-size: 32pt;
     -fx-font-family: "Chiller";
     -fx-text-fill: white;
-    -fx-opacity: 1;
 }
 
 .table-view {
@@ -53,7 +50,6 @@
     -fx-font-family: "Chiller";
     -fx-text-fill: white;
     -fx-alignment: center-left;
-    -fx-opacity: 1;
 }
 
 .table-view:focused .table-row-cell:filled:focused:selected {
@@ -81,7 +77,6 @@
     -fx-font-size: 14pt;
     -fx-font-family: "Chiller";
     -fx-text-fill: white;
-    -fx-opacity: 0.9;
 }
 
 .menu .left-container {

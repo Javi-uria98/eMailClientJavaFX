@@ -5,7 +5,7 @@
 .label {
     -fx-font-size: 12pt;
     -fx-font-family: "Times New Roman";
-    -fx-text-fill: red;
+    -fx-text-fill: black;
     -fx-opacity: 0.7;
 }
 

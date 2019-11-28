@@ -26,7 +26,6 @@ public class StylesWindowController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        comboBox.setPromptText("Elija su estilo ...");
         comboBox.setOnAction((e) -> {
             Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
             switch (comboBox.getSelectionModel().getSelectedItem()) {

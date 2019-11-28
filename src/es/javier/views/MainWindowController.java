@@ -75,6 +75,13 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void borrarMensaje(ActionEvent event) {
+        mensaje = tableMessages.getSelectionModel().getSelectedItem();
+        int index=tableMessages.getSelectionModel().getSelectedIndex();
+
+    }
+
+    @FXML
     void pantallaEstilos(ActionEvent event) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("styleswindow.fxml"));

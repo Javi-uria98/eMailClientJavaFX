@@ -101,6 +101,27 @@ public class Logica {
         }
     }
 
+    public void borrarMensaje(Message message) throws MessagingException {
+        Folder folder=Logica.getInstance().getFolder();
+        if (folder.getName() != "[Gmail]/Papelera") {
+            Logica.getInstance().copiarMensaje(message.getFolder().getMessages());
+        } else {
+            message.setFlag(Flags.Flag.DELETED, true);
+            folder.close(true);
+        }
+    }
+
+    public void copiarMensaje(Message[] messages) throws MessagingException {
+        messages=folder.getMessages();
+        for (int i = 0; i < messages.length; i++) {
+            m = new Mensaje(messages[i]);
+            listaMensajes.add(m);
+        }
+        Folder papelera=store.getFolder("[Gmail]/Papelera");
+        papelera.open(Folder.READ_ONLY);
+        folder.copyMessages(messages, papelera);
+    }
+
     /**
      * @param table tabla que le paso para que me haga el autoResize (metodo para que las columnas tengan el tamaño de su contenido)
      */
