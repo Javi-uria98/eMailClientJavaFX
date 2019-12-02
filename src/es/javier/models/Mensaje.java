@@ -57,4 +57,8 @@ public class Mensaje {
         */
     }
 
+    public boolean estadoLeido() throws MessagingException {
+        return message.isSet(Flags.Flag.SEEN);
+    }
+
 }

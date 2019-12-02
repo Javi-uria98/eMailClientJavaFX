@@ -19,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -61,15 +62,29 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void pantallaEnviar(ActionEvent event){
-        try{
+    void pantallaEnviar(ActionEvent event) {
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sendwindow.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root, 600, 600));
+            stage.setScene(new Scene(root, 600, 400));
             stage.show();
-        }catch (IOException e){
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void pantallaResponder(ActionEvent actionEvent){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("answerwindow.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
+        } catch (IOException e){
             e.printStackTrace();
         }
     }
@@ -77,7 +92,7 @@ public class MainWindowController implements Initializable {
     @FXML
     void borrarMensaje(ActionEvent event) {
         mensaje = tableMessages.getSelectionModel().getSelectedItem();
-        int index=tableMessages.getSelectionModel().getSelectedIndex();
+        int index = tableMessages.getSelectionModel().getSelectedIndex();
 
     }
 
@@ -101,6 +116,7 @@ public class MainWindowController implements Initializable {
         try {
             int index = tableMessages.getSelectionModel().getSelectedIndex();
             webView.getEngine().loadContent(mensaje.getMessageContent(Logica.getInstance().getListaMensajes().get(index)));
+            tableMessages.refresh();
         } catch (MessagingException e) {
             e.printStackTrace();
         } catch (IndexOutOfBoundsException ignored) {
@@ -141,6 +157,27 @@ public class MainWindowController implements Initializable {
         }
         listaMensajes = Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
+        tableMessages.setRowFactory(new Callback<TableView<Mensaje>, TableRow<Mensaje>>() {
+            @Override
+            public TableRow<Mensaje> call(TableView<Mensaje> mensajeTableView) {
+                return new TableRow<Mensaje>() {
+                    @Override
+                    protected void updateItem(Mensaje mensaje, boolean b) {
+                        super.updateItem(mensaje, b);
+                        if (mensaje!=null){
+                            try {
+                                if (!mensaje.estadoLeido())
+                                    setStyle("-fx-font-weight:bold");
+                                else
+                                    setStyle("");
+                            } catch (MessagingException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                };
+            }
+        });
         autoResizeColumns(tableMessages);
         try {
             eMailTreeItem e = generateTreeView();
@@ -160,6 +197,7 @@ public class MainWindowController implements Initializable {
                 }
 
             });
+
         } catch (MessagingException ex) {
             ex.printStackTrace();
         }

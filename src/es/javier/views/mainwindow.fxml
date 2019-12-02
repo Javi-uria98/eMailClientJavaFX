@@ -52,7 +52,7 @@
                         <ToolBar prefHeight="40.0" prefWidth="200.0">
                             <items>
                                 <Button mnemonicParsing="false" onAction="#pantallaEnviar" text="Nuevo" />
-                                <Button mnemonicParsing="false" text="Responder" />
+                                <Button mnemonicParsing="false" onAction="#pantallaResponder" text="Responder" />
                                 <Button mnemonicParsing="false" text="Reenviar" />
                                 <Button mnemonicParsing="false" onAction="#borrarMensaje" text="Eliminar" />
                         <Button mnemonicParsing="false" onAction="#pantallaEstilos" text="Estilos" />

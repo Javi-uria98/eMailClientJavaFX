@@ -149,5 +149,7 @@ public class Logica {
         });
     }
 
+    //TODO implementar hilos en alguna parte de la aplicación (por ejemplo a la hora
+
 
 }
