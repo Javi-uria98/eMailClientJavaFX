@@ -149,7 +149,11 @@ public class Logica {
         });
     }
 
-    //TODO implementar hilos en alguna parte de la aplicación (por ejemplo a la hora
+    //TODO implementar hilos en alguna parte de la aplicación (por ejemplo a la hora de cargar el contenido de un mensaje en el webvview)
+    //TODO implementar un test (pensar de qué clase o métdo hacerlo)
+    //TODO implementar algo de validación (por ejemplo en la pantalla de login, que no deje darle el botón si no escribiste nada en los textfields)
+    //TODO alguna Alert
+
 
 
 }

@@ -34,12 +34,16 @@ public class MainWindowController implements Initializable {
     private ObservableList<Mensaje> listaMensajes;
     private eMail email;
     private Mensaje mensaje;
+    static Mensaje mresponder;
 
     @FXML
     SplitPane root;
 
     @FXML
     private TableView<Mensaje> tableMessages;
+
+    @FXML
+    public static TableColumn columnaremitente;
 
     @FXML
     private TreeView treeViewEmail;
@@ -77,6 +81,11 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void pantallaResponder(ActionEvent actionEvent){
+        TablePosition pos=tableMessages.getSelectionModel().getSelectedCells().get(0);
+        int row=pos.getRow();
+        mresponder=tableMessages.getItems().get(row);
+        columnaremitente=pos.getTableColumn();
+        //System.out.println((String)columnaremitente.getCellObservableValue(mresponder).getValue());
         try{
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("answerwindow.fxml"));
             Parent root = fxmlLoader.load();
@@ -149,6 +158,7 @@ public class MainWindowController implements Initializable {
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root, 300, 300));
         stage.showAndWait();
+
         email = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
         try {
             Logica.getInstance().cargarCuentaGmail(email, "INBOX");
