@@ -24,6 +24,7 @@ import javafx.util.Callback;
 import javax.mail.*;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -32,15 +33,18 @@ import static es.javier.logica.Logica.autoResizeColumns;
 public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
+    private ArrayList<eMail> listaCuentas;
     private eMail email;
     private Mensaje mensaje;
     static Mensaje mresponder;
+
 
     @FXML
     SplitPane root;
 
     @FXML
     private TableView<Mensaje> tableMessages;
+
 
     @FXML
     public static TableColumn columnaremitente;
@@ -80,20 +84,20 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void pantallaResponder(ActionEvent actionEvent){
-        TablePosition pos=tableMessages.getSelectionModel().getSelectedCells().get(0);
-        int row=pos.getRow();
-        mresponder=tableMessages.getItems().get(row);
-        columnaremitente=pos.getTableColumn();
+    void pantallaResponder(ActionEvent actionEvent) {
+        TablePosition pos = tableMessages.getSelectionModel().getSelectedCells().get(0);
+        int row = pos.getRow();
+        mresponder = tableMessages.getItems().get(row);
+        columnaremitente = pos.getTableColumn();
         //System.out.println((String)columnaremitente.getCellObservableValue(mresponder).getValue());
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("answerwindow.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
             stage.show();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -134,14 +138,17 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    private eMailTreeItem generateTreeView() throws MessagingException {
-        eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
-        String nombre = LoginWindowController.usuario;
-        Folder folder = Logica.getInstance().getFolder();
-
-        eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
-
-        Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem, eMail);
+    private void generateTreeView() throws MessagingException {
+        listaCuentas = Logica.getInstance().getListaEmail();
+        eMailTreeItem root = new eMailTreeItem(""); //elemento raíz de todoo el tableview
+        for (eMail e : listaCuentas) {
+            eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
+            String nombre = LoginWindowController.usuario;
+            Folder folder = Logica.getInstance().getFolder();
+            eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
+            Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem);
+            root.getChildren().add(eMailTreeItem);
+        }
         return eMailTreeItem;
     }
 
@@ -174,7 +181,7 @@ public class MainWindowController implements Initializable {
                     @Override
                     protected void updateItem(Mensaje mensaje, boolean b) {
                         super.updateItem(mensaje, b);
-                        if (mensaje!=null){
+                        if (mensaje != null) {
                             try {
                                 if (!mensaje.estadoLeido())
                                     setStyle("-fx-font-weight:bold");

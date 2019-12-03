@@ -26,6 +26,12 @@ public class eMailTreeItem extends TreeItem<String> {
         this.folder=folder;
     }
 
+    public eMailTreeItem(String name){
+        super(name);
+        folder=null;
+        email=null;
+    }
+
     public eMail getEmail(){
         return email;
     }

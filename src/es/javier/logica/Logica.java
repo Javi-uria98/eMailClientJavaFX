@@ -19,6 +19,7 @@ public class Logica {
     private static Logica INSTANCE = null;
 
     private ArrayList<eMail> listaEmail;
+    private int contCuentas = 0;
     private ObservableList<Mensaje> listaMensajes;
     private List<TreeItem<String>> treeItemsContainer;
 
@@ -47,6 +48,15 @@ public class Logica {
 
     public ArrayList<eMail> getListaEmail() {
         return listaEmail;
+    }
+
+    public void addCuenta(eMail email){
+        listaEmail.add(email);
+    }
+
+    public void setListaEmail(eMail email) {
+        listaEmail.add(email);
+        contCuentas++;
     }
 
     public List<TreeItem<String>> getTreeItemsContainer() {
@@ -89,20 +99,21 @@ public class Logica {
     /**
      * @param folders las carpetas que tiene la cuenta de email y que cargaré en el treeview
      * @param e1      cualquier treeitem que tenga hijos (la cuenta, INBOX y [Gmail]
-     * @param email   cuenta de email que indico, junto con el nombre de la carpeta y el propio objeto carpeta para crear el treeitem hijo
      * @throws MessagingException
      */
-    public void llenarTreeView(Folder[] folders, eMailTreeItem e1, eMail email) throws MessagingException {
+    public void llenarTreeView(Folder[] folders, eMailTreeItem e1) throws MessagingException {
         for (Folder f : folders) {
-            eMailTreeItem e2 = new eMailTreeItem(f.getName(), email, f);
+            eMailTreeItem e2 = new eMailTreeItem(f.getName(), e1.getEmail(), f);
             e1.getChildren().add(e2);
-            if (f.getType() == Folder.HOLDS_FOLDERS)
-                llenarTreeView(f.list(), e2, email);
+            if (f.getType() == Folder.HOLDS_FOLDERS) {
+                Folder[] subFolders = folder.list();
+                llenarTreeView(f.list(), e2);
+            }
         }
     }
 
     public void borrarMensaje(Message message) throws MessagingException {
-        Folder folder=Logica.getInstance().getFolder();
+        Folder folder = Logica.getInstance().getFolder();
         if (folder.getName() != "[Gmail]/Papelera") {
             Logica.getInstance().copiarMensaje(message.getFolder().getMessages());
         } else {
@@ -112,12 +123,12 @@ public class Logica {
     }
 
     public void copiarMensaje(Message[] messages) throws MessagingException {
-        messages=folder.getMessages();
+        messages = folder.getMessages();
         for (int i = 0; i < messages.length; i++) {
             m = new Mensaje(messages[i]);
             listaMensajes.add(m);
         }
-        Folder papelera=store.getFolder("[Gmail]/Papelera");
+        Folder papelera = store.getFolder("[Gmail]/Papelera");
         papelera.open(Folder.READ_ONLY);
         folder.copyMessages(messages, papelera);
     }

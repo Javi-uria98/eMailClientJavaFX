@@ -1,5 +1,7 @@
 package es.javier.views;
 
+import es.javier.logica.Logica;
+import es.javier.models.eMail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +32,9 @@ public class LoginWindowController {
     public void Login(ActionEvent actionEvent) throws IOException {
         usuario = getIduser();
         contra = getIdcontra();
+        eMail email=new eMail(usuario, contra);
+        Logica.getInstance().addCuenta(email);
+
         Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         stage.close();
             /*Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
