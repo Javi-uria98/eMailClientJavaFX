@@ -29,7 +29,7 @@ public class LoginWindowController {
     static String contra;
 
     @FXML
-    public void Login(ActionEvent actionEvent) throws IOException {
+    public void Login(ActionEvent actionEvent) {
         usuario = getIduser();
         contra = getIdcontra();
         eMail email=new eMail(usuario, contra);

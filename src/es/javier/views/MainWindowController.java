@@ -55,15 +55,16 @@ public class MainWindowController implements Initializable {
     @FXML
     private WebView webView;
 
+
     @FXML
-    void altaEmail(ActionEvent event) {
+    void pantallaLogin(ActionEvent actionEvent){
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("emailwindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginwindow.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root, 300, 275));
-            stage.showAndWait();
+            stage.setScene(new Scene(root, 600, 400));
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -140,16 +141,34 @@ public class MainWindowController implements Initializable {
     @FXML
     private void generateTreeView() throws MessagingException {
         listaCuentas = Logica.getInstance().getListaEmail();
-        eMailTreeItem root = new eMailTreeItem(""); //elemento raíz de todoo el tableview
+        eMailTreeItem root = new eMailTreeItem("root"); //elemento raíz de todoo el tableview
+        root.setExpanded(true);
         for (eMail e : listaCuentas) {
             eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
+            Logica.getInstance().cargarCuentaGmail(eMail, "INBOX");
             String nombre = LoginWindowController.usuario;
             Folder folder = Logica.getInstance().getFolder();
             eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
             Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem);
             root.getChildren().add(eMailTreeItem);
         }
-        return eMailTreeItem;
+        treeViewEmail.setRoot(root);
+        treeViewEmail.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue,
+                                Object newValue) {
+                try {
+                    eMailTreeItem selectedItem = (eMailTreeItem) newValue;
+                    tableMessages.getItems().clear();
+                    System.out.println("Selected Text : " + selectedItem.getFolder().toString());
+                    Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta
+                } catch (Exception e) {                                                                 //no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
+                }
+                tableMessages.setItems(listaMensajes);
+            }
+
+        });
+
     }
 
     @Override
@@ -197,26 +216,9 @@ public class MainWindowController implements Initializable {
         });
         autoResizeColumns(tableMessages);
         try {
-            eMailTreeItem e = generateTreeView();
-            treeViewEmail.setRoot(e);
-            treeViewEmail.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue,
-                                    Object newValue) {
-                    try {
-                        eMailTreeItem selectedItem = (eMailTreeItem) newValue;
-                        tableMessages.getItems().clear();
-                        System.out.println("Selected Text : " + selectedItem.getFolder().toString());
-                        Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta
-                    } catch (Exception e) {                                                                 //no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
-                    }
-                    tableMessages.setItems(listaMensajes);
-                }
-
-            });
-
-        } catch (MessagingException ex) {
-            ex.printStackTrace();
+            generateTreeView();
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
     }
 
