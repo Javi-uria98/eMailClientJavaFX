@@ -141,7 +141,7 @@ public class MainWindowController implements Initializable {
     @FXML
     private void generateTreeView() throws MessagingException {
         listaCuentas = Logica.getInstance().getListaEmail();
-        eMailTreeItem root = new eMailTreeItem("root"); //elemento raíz de todoo el tableview
+        eMailTreeItem root = new eMailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
         root.setExpanded(true);
         for (eMail e : listaCuentas) {
             eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);

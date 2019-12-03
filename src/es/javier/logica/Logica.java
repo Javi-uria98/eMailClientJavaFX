@@ -50,7 +50,7 @@ public class Logica {
         return listaEmail;
     }
 
-    public void addCuenta(eMail email){
+    public void addCuenta(eMail email) {
         listaEmail.add(email);
     }
 
@@ -90,12 +90,6 @@ public class Logica {
         return store.getDefaultFolder();
     }
 
-    //otro metodo getFolders (eMail email)
-    //crea un nuevo treeItem con email.getDireccion, el parametro email y como carpteta null
-    //crea un array de carpetas con email.getStore.getDefaultFolder().list();
-    //llama a llenarTreeView
-    //retorna el treeItem
-
     /**
      * @param folders las carpetas que tiene la cuenta de email y que cargaré en el treeview
      * @param e1      cualquier treeitem que tenga hijos (la cuenta, INBOX y [Gmail]
@@ -106,7 +100,6 @@ public class Logica {
             eMailTreeItem e2 = new eMailTreeItem(f.getName(), e1.getEmail(), f);
             e1.getChildren().add(e2);
             if (f.getType() == Folder.HOLDS_FOLDERS) {
-                Folder[] subFolders = folder.list();
                 llenarTreeView(f.list(), e2);
             }
         }
@@ -164,7 +157,6 @@ public class Logica {
     //TODO implementar un test (pensar de qué clase o métdo hacerlo)
     //TODO implementar algo de validación (por ejemplo en la pantalla de login, que no deje darle el botón si no escribiste nada en los textfields)
     //TODO alguna Alert
-
 
 
 }
