@@ -34,13 +34,12 @@ public class LoginWindowController implements Initializable {
     @FXML
     public TextField Idcontra;
 
-    static String usuario;
-    static String contra;
+
 
     @FXML
     public void Login(ActionEvent actionEvent) {
-        usuario = getIduser();
-        contra = getIdcontra();
+        String usuario = getIduser();
+        String contra = getIdcontra();
         EmailCuenta email=new EmailCuenta(usuario, contra);
         Logica.getInstance().addCuenta(email);
 

@@ -1,5 +1,7 @@
 package es.javier.views;
 
+import es.javier.logica.Logica;
+import es.javier.models.EmailCuenta;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -38,10 +40,11 @@ public class SendWindowController {
         properties.put("mail.smtp.port", "587");
 
         //System.out.println("Introduzca su cuenta de email");
-        String cuentaEmail = LoginWindowController.usuario;
+        EmailCuenta emailCuenta = Logica.getInstance().getListaEmail().get(0);
+        String cuentaEmail = emailCuenta.getDireccion();
 
         //System.out.println("Introduzca su contraseña");
-        String contrasena = LoginWindowController.contra;
+        String contrasena = emailCuenta.getContrasena();
 
         System.out.println("Preparando el envío del correo...");
 

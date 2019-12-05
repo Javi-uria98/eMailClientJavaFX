@@ -21,18 +21,14 @@ public class Logica {
     private ArrayList<EmailCuenta> listaEmail;
     private int contCuentas = 0;
     private ObservableList<Mensaje> listaMensajes;
-    private List<TreeItem<String>> treeItemsContainer;
 
     private Mensaje m;
-    private Properties properties;
-    private Session session;
     private Store store;
     private Folder folder;
 
     private Logica() {
         listaEmail = new ArrayList<>();
         listaMensajes = FXCollections.observableArrayList();
-        treeItemsContainer = new ArrayList<>();
     }
 
     public static Logica getInstance() {
@@ -54,15 +50,6 @@ public class Logica {
         listaEmail.add(email);
     }
 
-    public void setListaEmail(EmailCuenta email) {
-        listaEmail.add(email);
-        contCuentas++;
-    }
-
-    public List<TreeItem<String>> getTreeItemsContainer() {
-        return treeItemsContainer;
-    }
-
     /**
      * @param email cuenta que introduzco (usuario y contraseña) para que me la cargue el programa
      * @param s     nombre de la carpeta que quiero visualizar
@@ -70,9 +57,9 @@ public class Logica {
      */
     public void cargarCuentaGmail(EmailCuenta email, String s) throws MessagingException {
         String imap = "imaps";
-        properties = new Properties();
+        Properties properties = new Properties();
         properties.setProperty("mail.store.protocol", imap);
-        session = Session.getInstance(properties);
+        Session session = Session.getInstance(properties);
         store = session.getStore(imap);
 
         store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());

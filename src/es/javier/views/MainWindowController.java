@@ -63,7 +63,7 @@ public class MainWindowController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
             stage.showAndWait();
-            email = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
+            //email = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
             try {
                 Logica.getInstance().cargarCuentaGmail(email, "INBOX");
             } catch (MessagingException e) {
@@ -178,9 +178,8 @@ public class MainWindowController implements Initializable {
         EmailTreeItem root = new EmailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
         root.setExpanded(true);
         for (EmailCuenta e : listaCuentas) {
-            //EmailCuenta EmailCuenta = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
             Logica.getInstance().cargarCuentaGmail(e, "INBOX");
-            String nombre = LoginWindowController.usuario;
+            String nombre = e.getDireccion();
             Folder folder = Logica.getInstance().getFolder();
             EmailTreeItem eMailTreeItem = new EmailTreeItem(nombre, e, folder);
             Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem);
@@ -219,7 +218,8 @@ public class MainWindowController implements Initializable {
         stage.setScene(new Scene(root, 300, 300));
         stage.showAndWait();
 
-        email = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
+        email = Logica.getInstance().getListaEmail().get(0);
+
         try {
             Logica.getInstance().cargarCuentaGmail(email, "INBOX");
         } catch (MessagingException e) {
