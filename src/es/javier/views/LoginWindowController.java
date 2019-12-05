@@ -1,15 +1,20 @@
 package es.javier.views;
 
 import es.javier.logica.Logica;
+import es.javier.logica.Servicios;
 import es.javier.models.EmailCuenta;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.validation.Severity;
@@ -40,6 +45,27 @@ public class LoginWindowController implements Initializable {
         String contra = getIdcontra();
         EmailCuenta email=new EmailCuenta(usuario, contra);
         Logica.getInstance().addCuenta(email);
+        Label label = new Label("");
+        ProgressIndicator progressIndicator = new ProgressIndicator();
+        progressIndicator.setVisible(false);
+        Servicios testService = new Servicios(email);
+        testService.start();
+        testService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent workerStateEvent) {
+                //Recuperamos el valor de retorno
+                String saludo = testService.getValue().getDireccion();
+                label.setText(saludo);
+                progressIndicator.setVisible(false);
+            }
+        });
+        testService.setOnRunning(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent workerStateEvent) {
+                progressIndicator.setVisible(true);
+            }
+        });
+
 
         Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         stage.close();

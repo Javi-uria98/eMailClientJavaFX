@@ -1,22 +1,23 @@
 package es.javier.logica;
 
+import es.javier.models.EmailCuenta;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-public class Servicios extends Service<String> {
+public class Servicios extends Service<EmailCuenta> {
 
-    private String name;
+    private EmailCuenta email;
 
-    public Servicios(String name){
-        this.name=name;
+    public Servicios(EmailCuenta email){
+        this.email=email;
     }
 
     @Override
-    protected Task<String> createTask() {
-        return new Task<String>() {
+    protected Task<EmailCuenta> createTask() {
+        return new Task<>() {
             @Override
-            protected String call() throws Exception {
-                return null;
+            protected EmailCuenta call() throws Exception {
+                return email;
             }
         };
     }
