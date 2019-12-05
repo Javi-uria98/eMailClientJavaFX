@@ -1,9 +1,9 @@
 package es.javier.views;
 
 import es.javier.logica.Logica;
+import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
-import es.javier.models.eMail;
-import es.javier.models.eMailTreeItem;
+import es.javier.models.EmailTreeItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -11,7 +11,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -25,7 +24,6 @@ import javax.mail.*;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Properties;
 import java.util.ResourceBundle;
 
 import static es.javier.logica.Logica.autoResizeColumns;
@@ -33,8 +31,8 @@ import static es.javier.logica.Logica.autoResizeColumns;
 public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
-    private ArrayList<eMail> listaCuentas;
-    private eMail email;
+    private ArrayList<EmailCuenta> listaCuentas;
+    private EmailCuenta email;
     private Mensaje mensaje;
     static Mensaje mresponder;
 
@@ -64,7 +62,42 @@ public class MainWindowController implements Initializable {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
-            stage.show();
+            stage.showAndWait();
+            email = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
+            try {
+                Logica.getInstance().cargarCuentaGmail(email, "INBOX");
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
+            listaMensajes = Logica.getInstance().getListaMensajes();
+            tableMessages.setItems(listaMensajes);
+            tableMessages.setRowFactory(new Callback<TableView<Mensaje>, TableRow<Mensaje>>() {
+                @Override
+                public TableRow<Mensaje> call(TableView<Mensaje> mensajeTableView) {
+                    return new TableRow<Mensaje>() {
+                        @Override
+                        protected void updateItem(Mensaje mensaje, boolean b) {
+                            super.updateItem(mensaje, b);
+                            if (mensaje != null) {
+                                try {
+                                    if (!mensaje.estadoLeido())
+                                        setStyle("-fx-font-weight:bold");
+                                    else
+                                        setStyle("");
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                    };
+                }
+            });
+            autoResizeColumns(tableMessages);
+            try {
+                generateTreeView();
+            } catch (MessagingException e) {
+                e.printStackTrace();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -95,6 +128,7 @@ public class MainWindowController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("answerwindow.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
             stage.show();
@@ -141,14 +175,14 @@ public class MainWindowController implements Initializable {
     @FXML
     private void generateTreeView() throws MessagingException {
         listaCuentas = Logica.getInstance().getListaEmail();
-        eMailTreeItem root = new eMailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
+        EmailTreeItem root = new EmailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
         root.setExpanded(true);
-        for (eMail e : listaCuentas) {
-            eMail eMail = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
-            Logica.getInstance().cargarCuentaGmail(eMail, "INBOX");
+        for (EmailCuenta e : listaCuentas) {
+            //EmailCuenta EmailCuenta = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
+            Logica.getInstance().cargarCuentaGmail(e, "INBOX");
             String nombre = LoginWindowController.usuario;
             Folder folder = Logica.getInstance().getFolder();
-            eMailTreeItem eMailTreeItem = new eMailTreeItem(nombre, eMail, folder);
+            EmailTreeItem eMailTreeItem = new EmailTreeItem(nombre, e, folder);
             Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem);
             root.getChildren().add(eMailTreeItem);
         }
@@ -158,7 +192,7 @@ public class MainWindowController implements Initializable {
             public void changed(ObservableValue observable, Object oldValue,
                                 Object newValue) {
                 try {
-                    eMailTreeItem selectedItem = (eMailTreeItem) newValue;
+                    EmailTreeItem selectedItem = (EmailTreeItem) newValue;
                     tableMessages.getItems().clear();
                     System.out.println("Selected Text : " + selectedItem.getFolder().toString());
                     Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta
@@ -185,7 +219,7 @@ public class MainWindowController implements Initializable {
         stage.setScene(new Scene(root, 300, 300));
         stage.showAndWait();
 
-        email = new eMail(LoginWindowController.usuario, LoginWindowController.contra);
+        email = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
         try {
             Logica.getInstance().cargarCuentaGmail(email, "INBOX");
         } catch (MessagingException e) {

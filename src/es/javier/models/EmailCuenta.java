@@ -4,12 +4,12 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Properties;
 
-public class eMail {
+public class EmailCuenta {
 
     private String direccion;
     private String contrasena;
 
-    public eMail(String direccion, String contrasena){
+    public EmailCuenta(String direccion, String contrasena){
         this.direccion=direccion;
         this.contrasena=contrasena;
     }

@@ -1,13 +1,13 @@
 package es.javier.views;
 
-import es.javier.models.eMail;
+import es.javier.models.EmailCuenta;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class EmailWindowController {
 
-    private eMail email;
+    private EmailCuenta email;
 
     @FXML
     private TextField remitenteTF;

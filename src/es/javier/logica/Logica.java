@@ -1,8 +1,8 @@
 package es.javier.logica;
 
+import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
-import es.javier.models.eMail;
-import es.javier.models.eMailTreeItem;
+import es.javier.models.EmailTreeItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -18,7 +18,7 @@ public class Logica {
 
     private static Logica INSTANCE = null;
 
-    private ArrayList<eMail> listaEmail;
+    private ArrayList<EmailCuenta> listaEmail;
     private int contCuentas = 0;
     private ObservableList<Mensaje> listaMensajes;
     private List<TreeItem<String>> treeItemsContainer;
@@ -46,15 +46,15 @@ public class Logica {
         return listaMensajes;
     }
 
-    public ArrayList<eMail> getListaEmail() {
+    public ArrayList<EmailCuenta> getListaEmail() {
         return listaEmail;
     }
 
-    public void addCuenta(eMail email) {
+    public void addCuenta(EmailCuenta email) {
         listaEmail.add(email);
     }
 
-    public void setListaEmail(eMail email) {
+    public void setListaEmail(EmailCuenta email) {
         listaEmail.add(email);
         contCuentas++;
     }
@@ -68,7 +68,7 @@ public class Logica {
      * @param s     nombre de la carpeta que quiero visualizar
      * @throws MessagingException
      */
-    public void cargarCuentaGmail(eMail email, String s) throws MessagingException {
+    public void cargarCuentaGmail(EmailCuenta email, String s) throws MessagingException {
         String imap = "imaps";
         properties = new Properties();
         properties.setProperty("mail.store.protocol", imap);
@@ -95,9 +95,9 @@ public class Logica {
      * @param e1      cualquier treeitem que tenga hijos (la cuenta, INBOX y [Gmail]
      * @throws MessagingException
      */
-    public void llenarTreeView(Folder[] folders, eMailTreeItem e1) throws MessagingException {
+    public void llenarTreeView(Folder[] folders, EmailTreeItem e1) throws MessagingException {
         for (Folder f : folders) {
-            eMailTreeItem e2 = new eMailTreeItem(f.getName(), e1.getEmail(), f);
+            EmailTreeItem e2 = new EmailTreeItem(f.getName(), e1.getEmail(), f);
             e1.getChildren().add(e2);
             if (f.getType() == Folder.HOLDS_FOLDERS) {
                 llenarTreeView(f.list(), e2);
@@ -155,7 +155,6 @@ public class Logica {
 
     //TODO implementar hilos en alguna parte de la aplicación (por ejemplo a la hora de cargar el contenido de un mensaje en el webvview)
     //TODO implementar un test (pensar de qué clase o métdo hacerlo)
-    //TODO implementar algo de validación (por ejemplo en la pantalla de login, que no deje darle el botón si no escribiste nada en los textfields)
     //TODO alguna Alert
 
 

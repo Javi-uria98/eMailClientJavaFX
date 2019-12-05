@@ -4,6 +4,7 @@ module eMailClientJavaFX {
     requires java.mail;
     requires javafx.fxml;
     requires javafx.web;
+    requires org.controlsfx.controls;
     exports es.javier.views;
     exports es.javier;
     opens es.javier.views.resources to javafx.fxml;

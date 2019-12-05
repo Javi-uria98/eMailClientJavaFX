@@ -3,12 +3,11 @@ package es.javier.models;
 import javafx.scene.control.TreeItem;
 
 import javax.mail.Folder;
-import javax.mail.MessagingException;
 
-public class eMailTreeItem extends TreeItem<String> {
+public class EmailTreeItem extends TreeItem<String> {
 
     private Folder folder;
-    private eMail email;
+    private EmailCuenta email;
     private String name;
 
     public Folder getFolder() {
@@ -19,20 +18,20 @@ public class eMailTreeItem extends TreeItem<String> {
         this.folder = folder;
     }
 
-    public eMailTreeItem(String name, eMail email, Folder folder){
+    public EmailTreeItem(String name, EmailCuenta email, Folder folder){
         super(name);
         this.name=name;
         this.email=email;
         this.folder=folder;
     }
 
-    public eMailTreeItem(String name){
+    public EmailTreeItem(String name){
         super(name);
         folder=null;
         email=null;
     }
 
-    public eMail getEmail(){
+    public EmailCuenta getEmail(){
         return email;
     }
 }

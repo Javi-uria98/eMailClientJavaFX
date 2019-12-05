@@ -9,6 +9,6 @@
    <children>
       <TextField fx:id="Idcontra" layoutX="89.0" layoutY="134.0" promptText="Contraseña" />
       <TextField fx:id="Iduser" layoutX="85.0" layoutY="73.0" promptText="Usuario" />
-      <Button layoutX="131.0" layoutY="181.0" mnemonicParsing="false" onAction="#Login" text="Aceptar" />
+      <Button fx:id="btnAceptar" layoutX="131.0" layoutY="181.0" mnemonicParsing="false" onAction="#Login" text="Aceptar" />
    </children>
 </AnchorPane>
