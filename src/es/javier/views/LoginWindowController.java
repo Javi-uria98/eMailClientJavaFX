@@ -34,8 +34,6 @@ public class LoginWindowController implements Initializable {
     @FXML
     public TextField Idcontra;
 
-
-
     @FXML
     public void Login(ActionEvent actionEvent) {
         String usuario = getIduser();
@@ -45,12 +43,6 @@ public class LoginWindowController implements Initializable {
 
         Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         stage.close();
-            /*Parent root = FXMLLoader.load(getClass().getResource("mainwindow.fxml"));
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("Cuenta de gmail de "+titulo);
-            stage.setScene(new Scene(root, 1200, 600));
-            stage.show();*/
     }
 
     private String getIduser() {
@@ -68,7 +60,7 @@ public class LoginWindowController implements Initializable {
         validationSupport.registerValidator(Iduser, Validator.createRegexValidator("Solo pueden introducirse letras, números y caracteres especiales",
                 Pattern.compile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$"), Severity.ERROR));
         validationSupport.registerValidator(Idcontra, Validator.createEmptyValidator("La contraseña está vacía"));
-        validationSupport.registerValidator(Idcontra, Validator.createRegexValidator("Solo pueden introducirse letras y números", Pattern.compile("^[a-zA-Z0-9]*$"), Severity.ERROR));
+        validationSupport.registerValidator(Idcontra, Validator.createRegexValidator("Solo pueden introducirse letras, números y guión", Pattern.compile("^[a-zA-Z0-9-]*$"), Severity.ERROR));
 
         validationSupport.invalidProperty().addListener(new ChangeListener<Boolean>() {
             @Override

@@ -55,7 +55,7 @@ public class MainWindowController implements Initializable {
 
 
     @FXML
-    void pantallaLogin(ActionEvent actionEvent){
+    void pantallaLogin(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginwindow.fxml"));
             Parent root = fxmlLoader.load();
@@ -63,8 +63,9 @@ public class MainWindowController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
             stage.showAndWait();
-            //email = new EmailCuenta(LoginWindowController.usuario, LoginWindowController.contra);
+
             try {
+                email = Logica.getInstance().getListaEmail().get(1);
                 Logica.getInstance().cargarCuentaGmail(email, "INBOX");
             } catch (MessagingException e) {
                 e.printStackTrace();
