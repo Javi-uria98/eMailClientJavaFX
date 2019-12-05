@@ -61,7 +61,9 @@ public class MainWindowController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root, 600, 400));
+            stage.setScene(new Scene(root, 300, 300));
+            stage.setResizable(false);
+            stage.setTitle("Pantalla de Login");
             stage.showAndWait();
 
             try {
@@ -217,6 +219,8 @@ public class MainWindowController implements Initializable {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(root, 300, 300));
+        stage.setTitle("Pantalla de Login");
+        stage.setResizable(false);
         stage.showAndWait();
 
         email = Logica.getInstance().getListaEmail().get(0);
