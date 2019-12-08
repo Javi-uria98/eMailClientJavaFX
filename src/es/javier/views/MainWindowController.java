@@ -35,14 +35,13 @@ public class MainWindowController implements Initializable {
     private EmailCuenta email;
     private Mensaje mensaje;
     static Mensaje mresponder;
-
+    private int contLogin=1;
 
     @FXML
     SplitPane root;
 
     @FXML
     private TableView<Mensaje> tableMessages;
-
 
     @FXML
     public static TableColumn columnaremitente;
@@ -67,7 +66,7 @@ public class MainWindowController implements Initializable {
             stage.showAndWait();
 
             try {
-                email = Logica.getInstance().getListaEmail().get(1);
+                email = Logica.getInstance().getListaEmail().get(contLogin);
                 Logica.getInstance().cargarCuentaGmail(email, "INBOX");
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -104,6 +103,7 @@ public class MainWindowController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        contLogin++;
     }
 
     @FXML
