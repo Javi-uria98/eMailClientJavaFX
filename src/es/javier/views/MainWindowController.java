@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -31,20 +32,19 @@ import static es.javier.logica.Logica.autoResizeColumns;
 public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
-    private ArrayList<EmailCuenta> listaCuentas;
+    private ObservableList<EmailCuenta> listaCuentas;
     private EmailCuenta email;
     private Mensaje mensaje;
-    static Mensaje mresponder;
-    private int contLogin=1;
+    private int contLogin = 1;
 
     @FXML
     SplitPane root;
 
     @FXML
-    private TableView<Mensaje> tableMessages;
+    public TableView<Mensaje> tableMessages;
 
     @FXML
-    public static TableColumn columnaremitente;
+    public TableColumn columnaremitente;
 
     @FXML
     private TreeView treeViewEmail;
@@ -122,21 +122,40 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void pantallaResponder(ActionEvent actionEvent) {
-        TablePosition pos = tableMessages.getSelectionModel().getSelectedCells().get(0);
-        int row = pos.getRow();
-        mresponder = tableMessages.getItems().get(row);
-        columnaremitente = pos.getTableColumn();
-        //System.out.println((String)columnaremitente.getCellObservableValue(mresponder).getValue());
+        EmailTreeItem treeItem = (EmailTreeItem) treeViewEmail.getSelectionModel().getSelectedItem();
+        EmailCuenta cuenta = treeItem.getEmail();
+        Mensaje mensaje = tableMessages.getSelectionModel().getSelectedItem();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("answerwindow.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sendwindow.fxml"));
             Parent root = fxmlLoader.load();
+            SendWindowController controller = fxmlLoader.getController();
             Stage stage = new Stage();
-
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
+            controller.responder(mensaje, cuenta);
             stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | MessagingException a) {
+            a.printStackTrace();
+        }
+
+    }
+
+    @FXML
+    void pantallaReenviar(ActionEvent actionEvent){
+        EmailTreeItem treeItem = (EmailTreeItem) treeViewEmail.getSelectionModel().getSelectedItem();
+        EmailCuenta cuenta = treeItem.getEmail();
+        Mensaje mensaje = tableMessages.getSelectionModel().getSelectedItem();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("sendwindow.fxml"));
+            Parent root = fxmlLoader.load();
+            SendWindowController controller = fxmlLoader.getController();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root, 600, 400));
+            controller.reenviar(mensaje, cuenta);
+            stage.show();
+        } catch (IOException | MessagingException a) {
+            a.printStackTrace();
         }
     }
 
@@ -158,20 +177,6 @@ public class MainWindowController implements Initializable {
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    void seleccionarFila(MouseEvent event) {
-        mensaje = tableMessages.getSelectionModel().getSelectedItem();
-        try {
-            int index = tableMessages.getSelectionModel().getSelectedIndex();
-            webView.getEngine().loadContent(mensaje.getMessageContent(Logica.getInstance().getListaMensajes().get(index)));
-            tableMessages.refresh();
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        } catch (IndexOutOfBoundsException ignored) {
-
         }
     }
 
@@ -232,6 +237,7 @@ public class MainWindowController implements Initializable {
         }
         listaMensajes = Logica.getInstance().getListaMensajes();
         tableMessages.setItems(listaMensajes);
+
         tableMessages.setRowFactory(new Callback<TableView<Mensaje>, TableRow<Mensaje>>() {
             @Override
             public TableRow<Mensaje> call(TableView<Mensaje> mensajeTableView) {
@@ -251,6 +257,19 @@ public class MainWindowController implements Initializable {
                         }
                     }
                 };
+            }
+        });
+
+        tableMessages.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Mensaje>() {
+            @Override
+            public void changed(ObservableValue<? extends Mensaje> observableValue, Mensaje mensaje, Mensaje t1) {
+                try {
+                    String m = t1.getMessageContent();
+                    WebEngine webEngine = webView.getEngine();
+                    webEngine.loadContent(m);
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
             }
         });
         autoResizeColumns(tableMessages);

@@ -25,7 +25,15 @@ public class Mensaje {
         return sdf.format(message.getReceivedDate());
     }
 
-    public String getMessageContent(Mensaje mensaje) throws MessagingException {
+    public String[] getDestinatario() throws MessagingException {
+        String[] destinatario = new String[message.getAllRecipients().length];
+        for (int i = 0; i < message.getAllRecipients().length; i++) {
+            destinatario[i] = message.getAllRecipients()[i].toString();
+        }
+        return destinatario;
+    }
+
+    public String getMessageContent() throws MessagingException {
         try {
             Object content = message.getContent();
             if (content instanceof Multipart) {

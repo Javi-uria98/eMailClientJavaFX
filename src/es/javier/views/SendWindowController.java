@@ -2,20 +2,29 @@ package es.javier.views;
 
 import es.javier.logica.Logica;
 import es.javier.models.EmailCuenta;
+import es.javier.models.Mensaje;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.web.HTMLEditor;
 import javafx.stage.Stage;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.net.URL;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
-public class SendWindowController {
+public class SendWindowController implements Initializable {
+
+    @FXML
+    private ComboBox<EmailCuenta> cb_remitente;
 
     @FXML
     private TextArea ta_contenido;
@@ -55,7 +64,7 @@ public class SendWindowController {
             }
         });
 
-        Message message = prepareMessage(session, cuentaEmail);
+        Message message = prepareMessage(session);
 
 
         try {
@@ -68,10 +77,10 @@ public class SendWindowController {
         stage.close();
     }
 
-    private Message prepareMessage(Session session, String cuentaEmail) {
+    private Message prepareMessage(Session session) {
         Message message = new MimeMessage(session);
         try {
-            message.setFrom(new InternetAddress(cuentaEmail));
+            message.setFrom(new InternetAddress(cb_remitente.getSelectionModel().getSelectedItem().getDireccion()));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(tf_para.getText()));
             message.setSubject(tf_asunto.getText());
             message.setText(ta_contenido.getText());
@@ -82,5 +91,23 @@ public class SendWindowController {
         return null;
     }
 
+    void responder(Mensaje mensaje, EmailCuenta cuenta) throws MessagingException {
+        cb_remitente.getSelectionModel().select(cuenta);
+        tf_para.setText(mensaje.getDestinatario()[0]);
+        tf_asunto.setText("RE: " + mensaje.getAsunto());
+    }
 
+    void reenviar(Mensaje mensaje, EmailCuenta cuenta) throws MessagingException {
+        cb_remitente.getSelectionModel().select(cuenta);
+        String mensajereenviado = "Mensaje procedente de: " + mensaje.getRemitente() + "\nPara: " + mensaje.getDestinatario() + "\n Con fecha: " + mensaje.getFecha()
+                + "\n Y asunto: " + mensaje.getAsunto() + "\n Dice: " + mensaje.getMessageContent();
+        ta_contenido.setText(mensajereenviado);
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        for (int i = 0; i < Logica.getInstance().getListaEmail().size(); i++) {
+            cb_remitente.getItems().add(Logica.getInstance().getListaEmail().get(i));
+        }
+    }
 }

@@ -18,7 +18,7 @@ public class Logica {
 
     private static Logica INSTANCE = null;
 
-    private ArrayList<EmailCuenta> listaEmail;
+    private ObservableList<EmailCuenta> listaEmail;
     private int contCuentas = 0;
     private ObservableList<Mensaje> listaMensajes;
 
@@ -27,7 +27,7 @@ public class Logica {
     private Folder folder;
 
     private Logica() {
-        listaEmail = new ArrayList<>();
+        listaEmail = FXCollections.observableArrayList();
         listaMensajes = FXCollections.observableArrayList();
     }
 
@@ -42,7 +42,7 @@ public class Logica {
         return listaMensajes;
     }
 
-    public ArrayList<EmailCuenta> getListaEmail() {
+    public ObservableList<EmailCuenta> getListaEmail() {
         return listaEmail;
     }
 
@@ -92,7 +92,7 @@ public class Logica {
         }
     }
 
-    public void borrarMensaje(Message message) throws MessagingException {
+    /*public void borrarMensaje(Message message) throws MessagingException {
         Folder folder = Logica.getInstance().getFolder();
         if (folder.getName() != "[Gmail]/Papelera") {
             Logica.getInstance().copiarMensaje(message.getFolder().getMessages());
@@ -111,7 +111,7 @@ public class Logica {
         Folder papelera = store.getFolder("[Gmail]/Papelera");
         papelera.open(Folder.READ_ONLY);
         folder.copyMessages(messages, papelera);
-    }
+    }*/
 
     /**
      * @param table tabla que le paso para que me haga el autoResize (metodo para que las columnas tengan el tamaño de su contenido)

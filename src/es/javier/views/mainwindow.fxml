@@ -24,7 +24,7 @@
                     <items>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="195.0" prefWidth="415.0">
                             <children>
-                                <TableView fx:id="tableMessages" onMouseClicked="#seleccionarFila" prefHeight="200.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                <TableView fx:id="tableMessages" prefHeight="200.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                     <columns>
                                         <TableColumn fx:id="columnaremitente" prefWidth="75.0" text="Remitente">
                                             <cellValueFactory>
@@ -54,7 +54,7 @@
                             <items>
                                 <Button mnemonicParsing="false" onAction="#pantallaEnviar" text="Nuevo" />
                                 <Button mnemonicParsing="false" onAction="#pantallaResponder" text="Responder" />
-                                <Button mnemonicParsing="false" text="Reenviar" />
+                                <Button mnemonicParsing="false" text="Reenviar" onAction="#pantallaReenviar"/>
                                 <Button mnemonicParsing="false" onAction="#borrarMensaje" text="Eliminar" />
                         <Button mnemonicParsing="false" onAction="#pantallaEstilos" text="Estilos" />
                             </items>
