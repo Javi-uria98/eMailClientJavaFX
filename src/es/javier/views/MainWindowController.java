@@ -35,7 +35,7 @@ public class MainWindowController implements Initializable {
     private ObservableList<EmailCuenta> listaCuentas;
     private EmailCuenta email;
     private Mensaje mensaje;
-    private int contLogin = 1;
+    private int contLogin = 0;
 
     @FXML
     SplitPane root;
@@ -66,10 +66,17 @@ public class MainWindowController implements Initializable {
             stage.showAndWait();
 
             try {
+                contLogin++;
                 email = Logica.getInstance().getListaEmail().get(contLogin);
                 Logica.getInstance().cargarCuentaGmail(email, "INBOX");
             } catch (MessagingException e) {
-                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("");
+                alert.setContentText("Usuario o contraseña errónea. Vuelva a intentarlo");
+                alert.showAndWait();
+            } catch (IndexOutOfBoundsException ignored) {
+
             }
             listaMensajes = Logica.getInstance().getListaMensajes();
             tableMessages.setItems(listaMensajes);
@@ -97,13 +104,12 @@ public class MainWindowController implements Initializable {
             autoResizeColumns(tableMessages);
             try {
                 generateTreeView();
-            } catch (MessagingException e) {
-                e.printStackTrace();
+            } catch (MessagingException ignored) {
+
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        contLogin++;
     }
 
     @FXML
@@ -141,7 +147,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    void pantallaReenviar(ActionEvent actionEvent){
+    void pantallaReenviar(ActionEvent actionEvent) {
         EmailTreeItem treeItem = (EmailTreeItem) treeViewEmail.getSelectionModel().getSelectedItem();
         EmailCuenta cuenta = treeItem.getEmail();
         Mensaje mensaje = tableMessages.getSelectionModel().getSelectedItem();
@@ -227,57 +233,68 @@ public class MainWindowController implements Initializable {
         stage.setTitle("Pantalla de Login");
         stage.setResizable(false);
         stage.showAndWait();
-
-        email = Logica.getInstance().getListaEmail().get(0);
-
         try {
-            Logica.getInstance().cargarCuentaGmail(email, "INBOX");
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-        listaMensajes = Logica.getInstance().getListaMensajes();
-        tableMessages.setItems(listaMensajes);
+            email = Logica.getInstance().getListaEmail().get(contLogin);
+            listaMensajes = Logica.getInstance().getListaMensajes();
+            tableMessages.setItems(listaMensajes);
 
-        tableMessages.setRowFactory(new Callback<TableView<Mensaje>, TableRow<Mensaje>>() {
-            @Override
-            public TableRow<Mensaje> call(TableView<Mensaje> mensajeTableView) {
-                return new TableRow<Mensaje>() {
-                    @Override
-                    protected void updateItem(Mensaje mensaje, boolean b) {
-                        super.updateItem(mensaje, b);
-                        if (mensaje != null) {
-                            try {
-                                if (!mensaje.estadoLeido())
-                                    setStyle("-fx-font-weight:bold");
-                                else
-                                    setStyle("");
-                            } catch (MessagingException e) {
-                                e.printStackTrace();
+            tableMessages.setRowFactory(new Callback<TableView<Mensaje>, TableRow<Mensaje>>() {
+                @Override
+                public TableRow<Mensaje> call(TableView<Mensaje> mensajeTableView) {
+                    return new TableRow<Mensaje>() {
+                        @Override
+                        protected void updateItem(Mensaje mensaje, boolean b) {
+                            super.updateItem(mensaje, b);
+                            if (mensaje != null) {
+                                try {
+                                    if (!mensaje.estadoLeido())
+                                        setStyle("-fx-font-weight:bold");
+                                    else
+                                        setStyle("");
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
-                };
-            }
-        });
-
-        tableMessages.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Mensaje>() {
-            @Override
-            public void changed(ObservableValue<? extends Mensaje> observableValue, Mensaje mensaje, Mensaje t1) {
-                try {
-                    String m = t1.getMessageContent();
-                    WebEngine webEngine = webView.getEngine();
-                    webEngine.loadContent(m);
-                } catch (MessagingException e) {
-                    e.printStackTrace();
+                    };
                 }
+            });
+
+            tableMessages.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Mensaje>() {
+                @Override
+                public void changed(ObservableValue<? extends Mensaje> observableValue, Mensaje mensaje, Mensaje t1) {
+                    try {
+                        String m = t1.getMessageContent();
+                        WebEngine webEngine = webView.getEngine();
+                        webEngine.loadContent(m);
+                    } catch (MessagingException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException ignored) {
+                    }
+                }
+            });
+            try {
+                generateTreeView();
+            } catch (AuthenticationFailedException auth) {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Error");
+                alert.setHeaderText("");
+                alert.setContentText("Usuario o contraseña errónea. Vuelva a intentarlo");
+                alert.showAndWait();
+                System.exit(0);
+            } catch (MessagingException e) {
+                e.printStackTrace();
             }
-        });
-        autoResizeColumns(tableMessages);
-        try {
-            generateTreeView();
-        } catch (MessagingException e) {
-            e.printStackTrace();
+
+        } catch (IndexOutOfBoundsException | NullPointerException ignored) {
+
         }
+        try {
+            autoResizeColumns(tableMessages);
+        } catch (NullPointerException ignored) {
+
+        }
+
     }
 
 }

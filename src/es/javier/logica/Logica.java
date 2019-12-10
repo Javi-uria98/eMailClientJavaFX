@@ -5,6 +5,7 @@ import es.javier.models.Mensaje;
 import es.javier.models.EmailTreeItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
 import javafx.scene.text.Text;
@@ -61,7 +62,6 @@ public class Logica {
         properties.setProperty("mail.store.protocol", imap);
         Session session = Session.getInstance(properties);
         store = session.getStore(imap);
-
         store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
         folder = store.getFolder(s);
         folder.open(Folder.READ_ONLY);
