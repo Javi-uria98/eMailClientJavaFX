@@ -83,6 +83,8 @@ public class SendWindowController implements Initializable {
         try {
             message.setFrom(new InternetAddress(cb_remitente.getSelectionModel().getSelectedItem()));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(tf_para.getText()));
+            //message.setRecipient(Message.RecipientType.CC, new InternetAddress(tf_para.getText()));
+            //message.setRecipient(Message.RecipientType.BCC, new InternetAddress(tf_para.getText()));
             message.setSubject(tf_asunto.getText());
             message.setText(ta_contenido.getText());
             return message;

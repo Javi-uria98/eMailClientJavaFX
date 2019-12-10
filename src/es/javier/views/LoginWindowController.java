@@ -31,13 +31,13 @@ public class LoginWindowController implements Initializable {
     private Parent root;
 
     @FXML
-    public Button btnAceptar;
+    private Button btnAceptar;
 
     @FXML
-    public TextField Iduser;
+    private TextField Iduser;
 
     @FXML
-    public TextField Idcontra;
+    private TextField Idcontra;
 
     @FXML
     public void Login(ActionEvent actionEvent) {
