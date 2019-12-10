@@ -52,6 +52,11 @@ public class MainWindowController implements Initializable {
     @FXML
     private WebView webView;
 
+    @FXML
+    private Button btnNuevo;
+
+    @FXML
+    public Button btnEstilos;
 
     @FXML
     void pantallaLogin(ActionEvent actionEvent) {
@@ -209,12 +214,13 @@ public class MainWindowController implements Initializable {
     @FXML
     void pantallaEstilos(ActionEvent event) {
         try {
+            btnEstilos.setText("Nuevo estilo");
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("styleswindow.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 300, 300));
-            stage.show();
+            stage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
