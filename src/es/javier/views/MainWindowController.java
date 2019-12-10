@@ -1,13 +1,16 @@
 package es.javier.views;
 
 import es.javier.logica.Logica;
+import es.javier.logica.Servicios;
 import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
 import es.javier.models.EmailTreeItem;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -19,6 +22,8 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import javax.mail.*;
@@ -39,6 +44,12 @@ public class MainWindowController implements Initializable {
 
     @FXML
     SplitPane root;
+
+    @FXML
+    private Label label;
+
+    @FXML
+    private ProgressIndicator progressIndicator;
 
     @FXML
     public TableView<Mensaje> tableMessages;
@@ -239,11 +250,28 @@ public class MainWindowController implements Initializable {
             Logica.getInstance().llenarTreeView(eMailTreeItem.getFolder().list(), eMailTreeItem);
             root.getChildren().add(eMailTreeItem);
         }
+        progressIndicator.setVisible(false);
         treeViewEmail.setRoot(root);
         treeViewEmail.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
             @Override
-            public void changed(ObservableValue observable, Object oldValue,
-                                Object newValue) {
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                Servicios testService = new Servicios("Por fin!");
+                testService.start();
+                testService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent workerStateEvent) {
+                        //Recuperamos el valor de retorno
+                        String saludo = testService.getValue();
+                        label.setText(saludo);
+                        progressIndicator.setVisible(false);
+                    }
+                });
+                testService.setOnRunning(new EventHandler<WorkerStateEvent>() {
+                    @Override
+                    public void handle(WorkerStateEvent workerStateEvent) {
+                        progressIndicator.setVisible(true);
+                    }
+                });
                 try {
                     EmailTreeItem selectedItem = (EmailTreeItem) newValue;
                     tableMessages.getItems().clear();
@@ -272,6 +300,13 @@ public class MainWindowController implements Initializable {
         stage.setScene(new Scene(root, 300, 300));
         stage.setTitle("Pantalla de Login");
         stage.setResizable(false);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                event.consume();
+            }
+        });
+        //stage.initStyle(StageStyle.UNDECORATED);
         stage.showAndWait();
         try {
             email = Logica.getInstance().getListaEmail().get(contLogin);

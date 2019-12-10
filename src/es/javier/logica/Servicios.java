@@ -4,20 +4,20 @@ import es.javier.models.EmailCuenta;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 
-public class Servicios extends Service<EmailCuenta> {
+public class Servicios extends Service<String> {
 
-    private EmailCuenta email;
+    private String nombreMensaje;
 
-    public Servicios(EmailCuenta email){
-        this.email=email;
+    public Servicios(String nombreMensaje){
+        this.nombreMensaje=nombreMensaje;
     }
 
     @Override
-    protected Task<EmailCuenta> createTask() {
+    protected Task<String> createTask() {
         return new Task<>() {
             @Override
-            protected EmailCuenta call() throws Exception {
-                return email;
+            protected String call() throws Exception {
+                return nombreMensaje;
             }
         };
     }

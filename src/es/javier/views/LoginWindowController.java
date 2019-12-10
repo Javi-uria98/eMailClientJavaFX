@@ -45,27 +45,6 @@ public class LoginWindowController implements Initializable {
         String contra = getIdcontra();
         EmailCuenta email=new EmailCuenta(usuario, contra);
         Logica.getInstance().addCuenta(email);
-        Label label = new Label("");
-        ProgressIndicator progressIndicator = new ProgressIndicator();
-        progressIndicator.setVisible(false);
-        Servicios testService = new Servicios(email);
-        testService.start();
-        testService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                //Recuperamos el valor de retorno
-                String saludo = testService.getValue().getDireccion();
-                label.setText(saludo);
-                progressIndicator.setVisible(false);
-            }
-        });
-        testService.setOnRunning(new EventHandler<WorkerStateEvent>() {
-            @Override
-            public void handle(WorkerStateEvent workerStateEvent) {
-                progressIndicator.setVisible(true);
-            }
-        });
-
 
         Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         stage.close();
