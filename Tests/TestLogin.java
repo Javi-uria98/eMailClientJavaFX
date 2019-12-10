@@ -41,6 +41,7 @@ public class TestLogin extends ApplicationTest {
         verifyThat("#tableMessages",TableViewMatchers.hasNumRows(7));
     }
 
+    //también hay que loguearse con pruebajavi98v2@gmail.com - Holahola1
     @Test
     public void insercionFila(){
         clickOn("#btnNuevo");
