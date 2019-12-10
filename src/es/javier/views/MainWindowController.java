@@ -129,6 +129,14 @@ public class MainWindowController implements Initializable {
     @FXML
     void pantallaResponder(ActionEvent actionEvent) {
         EmailTreeItem treeItem = (EmailTreeItem) treeViewEmail.getSelectionModel().getSelectedItem();
+        if (treeItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aviso");
+            alert.setHeaderText("");
+            alert.setContentText("Tiene que seleccionar un mensaje para poder responder");
+            alert.showAndWait();
+            return;
+        }
         EmailCuenta cuenta = treeItem.getEmail();
         Mensaje mensaje = tableMessages.getSelectionModel().getSelectedItem();
         try {
@@ -138,7 +146,16 @@ public class MainWindowController implements Initializable {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
-            controller.responder(mensaje, cuenta);
+            try {
+                controller.responder(mensaje, cuenta);
+            } catch (NullPointerException n) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Aviso");
+                alert.setHeaderText("");
+                alert.setContentText("Tiene que seleccionar un mensaje para poder responder");
+                alert.showAndWait();
+                return;
+            }
             stage.show();
         } catch (IOException | MessagingException a) {
             a.printStackTrace();
@@ -149,6 +166,14 @@ public class MainWindowController implements Initializable {
     @FXML
     void pantallaReenviar(ActionEvent actionEvent) {
         EmailTreeItem treeItem = (EmailTreeItem) treeViewEmail.getSelectionModel().getSelectedItem();
+        if (treeItem == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Aviso");
+            alert.setHeaderText("");
+            alert.setContentText("Tiene que seleccionar un mensaje para poder reenviar");
+            alert.showAndWait();
+            return;
+        }
         EmailCuenta cuenta = treeItem.getEmail();
         Mensaje mensaje = tableMessages.getSelectionModel().getSelectedItem();
         try {
@@ -158,7 +183,16 @@ public class MainWindowController implements Initializable {
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 600, 400));
-            controller.reenviar(mensaje, cuenta);
+            try {
+                controller.reenviar(mensaje, cuenta);
+            } catch (NullPointerException n) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Aviso");
+                alert.setHeaderText("");
+                alert.setContentText("Tiene que seleccionar un mensaje para poder responder");
+                alert.showAndWait();
+                return;
+            }
             stage.show();
         } catch (IOException | MessagingException a) {
             a.printStackTrace();

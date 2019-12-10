@@ -18,13 +18,14 @@ import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class SendWindowController implements Initializable {
 
     @FXML
-    private ComboBox<EmailCuenta> cb_remitente;
+    private ComboBox<String> cb_remitente;
 
     @FXML
     private TextArea ta_contenido;
@@ -80,7 +81,7 @@ public class SendWindowController implements Initializable {
     private Message prepareMessage(Session session) {
         Message message = new MimeMessage(session);
         try {
-            message.setFrom(new InternetAddress(cb_remitente.getSelectionModel().getSelectedItem().getDireccion()));
+            message.setFrom(new InternetAddress(cb_remitente.getSelectionModel().getSelectedItem()));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(tf_para.getText()));
             message.setSubject(tf_asunto.getText());
             message.setText(ta_contenido.getText());
@@ -92,14 +93,14 @@ public class SendWindowController implements Initializable {
     }
 
     void responder(Mensaje mensaje, EmailCuenta cuenta) throws MessagingException {
-        cb_remitente.getSelectionModel().select(cuenta);
+        cb_remitente.getSelectionModel().select(cuenta.getDireccion());
         tf_para.setText(mensaje.getDestinatario()[0]);
         tf_asunto.setText("RE: " + mensaje.getAsunto());
     }
 
     void reenviar(Mensaje mensaje, EmailCuenta cuenta) throws MessagingException {
-        cb_remitente.getSelectionModel().select(cuenta);
-        String mensajereenviado = "Mensaje procedente de: " + mensaje.getRemitente() + "\nPara: " + mensaje.getDestinatario() + "\n Con fecha: " + mensaje.getFecha()
+        cb_remitente.getSelectionModel().select(cuenta.getDireccion());
+        String mensajereenviado = "Mensaje procedente de: " + mensaje.getRemitente() + "\nPara: " + Arrays.toString(mensaje.getDestinatario()) + "\n Con fecha: " + mensaje.getFecha()
                 + "\n Y asunto: " + mensaje.getAsunto() + "\n Dice: " + mensaje.getMessageContent();
         ta_contenido.setText(mensajereenviado);
     }
@@ -107,7 +108,7 @@ public class SendWindowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         for (int i = 0; i < Logica.getInstance().getListaEmail().size(); i++) {
-            cb_remitente.getItems().add(Logica.getInstance().getListaEmail().get(i));
+            cb_remitente.getItems().add(Logica.getInstance().getListaEmail().get(i).getDireccion());
         }
     }
 }
