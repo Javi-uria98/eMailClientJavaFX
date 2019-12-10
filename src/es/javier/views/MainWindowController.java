@@ -37,9 +37,7 @@ import static es.javier.logica.Logica.autoResizeColumns;
 public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
-    private ObservableList<EmailCuenta> listaCuentas;
     private EmailCuenta email;
-    private Mensaje mensaje;
     private int contLogin = 0;
 
     @FXML
@@ -217,7 +215,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void borrarMensaje(ActionEvent event) {
-        mensaje = tableMessages.getSelectionModel().getSelectedItem();
+        Mensaje mensaje = tableMessages.getSelectionModel().getSelectedItem();
         int index = tableMessages.getSelectionModel().getSelectedIndex();
 
     }
@@ -239,7 +237,7 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private void generateTreeView() throws MessagingException {
-        listaCuentas = Logica.getInstance().getListaEmail();
+        ObservableList<EmailCuenta> listaCuentas = Logica.getInstance().getListaEmail();
         EmailTreeItem root = new EmailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
         root.setExpanded(true);
         for (EmailCuenta e : listaCuentas) {

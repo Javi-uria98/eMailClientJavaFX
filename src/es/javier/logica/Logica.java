@@ -20,12 +20,9 @@ public class Logica {
     private static Logica INSTANCE = null;
 
     private ObservableList<EmailCuenta> listaEmail;
-    private int contCuentas = 0;
     private ObservableList<Mensaje> listaMensajes;
 
-    private Mensaje m;
     private Store store;
-    private Folder folder;
 
     private Logica() {
         listaEmail = FXCollections.observableArrayList();
@@ -54,7 +51,7 @@ public class Logica {
     /**
      * @param email cuenta que introduzco (usuario y contraseña) para que me la cargue el programa
      * @param s     nombre de la carpeta que quiero visualizar
-     * @throws MessagingException
+     * @throws MessagingException captura la excepción
      */
     public void cargarCuentaGmail(EmailCuenta email, String s) throws MessagingException {
         String imap = "imaps";
@@ -63,12 +60,12 @@ public class Logica {
         Session session = Session.getInstance(properties);
         store = session.getStore(imap);
         store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
-        folder = store.getFolder(s);
+        Folder folder = store.getFolder(s);
         folder.open(Folder.READ_ONLY);
         Message[] message = folder.getMessages();
 
         for (int i = 0; i < message.length; i++) {
-            m = new Mensaje(message[i]);
+            Mensaje m = new Mensaje(message[i]);
             listaMensajes.add(m);
         }
     }
@@ -80,7 +77,7 @@ public class Logica {
     /**
      * @param folders las carpetas que tiene la cuenta de email y que cargaré en el treeview
      * @param e1      cualquier treeitem que tenga hijos (la cuenta, INBOX y [Gmail]
-     * @throws MessagingException
+     * @throws MessagingException captura la excepción
      */
     public void llenarTreeView(Folder[] folders, EmailTreeItem e1) throws MessagingException {
         for (Folder f : folders) {
@@ -113,13 +110,14 @@ public class Logica {
         folder.copyMessages(messages, papelera);
     }*/
 
+
     /**
      * @param table tabla que le paso para que me haga el autoResize (metodo para que las columnas tengan el tamaño de su contenido)
      */
     public static void autoResizeColumns(TableView<?> table) {
         //Set the right policy
         table.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-        table.getColumns().stream().forEach((column) ->
+        table.getColumns().forEach((column) ->
         {
             //Minimal width = columnheader
             Text t = new Text(column.getText());
