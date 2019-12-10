@@ -21,11 +21,18 @@ public class TestLogin extends ApplicationTest {
         stage.show();
     }
 
+    /**
+     * Test que sirve para verificar que el texto del botón cuyo id es #btnNuevo es "Nuevo"
+     */
     @Test
     public void textoDespues() {
         verifyThat("#btnNuevo", hasText("Nuevo"));
     }
 
+    /**
+     * Test que sirve para verificar que, al abrir el stage de los estilos, verificar que cambie el texto del botón que abre ese stage
+     * (los métodos correspondientes al combobox realmente no importan para pasar o no el test)
+     */
     @Test
     public void cambioEstilo(){
         clickOn("#btnEstilos");
@@ -36,12 +43,19 @@ public class TestLogin extends ApplicationTest {
     }
 
     //Si me logueo con pruebajavi98v2@gmail.com - Holahola1
+    /**
+     * test que comprueba que la tabla tiene 7 filas
+     */
     @Test
     public void primeraFila(){
         verifyThat("#tableMessages",TableViewMatchers.hasNumRows(7));
     }
 
     //también hay que loguearse con pruebajavi98v2@gmail.com - Holahola1
+
+    /**
+     * Test que comprueba que la sexta fila de la tabla tiene el contenido indicado, aún escribiendo un nuevo mensaje
+     */
     @Test
     public void insercionFila(){
         clickOn("#btnNuevo");
