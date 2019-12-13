@@ -68,6 +68,21 @@ public class MainWindowController implements Initializable {
     public Button btnEstilos;
 
     @FXML
+    private Button btnExamen;
+
+    @FXML
+    void pantallaExamen(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("pantallaexamen.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(root, 300, 300));
+        stage.setResizable(false);
+        stage.setTitle("Ejercicio 2 del Examen");
+        stage.showAndWait();
+    }
+
+    @FXML
     void pantallaLogin(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("loginwindow.fxml"));
