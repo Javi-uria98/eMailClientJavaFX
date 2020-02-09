@@ -1,5 +1,8 @@
 package es.javier.views;
 
+import com.javier.componente.ComponenteReloj;
+import com.javier.componente.EnHoraQueCoincide;
+import com.javier.componente.Tarea;
 import es.javier.logica.Logica;
 import es.javier.logica.Servicios;
 import es.javier.models.EmailCuenta;
@@ -25,7 +28,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
-
 import javax.mail.*;
 import java.io.IOException;
 import java.net.URL;
@@ -38,6 +40,8 @@ public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
     private EmailCuenta email;
+    private Tarea tarea;
+    private ComponenteReloj cp;
     private int contLogin = 0;
 
     @FXML
@@ -66,6 +70,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     public Button btnEstilos;
+
+    @FXML
+    private Button btnAlarma;
 
     @FXML
     void pantallaLogin(ActionEvent actionEvent) {
@@ -230,6 +237,30 @@ public class MainWindowController implements Initializable {
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 300, 300));
             stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void pantallaAlarma(ActionEvent event) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("alarmwindow.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage=new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root, 500, 300));
+            stage.setResizable(false);
+            stage.showAndWait();
+
+            tarea=Logica.getInstance().getListaTareas().get(0);
+            cp.registarTarea(tarea);
+            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                @Override
+                public void ejecuta(Tarea tarea) {
+                    System.out.println(tarea.getTextoAlarma());
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

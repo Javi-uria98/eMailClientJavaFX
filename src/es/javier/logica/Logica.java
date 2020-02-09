@@ -1,5 +1,6 @@
 package es.javier.logica;
 
+import com.javier.componente.Tarea;
 import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
 import es.javier.models.EmailTreeItem;
@@ -21,12 +22,14 @@ public class Logica {
 
     private ObservableList<EmailCuenta> listaEmail;
     private ObservableList<Mensaje> listaMensajes;
+    private ArrayList<Tarea> listaTareas;
 
     private Store store;
 
     private Logica() {
         listaEmail = FXCollections.observableArrayList();
         listaMensajes = FXCollections.observableArrayList();
+        listaTareas = new ArrayList<Tarea>();
     }
 
     public static Logica getInstance() {
@@ -44,9 +47,13 @@ public class Logica {
         return listaEmail;
     }
 
+    public ArrayList<Tarea> getListaTareas() { return listaTareas; }
+
     public void addCuenta(EmailCuenta email) {
         listaEmail.add(email);
     }
+
+    public void addTarea(Tarea tarea) { listaTareas.add(tarea); }
 
     /**
      * @param email cuenta que introduzco (usuario y contraseña) para que me la cargue el programa
@@ -137,10 +144,5 @@ public class Logica {
             column.setPrefWidth(max + 10.0d);
         });
     }
-
-    //TODO implementar hilos en alguna parte de la aplicación (por ejemplo a la hora de cargar el contenido de un mensaje en el webvview)
-    //TODO implementar un test (pensar de qué clase o métdo hacerlo)
-    //TODO alguna Alert
-
 
 }

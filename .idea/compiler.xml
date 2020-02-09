@@ -15,7 +15,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="eMailClientJavaFX" options="--add-exports=javafx.graphics/com.sun.javafx.css=eMailClientJavaFX" />
+      <module name="eMailClientJavaFX" options="--add-exports=javafx.graphics/com.sun.javafx.css=eMailClientJavaFX --add-exports=RelojDigital/javafx.fxml=eMailClientJavaFX --add-exports=RelojDigital/javafx.scene.control=eMailClientJavaFX --add-exports=RelojDigital/javafx.collections=eMailClientJavaFX --add-exports=RelojDigital/javafx.event=eMailClientJavaFX --add-exports=RelojDigital/javafx.scene=eMailClientJavaFX --add-exports=RelojDigital/javafx.stage=eMailClientJavaFX --add-exports=RelojDigital/javax.mail=eMailClientJavaFX --add-exports=RelojDigital/javafx.util=eMailClientJavaFX --add-exports=RelojDigital/javafx.beans.value=eMailClientJavaFX --add-exports=RelojDigital/javafx.concurrent=eMailClientJavaFX --add-exports=RelojDigital/javafx.scene.web=eMailClientJavaFX" />
     </option>
   </component>
 </project>

@@ -61,6 +61,7 @@
                                 <Button mnemonicParsing="false" onAction="#pantallaReenviar" text="Reenviar" />
                                 <Button mnemonicParsing="false" onAction="#borrarMensaje" text="Eliminar" />
                                 <Button fx:id="btnEstilos" mnemonicParsing="false" onAction="#pantallaEstilos" text="Estilos" />
+                                <Button fx:id="btnAlarma" mnemonicParsing="false" onAction="#pantallaAlarma" text="Alarma" />
                             </items>
                         </ToolBar>
                     </items>
