@@ -10,6 +10,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
 
 import javax.mail.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Logica {
