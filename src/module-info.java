@@ -5,6 +5,7 @@ module eMailClientJavaFX {
     requires javafx.web;
     requires javafx.fxml;
     requires java.mail;
+    requires javafx.base;
     requires RelojDigitalv2;
     exports es.javier.views;
     exports es.javier;

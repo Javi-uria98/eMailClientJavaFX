@@ -10,13 +10,13 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" scope="TEST" name="org.testfx:testfx-junit:4.0.15-alpha" level="application" />
+    <orderEntry type="library" scope="TEST" name="org.testfx:testfx-junit5:4.0.16-alpha" level="application" />
     <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.13-rc-2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.hamcrest:hamcrest-core:1.3" level="project" />
-    <orderEntry type="library" name="activation-casa" level="application" />
-    <orderEntry type="library" name="javafx.web-casa" level="application" />
-    <orderEntry type="library" name="javax.mail-casa" level="application" />
-    <orderEntry type="library" name="javafx.base-casa" level="application" />
+    <orderEntry type="library" name="javax.mail" level="application" />
+    <orderEntry type="library" name="javafx.web" level="application" />
+    <orderEntry type="library" name="commons-email-1.5" level="application" />
+    <orderEntry type="library" name="controlsfx-11.0.0" level="application" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
@@ -26,14 +26,6 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../RelojDigital/out/artifacts/RelojDigital_jar/RelojDigital.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="activation" level="application" />
   </component>
 </module>
