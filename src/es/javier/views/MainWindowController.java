@@ -255,18 +255,20 @@ public class MainWindowController implements Initializable {
             stage.setResizable(false);
             stage.showAndWait();
 
-            tarea=Logica.getInstance().getListaTareas().get(0);
-            cp.registarTarea(tarea);
-            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
-                @Override
-                public void ejecuta(Tarea tarea) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Aviso");
-                    alert.setHeaderText("");
-                    alert.setContentText(tarea.getTextoAlarma());
-                    alert.showAndWait();
-                }
-            });
+            for (int i=0; i<Logica.getInstance().getListaTareas().size();i++) {
+                tarea = Logica.getInstance().getListaTareas().get(i);
+                cp.registarTarea(tarea);
+                cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                    @Override
+                    public void ejecuta(Tarea tarea) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Aviso");
+                        alert.setHeaderText("");
+                        alert.setContentText(tarea.getTextoAlarma());
+                        alert.showAndWait();
+                    }
+                });
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
