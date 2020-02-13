@@ -41,8 +41,10 @@ public class MainWindowController implements Initializable {
     private ObservableList<Mensaje> listaMensajes;
     private EmailCuenta email;
     private Tarea tarea;
-    private ComponenteReloj cp;
     private int contLogin = 0;
+
+    @FXML
+    private ComponenteReloj cp;
 
     @FXML
     SplitPane root;
@@ -253,14 +255,20 @@ public class MainWindowController implements Initializable {
             stage.setResizable(false);
             stage.showAndWait();
 
-            tarea=Logica.getInstance().getListaTareas().get(0);
-            cp.registarTarea(tarea);
-            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
-                @Override
-                public void ejecuta(Tarea tarea) {
-                    System.out.println(tarea.getTextoAlarma());
-                }
-            });
+            for (int i=0; i<Logica.getInstance().getListaTareas().size();i++) {
+                tarea = Logica.getInstance().getListaTareas().get(i);
+                cp.registarTarea(tarea);
+                cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                    @Override
+                    public void ejecuta(Tarea tarea) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Aviso");
+                        alert.setHeaderText("");
+                        alert.setContentText(tarea.getTextoAlarma());
+                        alert.showAndWait();
+                    }
+                });
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -337,6 +345,7 @@ public class MainWindowController implements Initializable {
         });
         //stage.initStyle(StageStyle.UNDECORATED);
         stage.showAndWait();
+        cp.iniciar();
         try {
             email = Logica.getInstance().getListaEmail().get(contLogin);
             listaMensajes = Logica.getInstance().getListaMensajes();
