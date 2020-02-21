@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javier.views.ReportsWindowController">
+    <children>
+        <ComboBox fx:id="comboBox" prefWidth="150.0" promptText="Seleccionar tipo de informe a generar">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Informe de un solo correo" />
+                    <String fx:value="Informe de todos los correos de una carpeta" />
+                    <String fx:value="Informe de todos los correos de una cuenta agrupados por carpeta" />
+                </FXCollections>
+            </items>
+            <value>
+                <String fx:id="modena" />
+                <String fx:id="caspian" />
+                <String fx:id="modena3" />
+            </value>
+        </ComboBox>
+        <Button fx:id="generarInforme" layoutX="271.0" layoutY="188.0" mnemonicParsing="false" text="Generar" />
+    </children>
+</AnchorPane>

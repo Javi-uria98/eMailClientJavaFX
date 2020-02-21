@@ -275,6 +275,21 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void pantallaInformes(ActionEvent actionEvent) {
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("reportswindow.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage=new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root, 500, 300));
+            stage.setResizable(false);
+            stage.show();
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void generateTreeView() throws MessagingException {
         ObservableList<EmailCuenta> listaCuentas = Logica.getInstance().getListaEmail();
         EmailTreeItem root = new EmailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
