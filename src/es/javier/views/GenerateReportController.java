@@ -23,7 +23,8 @@ import java.util.*;
 
 public class GenerateReportController implements Initializable {
 
-    private Store store;
+    private EmailCuenta cuenta;
+    private List<Mensaje> listaMensajes;
 
     @FXML
     private TextField tfDireccion;
@@ -37,45 +38,36 @@ public class GenerateReportController implements Initializable {
     @FXML
     private Button btnSalir;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    @FXML
+    public void GenerarInforme(ActionEvent actionEvent) {
         try {
             String usuario = getDireccionCuenta();
             String contra = getContrasenaCuenta();
-            EmailCuenta cuenta = new EmailCuenta(usuario, contra);
-            Logica.getInstance().cargarCuentaGmail(cuenta, "INBOX");
+            cuenta = new EmailCuenta(usuario, contra);
+            Logica.getInstance().cargarCuentaGmailInformes(cuenta, "[Gmail]/Importantes");
 
-            /*
-            ArrayList<Mensaje> listaMensajes = new ArrayList<Mensaje>();
-            generarUnMensaje(cuenta, "[Gmail]/Importantes", listaMensajes);
-            */
+            listaMensajes = Logica.getInstance().getListaMensajesInformes();
 
-            btnGenerar.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(Logica.getInstance().getListaMensajes());
-                    Map<String, Object> parametros = new HashMap<>();
+            JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajes);
+            Map<String, Object> parametros = new HashMap<>();
 
-                    try {
-                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Mensaje.jasper"), parametros, jr);
-                        JasperExportManager.exportReportToPdfFile(print, "informes/Mensaje1.pdf");
-                    } catch (JRException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-
-            btnSalir.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-
-                }
-            });
-        } catch (MessagingException e) {
+            try {
+                JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Mensaje.jasper"), parametros, jr);
+                JasperExportManager.exportReportToPdfFile(print, "informes/Mensaje3.pdf");
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+        }catch (MessagingException e){
             e.printStackTrace();
         }
     }
 
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+
+
+    }
 
     private String getDireccionCuenta() {
         return tfDireccion.getText();
@@ -85,24 +77,4 @@ public class GenerateReportController implements Initializable {
         return tfContrasena.getText();
     }
 
-    private void generarUnMensaje(EmailCuenta email, String s, ArrayList<Mensaje> mensajes) {
-        try {
-            String imap = "imaps";
-            Properties properties = new Properties();
-            properties.setProperty("mail.store.protocol", imap);
-            Session session = Session.getInstance(properties);
-            store = session.getStore(imap);
-            store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
-            Folder folder = store.getFolder(s);
-            folder.open(Folder.READ_ONLY);
-            Message[] message = folder.getMessages();
-
-            for (int i = 0; i < message.length; i++) {
-                Mensaje m = new Mensaje(message[i]);
-                mensajes.add(m);
-            }
-        } catch (MessagingException e) {
-            e.printStackTrace();
-        }
-    }
 }

@@ -1,5 +1,6 @@
 package es.javier.views;
 
+import com.sun.mail.iap.BadCommandException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -29,23 +30,23 @@ public class ReportsWindowController implements Initializable {
         comboBox.setOnAction((e) -> {
             switch (comboBox.getSelectionModel().getSelectedItem()) {
                 case "Informe de un solo correo":
-                    generarInforme.setOnAction(new EventHandler<ActionEvent>() {
-                        @Override
-                        public void handle(ActionEvent actionEvent) {
-                            try {
-                                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("generatereport.fxml"));
-                                Parent root = fxmlLoader.load();
-                                Stage stage = new Stage();
-                                stage.initModality(Modality.APPLICATION_MODAL);
-                                stage.setScene(new Scene(root, 600, 400));
-                                stage.show();
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                        generarInforme.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                try {
+                                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("generatereport.fxml"));
+                                    Parent root = fxmlLoader.load();
+                                    GenerateReportController controller = fxmlLoader.getController();
+                                    Stage stage = new Stage();
+                                    stage.initModality(Modality.APPLICATION_MODAL);
+                                    stage.setScene(new Scene(root, 600, 400));
+                                    stage.show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
-
-                        }
-                    });
-
+                        });
                     break;
                 case "Informe de todos los correos de una carpeta":
                     generarInforme.setOnAction(new EventHandler<ActionEvent>() {
