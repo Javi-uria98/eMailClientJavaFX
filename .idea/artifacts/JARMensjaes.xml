@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JARMensjaes">
+    <output-path>$PROJECT_DIR$/out/artifacts/JARMensjaes</output-path>
+    <root id="archive" name="JARMensjaes.jar">
+      <element id="module-output" name="DataAdapter" />
+    </root>
+  </artifact>
+</component>

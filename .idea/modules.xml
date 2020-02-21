@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/DataAdapter/DataAdapter.iml" filepath="$PROJECT_DIR$/DataAdapter/DataAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/eMailClientJavaFX.iml" filepath="$PROJECT_DIR$/eMailClientJavaFX.iml" />
     </modules>
   </component>
