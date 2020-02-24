@@ -1,23 +1,42 @@
 package es.javier.views;
 
 import com.sun.mail.iap.BadCommandException;
+import es.javier.logica.Logica;
+import es.javier.models.EmailCuenta;
+import es.javier.models.Mensaje;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import javafx.scene.control.TextField;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
-import java.io.IOException;
+import javax.mail.MessagingException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class ReportsWindowController implements Initializable {
+
+    private EmailCuenta cuenta;
+    private List<Mensaje> listaMensajes;
+
+    @FXML
+    private TextField tfDireccion;
+
+    @FXML
+    private TextField tfContrasena;
+
+    @FXML
+    private TextField tfCarpeta;
 
     @FXML
     private Button generarInforme;
@@ -33,18 +52,7 @@ public class ReportsWindowController implements Initializable {
                         generarInforme.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                try {
-                                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("generatereport.fxml"));
-                                    Parent root = fxmlLoader.load();
-                                    GenerateReportController controller = fxmlLoader.getController();
-                                    Stage stage = new Stage();
-                                    stage.initModality(Modality.APPLICATION_MODAL);
-                                    stage.setScene(new Scene(root, 600, 400));
-                                    stage.show();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
+                                GenerarInforme(false, getCarpetaCuenta(), "/es/javier/jasper/Mensaje.jasper", "informes/Mensaje1.pdf");
                             }
                         });
                     break;
@@ -52,7 +60,7 @@ public class ReportsWindowController implements Initializable {
                     generarInforme.setOnAction(new EventHandler<ActionEvent>() {
                         @Override
                         public void handle(ActionEvent actionEvent) {
-
+                            GenerarInforme(true, getCarpetaCuenta(), "/es/javier/jasper/Mensaje2.jasper", "informes/Mensaje2.pdf");
                         }
                     });
                     break;
@@ -69,4 +77,40 @@ public class ReportsWindowController implements Initializable {
             }
         });
     }
+
+    private void GenerarInforme(boolean carpeta, String nombreCarpeta, String rutaJasper, String rutaPDF) {
+        try {
+            String usuario = getDireccionCuenta();
+            String contra = getContrasenaCuenta();
+            cuenta = new EmailCuenta(usuario, contra);
+            Logica.getInstance().cargarCuentaGmailInformes(cuenta, nombreCarpeta, carpeta);
+
+            listaMensajes = Logica.getInstance().getListaMensajesInformes();
+
+            JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajes);
+            Map<String, Object> parametros = new HashMap<>();
+
+            try {
+                JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream(rutaJasper), parametros, jr);
+                JasperExportManager.exportReportToPdfFile(print, rutaPDF);
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+        }catch (MessagingException e){
+            e.printStackTrace();
+        }
+    }
+
+    private String getDireccionCuenta() {
+        return tfDireccion.getText();
+    }
+
+    private String getContrasenaCuenta() {
+        return tfContrasena.getText();
+    }
+
+    private String getCarpetaCuenta(){
+        return tfCarpeta.getText();
+    }
+
 }

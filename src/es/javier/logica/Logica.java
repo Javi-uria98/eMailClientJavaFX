@@ -87,7 +87,7 @@ public class Logica {
      * @param s
      * @throws MessagingException
      */
-    public void cargarCuentaGmailInformes(EmailCuenta email, String s) throws MessagingException {
+    public void cargarCuentaGmailInformes(EmailCuenta email, String s, boolean parInforme) throws MessagingException {
         String imap = "imaps";
         Properties properties = new Properties();
         properties.setProperty("mail.store.protocol", imap);
@@ -98,9 +98,16 @@ public class Logica {
         folder.open(Folder.READ_ONLY);
         Message[] message = folder.getMessages();
 
-        for (int i = 0; i < message.length; i++) {
-            Mensaje m = new Mensaje(message[i]);
-            listaMensajesInformes.add(m);
+        if (parInforme) {
+            for (int i = 0; i < message.length; i++) {
+                Mensaje m = new Mensaje(message[i]);
+                listaMensajesInformes.add(m);
+            }
+        } else {
+            for (int i = 0; i < 1; i++) {
+                Mensaje m = new Mensaje(message[i]);
+                listaMensajesInformes.add(m);
+            }
         }
     }
 
