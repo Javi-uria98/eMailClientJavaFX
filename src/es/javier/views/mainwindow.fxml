@@ -63,6 +63,7 @@
                                 <Button mnemonicParsing="false" onAction="#borrarMensaje" text="Eliminar" />
                                 <Button fx:id="btnEstilos" mnemonicParsing="false" onAction="#pantallaEstilos" text="Estilos" />
                                 <Button fx:id="btnAlarma" mnemonicParsing="false" onAction="#pantallaAlarma" text="Alarma" />
+                        <Button mnemonicParsing="false" onAction="#pantallaInformes" text="Informes" />
                         <ComponenteReloj fx:id="cp" formato24h="true" prefHeight="17.0" prefWidth="83.0" />
                             </items>
                         </ToolBar>

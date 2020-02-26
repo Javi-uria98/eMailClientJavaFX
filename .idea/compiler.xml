@@ -10,6 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="13">
+      <module name="DataAdapter" target="8" />
       <module name="eMailClientJavaFX" target="9" />
     </bytecodeTargetLevel>
   </component>
