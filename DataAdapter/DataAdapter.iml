@@ -8,5 +8,6 @@
     <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="javax.mail-casa" level="application" />
+    <orderEntry type="library" name="javax.mail" level="application" />
   </component>
 </module>

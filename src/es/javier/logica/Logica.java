@@ -4,6 +4,7 @@ import com.javier.componente.Tarea;
 import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
 import es.javier.models.EmailTreeItem;
+import es.javier.models.MensajeInforme;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
@@ -20,6 +21,7 @@ public class Logica {
     private ObservableList<EmailCuenta> listaEmail;
     private ObservableList<Mensaje> listaMensajes;
     private ArrayList<Tarea> listaTareas;
+    private ArrayList<MensajeInforme> listaMensajesInformesv2;
 
     private ArrayList<Mensaje> listaMensajesInformes;
 
@@ -30,6 +32,7 @@ public class Logica {
         listaMensajes = FXCollections.observableArrayList();
         listaTareas = new ArrayList<Tarea>();
         listaMensajesInformes = new ArrayList<Mensaje>();
+        listaMensajesInformesv2 = new ArrayList<MensajeInforme>();
     }
 
     public static Logica getInstance() {
@@ -47,16 +50,29 @@ public class Logica {
         return listaEmail;
     }
 
-    public ArrayList<Tarea> getListaTareas() { return listaTareas; }
+    public ArrayList<Tarea> getListaTareas() {
+        return listaTareas;
+    }
 
     public void addCuenta(EmailCuenta email) {
         listaEmail.add(email);
     }
 
-    public void addTarea(Tarea tarea) { listaTareas.add(tarea); }
+    public void addTarea(Tarea tarea) {
+        listaTareas.add(tarea);
+    }
 
-    public ArrayList<Mensaje> getListaMensajesInformes() { return listaMensajesInformes; }
+    public ArrayList<Mensaje> getListaMensajesInformes() {
+        return listaMensajesInformes;
+    }
 
+    public ArrayList<MensajeInforme> getListaMensajesInformesv2() {
+        return listaMensajesInformesv2;
+    }
+
+    public void addMensajeInformev2(MensajeInforme mensajeInforme) {
+        listaMensajesInformesv2.add(mensajeInforme);
+    }
 
 
     /**
@@ -82,7 +98,8 @@ public class Logica {
     }
 
     /**
-     * Mismo método que el de arriba, pero para cargar los mensajes del informe
+     * Mismo método que el de arriba, pero para cargar los mensajes del informe (v1)
+     *
      * @param email
      * @param s
      * @throws MessagingException
@@ -108,6 +125,24 @@ public class Logica {
                 Mensaje m = new Mensaje(message[i]);
                 listaMensajesInformes.add(m);
             }
+        }
+    }
+
+    public void cargarCuentaGmailInformesv2(EmailCuenta email, String s) throws MessagingException {
+        String imap = "imaps";
+        Properties properties = new Properties();
+        properties.setProperty("mail.store.protocol", imap);
+        Session session = Session.getInstance(properties);
+        store = session.getStore(imap);
+        store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
+        Folder folder = store.getFolder(s);
+        folder.open(Folder.READ_ONLY);
+        Message[] message = folder.getMessages();
+
+        for (int i = 0; i < message.length; i++) {
+            Mensaje m = new Mensaje(message[i]);
+            MensajeInforme mi = new MensajeInforme(m.getFecha(), m.getAsunto(), m.getRemitente(), m.getDestinatario()[0], m.getMessageContent());
+            listaMensajesInformesv2.add(mi);
         }
     }
 

@@ -8,6 +8,7 @@ import es.javier.logica.Servicios;
 import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
 import es.javier.models.EmailTreeItem;
+import es.javier.models.MensajeInforme;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -28,20 +29,31 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
 import javax.mail.*;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import static es.javier.logica.Logica.autoResizeColumns;
 
 public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
+    private ArrayList<MensajeInforme> listaMensajesInforme;
     private EmailCuenta email;
     private Tarea tarea;
     private int contLogin = 0;
+    private int contTarea = 0;
+    private MensajeInforme mensajeInforme;
+
+    @FXML
+    private Button btnUnInforme;
 
     @FXML
     private ComponenteReloj cp;
@@ -246,29 +258,29 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void pantallaAlarma(ActionEvent event) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("alarmwindow.fxml"));
             Parent root = fxmlLoader.load();
-            Stage stage=new Stage();
+            Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 500, 300));
             stage.setResizable(false);
             stage.showAndWait();
 
-            for (int i=0; i<Logica.getInstance().getListaTareas().size();i++) {
-                tarea = Logica.getInstance().getListaTareas().get(i);
-                cp.registarTarea(tarea);
-                cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
-                    @Override
-                    public void ejecuta(Tarea tarea) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Aviso");
-                        alert.setHeaderText("");
-                        alert.setContentText(tarea.getTextoAlarma());
-                        alert.showAndWait();
-                    }
-                });
-            }
+            tarea = Logica.getInstance().getListaTareas().get(contTarea);
+            cp.registarTarea(tarea);
+            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                @Override
+                public void ejecuta(Tarea tarea) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Aviso");
+                    alert.setHeaderText("");
+                    alert.setContentText(tarea.getTextoAlarma());
+                    alert.showAndWait();
+                }
+            });
+            contTarea++;
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -276,15 +288,15 @@ public class MainWindowController implements Initializable {
 
     @FXML
     void pantallaInformes(ActionEvent actionEvent) {
-        try{
+        try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("reportswindow.fxml"));
             Parent root = fxmlLoader.load();
-            Stage stage=new Stage();
+            Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(new Scene(root, 500, 300));
             stage.setResizable(false);
             stage.show();
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -328,10 +340,31 @@ public class MainWindowController implements Initializable {
                     EmailTreeItem selectedItem = (EmailTreeItem) newValue;
                     tableMessages.getItems().clear();
                     System.out.println("Selected Text : " + selectedItem.getFolder().toString());
-                    Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta
-                } catch (Exception e) {                                                                 //no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
+                    Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
+                    Logica.getInstance().cargarCuentaGmailInformesv2(email, selectedItem.getFolder().toString());
+                } catch (Exception e) {
                 }
                 tableMessages.setItems(listaMensajes);
+                listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
+                btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
+                        Map<String, Object> parametros = new HashMap<>();
+                        try {
+                            JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
+                            JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCarpeta.pdf");
+                        } catch (JRException e) {
+                            e.printStackTrace();
+                        } catch (NullPointerException e) {
+                            Alert alert = new Alert(Alert.AlertType.ERROR);
+                            alert.setTitle("¡Error!");
+                            alert.setHeaderText("");
+                            alert.setContentText("Para generar el informe, seleccione un mensaje!");
+                            alert.showAndWait();
+                        }
+                    }
+                });
             }
 
         });
@@ -392,6 +425,40 @@ public class MainWindowController implements Initializable {
                 @Override
                 public void changed(ObservableValue<? extends Mensaje> observableValue, Mensaje mensaje, Mensaje t1) {
                     try {
+                        btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                try {
+                                    String[] destinatarioInforme = t1.getDestinatario();
+                                    String destinatarioFinal = destinatarioInforme[0];
+                                    mensajeInforme = new MensajeInforme(t1.getFecha(), t1.getAsunto(), t1.getRemitente(), destinatarioFinal, t1.getMessageContent());
+                                    if (listaMensajesInforme.isEmpty()) {
+                                        listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
+                                        Logica.getInstance().addMensajeInformev2(mensajeInforme);
+                                    } else {
+                                        listaMensajesInforme = new ArrayList<MensajeInforme>();
+                                        listaMensajesInforme.add(mensajeInforme);
+                                    }
+                                    JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
+                                    Map<String, Object> parametros = new HashMap<>();
+                                    try {
+                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/MensajesInformesv2.jasper"), parametros, jr);
+                                        JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajeUnico.pdf");
+                                    } catch (JRException e) {
+                                        e.printStackTrace();
+                                    }
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                } catch (NullPointerException e) {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                                    alert.setTitle("¡Error!");
+                                    alert.setHeaderText("");
+                                    alert.setContentText("¡Para generar el informe, seleccione un mensaje!");
+                                    alert.showAndWait();
+                                }
+
+                            }
+                        });
                         String m = t1.getMessageContent();
                         WebEngine webEngine = webView.getEngine();
                         webEngine.loadContent(m);
