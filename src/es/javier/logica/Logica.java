@@ -23,15 +23,12 @@ public class Logica {
     private ArrayList<Tarea> listaTareas;
     private ArrayList<MensajeInforme> listaMensajesInformesv2;
 
-    private ArrayList<Mensaje> listaMensajesInformes;
-
     private Store store;
 
     private Logica() {
         listaEmail = FXCollections.observableArrayList();
         listaMensajes = FXCollections.observableArrayList();
         listaTareas = new ArrayList<Tarea>();
-        listaMensajesInformes = new ArrayList<Mensaje>();
         listaMensajesInformesv2 = new ArrayList<MensajeInforme>();
     }
 
@@ -60,10 +57,6 @@ public class Logica {
 
     public void addTarea(Tarea tarea) {
         listaTareas.add(tarea);
-    }
-
-    public ArrayList<Mensaje> getListaMensajesInformes() {
-        return listaMensajesInformes;
     }
 
     public ArrayList<MensajeInforme> getListaMensajesInformesv2() {
@@ -104,30 +97,6 @@ public class Logica {
      * @param s
      * @throws MessagingException
      */
-    public void cargarCuentaGmailInformes(EmailCuenta email, String s, boolean parInforme) throws MessagingException {
-        String imap = "imaps";
-        Properties properties = new Properties();
-        properties.setProperty("mail.store.protocol", imap);
-        Session session = Session.getInstance(properties);
-        store = session.getStore(imap);
-        store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
-        Folder folder = store.getFolder(s);
-        folder.open(Folder.READ_ONLY);
-        Message[] message = folder.getMessages();
-
-        if (parInforme) {
-            for (int i = 0; i < message.length; i++) {
-                Mensaje m = new Mensaje(message[i]);
-                listaMensajesInformes.add(m);
-            }
-        } else {
-            for (int i = 0; i < 1; i++) {
-                Mensaje m = new Mensaje(message[i]);
-                listaMensajesInformes.add(m);
-            }
-        }
-    }
-
     public void cargarCuentaGmailInformesv2(EmailCuenta email, String s) throws MessagingException {
         String imap = "imaps";
         Properties properties = new Properties();

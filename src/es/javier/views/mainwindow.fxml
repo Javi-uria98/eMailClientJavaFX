@@ -79,7 +79,6 @@
                                         text="Estilos"/>
                                 <Button fx:id="btnAlarma" mnemonicParsing="false" onAction="#pantallaAlarma"
                                         text="Alarma"/>
-                                <Button mnemonicParsing="false" onAction="#pantallaInformes" text="Informes"/>
                                 <Button fx:id="btnUnInforme" mnemonicParsing="false" text="Generar"/>
                                 <ComponenteReloj fx:id="cp" formato24h="true" prefHeight="17.0" prefWidth="83.0"/>
                             </items>

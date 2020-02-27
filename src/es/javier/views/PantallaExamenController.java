@@ -1,7 +1,6 @@
 package es.javier.views;
 
 import es.javier.logica.Logica;
-import es.javier.models.EmailCuenta;
 import es.javier.models.Mensaje;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
