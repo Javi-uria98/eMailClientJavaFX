@@ -18,9 +18,14 @@ public class Logica {
 
     private static Logica INSTANCE = null;
 
+    //estos dos atributos, y sus métodos correspondientes, son para manejar la iteración de las tareas
+    private int contborrar;
+    private int contTarea;
+
+
     private ObservableList<EmailCuenta> listaEmail;
     private ObservableList<Mensaje> listaMensajes;
-    private ArrayList<Tarea> listaTareas;
+    private ObservableList<Tarea> listaTareas;
     private ArrayList<MensajeInforme> listaMensajesInformesv2;
 
     private Store store;
@@ -28,8 +33,10 @@ public class Logica {
     private Logica() {
         listaEmail = FXCollections.observableArrayList();
         listaMensajes = FXCollections.observableArrayList();
-        listaTareas = new ArrayList<Tarea>();
+        listaTareas = FXCollections.observableArrayList();
         listaMensajesInformesv2 = new ArrayList<MensajeInforme>();
+        contTarea=0;
+        contborrar=0;
     }
 
     public static Logica getInstance() {
@@ -47,7 +54,7 @@ public class Logica {
         return listaEmail;
     }
 
-    public ArrayList<Tarea> getListaTareas() {
+    public ObservableList<Tarea> getListaTareas() {
         return listaTareas;
     }
 
@@ -58,6 +65,36 @@ public class Logica {
     public void addTarea(Tarea tarea) {
         listaTareas.add(tarea);
     }
+
+    public void borrarTarea(Tarea tarea) {
+        listaTareas.remove(tarea);
+        contborrar++;
+    }
+
+    public int getContborrar() {
+        return contborrar;
+    }
+
+    public int getContTarea() {
+        return contTarea;
+    }
+
+    public void addContborrar(){
+        this.contborrar++;
+    }
+
+    public void disminuirContborrar(){
+        this.contborrar=this.contborrar-2;
+    }
+
+    public void addContTarea(){
+        this.contTarea++;
+    }
+
+    public void disminuirConttarea(){
+        this.contTarea--;
+    }
+
 
     public ArrayList<MensajeInforme> getListaMensajesInformesv2() {
         return listaMensajesInformesv2;
