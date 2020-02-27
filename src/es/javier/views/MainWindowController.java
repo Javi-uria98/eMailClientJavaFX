@@ -322,32 +322,61 @@ public class MainWindowController implements Initializable {
                 try {
                     EmailTreeItem selectedItem = (EmailTreeItem) newValue;
                     tableMessages.getItems().clear();
-                    System.out.println("Selected Text : " + selectedItem.getFolder().toString());
+                    System.out.println("Selected Text : " + selectedItem.getValue());
                     Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
                     Logica.getInstance().cargarCuentaGmailInformesv2(email, selectedItem.getFolder().toString());
+                    tableMessages.setItems(listaMensajes);
+                    listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
+
+                    if (selectedItem.getValue().equals("Todos")){
+                        btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                try {
+                                    Logica.getInstance().cargarCuentaGmailInformesv2(email, "[Gmail]/Todos");
+                                    listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
+                                    JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
+                                    Map<String, Object> parametros = new HashMap<>();
+                                    try {
+                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
+                                        JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuenta.pdf");
+                                    } catch (JRException e) {
+                                        e.printStackTrace();
+                                    } catch (NullPointerException e) {
+                                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                                        alert.setTitle("¡Error!");
+                                        alert.setHeaderText("");
+                                        alert.setContentText("Para generar el informe, seleccione un mensaje!");
+                                        alert.showAndWait();
+                                    }
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                    } else {
+                        btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
+                            @Override
+                            public void handle(ActionEvent actionEvent) {
+                                JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
+                                Map<String, Object> parametros = new HashMap<>();
+                                try {
+                                    JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
+                                    JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCarpeta.pdf");
+                                } catch (JRException e) {
+                                    e.printStackTrace();
+                                } catch (NullPointerException e) {
+                                    Alert alert = new Alert(Alert.AlertType.ERROR);
+                                    alert.setTitle("¡Error!");
+                                    alert.setHeaderText("");
+                                    alert.setContentText("Para generar el informe, seleccione un mensaje!");
+                                    alert.showAndWait();
+                                }
+                            }
+                        });
+                    }
                 } catch (Exception e) {
                 }
-                tableMessages.setItems(listaMensajes);
-                listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
-                btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent actionEvent) {
-                        JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
-                        Map<String, Object> parametros = new HashMap<>();
-                        try {
-                            JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
-                            JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCarpeta.pdf");
-                        } catch (JRException e) {
-                            e.printStackTrace();
-                        } catch (NullPointerException e) {
-                            Alert alert = new Alert(Alert.AlertType.ERROR);
-                            alert.setTitle("¡Error!");
-                            alert.setHeaderText("");
-                            alert.setContentText("Para generar el informe, seleccione un mensaje!");
-                            alert.showAndWait();
-                        }
-                    }
-                });
             }
 
         });
