@@ -47,7 +47,8 @@ public class MainWindowController implements Initializable {
     private EmailCuenta email;
     private Tarea tarea;
     private int contLogin = 0;
-    private int contTarea = 0;
+    private int contTarea;
+    private int contBorrar;
     private MensajeInforme mensajeInforme;
 
     @FXML
@@ -261,25 +262,37 @@ public class MainWindowController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root, 500, 300));
+            stage.setScene(new Scene(root, 500, 500));
             stage.setResizable(false);
             stage.showAndWait();
 
-            tarea = Logica.getInstance().getListaTareas().get(contTarea);
-            cp.registarTarea(tarea);
-            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
-                @Override
-                public void ejecuta(Tarea tarea) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Aviso");
-                    alert.setHeaderText("");
-                    alert.setContentText(tarea.getTextoAlarma());
-                    alert.showAndWait();
-                }
-            });
-            contTarea++;
+            contBorrar = Logica.getInstance().getContborrar();
+            contTarea = Logica.getInstance().getListaTareas().size();
 
-        } catch (IOException e) {
+            System.out.println("contTarea: " + contTarea);
+            System.out.println("contBorrar: " + contBorrar);
+
+            if (contBorrar == contTarea-1) {
+                tarea = Logica.getInstance().getListaTareas().get(contTarea-1);
+
+                cp.registarTarea(tarea);
+                cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                    @Override
+                    public void ejecuta(Tarea tarea) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Aviso");
+                        alert.setHeaderText("");
+                        alert.setContentText(tarea.getTextoAlarma());
+                        alert.showAndWait();
+                    }
+                });
+
+                Logica.getInstance().addContborrar();
+            } else {
+                cp.borrarTarea(tarea);
+                Logica.getInstance().disminuirContborrar();
+            }
+        } catch (IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
     }
@@ -328,7 +341,7 @@ public class MainWindowController implements Initializable {
                     tableMessages.setItems(listaMensajes);
                     listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
 
-                    if (selectedItem.getValue().equals("Todos")){
+                    if (selectedItem.getValue().equals("Todos")) {
                         btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
