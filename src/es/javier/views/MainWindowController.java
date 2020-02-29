@@ -44,11 +44,12 @@ public class MainWindowController implements Initializable {
 
     private ObservableList<Mensaje> listaMensajes;
     private ArrayList<MensajeInforme> listaMensajesInforme;
+    private ArrayList<MensajeInforme> listaMensajesInforme_carpeta;
+    private ArrayList<MensajeInforme> listaMensajesInforme_cuenta;
     private EmailCuenta email;
     private Tarea tarea;
     private int contLogin = 0;
     private int contTarea;
-    private int contBorrar;
     private MensajeInforme mensajeInforme;
 
     @FXML
@@ -266,35 +267,25 @@ public class MainWindowController implements Initializable {
             stage.setResizable(false);
             stage.showAndWait();
 
-            contBorrar = Logica.getInstance().getContborrar();
-            contTarea = Logica.getInstance().getListaTareas().size();
+            tarea = Logica.getInstance().getListaTareas().get(contTarea);
 
-            System.out.println("contTarea: " + contTarea);
-            System.out.println("contBorrar: " + contBorrar);
+            cp.registarTarea(tarea);
+            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                @Override
+                public void ejecuta(Tarea tarea) {
+                    Alert alert = new Alert(Alert.AlertType.WARNING);
+                    alert.setTitle("Aviso");
+                    alert.setHeaderText("");
+                    alert.setContentText(tarea.getTextoAlarma());
+                    alert.showAndWait();
+                }
+            });
 
-            if (contBorrar == contTarea-1) {
-                tarea = Logica.getInstance().getListaTareas().get(contTarea-1);
-
-                cp.registarTarea(tarea);
-                cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
-                    @Override
-                    public void ejecuta(Tarea tarea) {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Aviso");
-                        alert.setHeaderText("");
-                        alert.setContentText(tarea.getTextoAlarma());
-                        alert.showAndWait();
-                    }
-                });
-
-                Logica.getInstance().addContborrar();
-            } else {
-                cp.borrarTarea(tarea);
-                Logica.getInstance().disminuirContborrar();
-            }
+            contTarea++;
         } catch (IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
+
     }
 
     @FXML
@@ -346,9 +337,9 @@ public class MainWindowController implements Initializable {
                             @Override
                             public void handle(ActionEvent actionEvent) {
                                 try {
-                                    Logica.getInstance().cargarCuentaGmailInformesv2(email, "[Gmail]/Todos");
-                                    listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
-                                    JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
+                                    Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, "[Gmail]/Todos");
+                                    listaMensajesInforme_cuenta = Logica.getInstance().getListaMensajesInformesv2_cuenta();
+                                    JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);
                                     Map<String, Object> parametros = new HashMap<>();
                                     try {
                                         JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
@@ -371,7 +362,13 @@ public class MainWindowController implements Initializable {
                         btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
+                                try {
+                                    Logica.getInstance().cargarCuentaGmailInformesv2_carpetas(email, selectedItem.getFolder().toString());
+                                } catch (MessagingException e) {
+                                    e.printStackTrace();
+                                }
+                                listaMensajesInforme_carpeta = Logica.getInstance().getListaMensajesInformesv2_carpeta();
+                                JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_carpeta);
                                 Map<String, Object> parametros = new HashMap<>();
                                 try {
                                     JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
@@ -457,7 +454,7 @@ public class MainWindowController implements Initializable {
                                     String[] destinatarioInforme = t1.getDestinatario();
                                     String destinatarioFinal = destinatarioInforme[0];
                                     mensajeInforme = new MensajeInforme(t1.getFecha(), t1.getAsunto(), t1.getRemitente(), destinatarioFinal, t1.getMessageContent());
-                                    if (listaMensajesInforme.isEmpty()) {
+                                    if (listaMensajesInforme==null) {
                                         listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
                                         Logica.getInstance().addMensajeInformev2(mensajeInforme);
                                     } else {

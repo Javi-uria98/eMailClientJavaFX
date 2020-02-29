@@ -18,15 +18,12 @@ public class Logica {
 
     private static Logica INSTANCE = null;
 
-    //estos dos atributos, y sus métodos correspondientes, son para manejar la iteración de las tareas
-    private int contborrar;
-    private int contTarea;
-
-
     private ObservableList<EmailCuenta> listaEmail;
     private ObservableList<Mensaje> listaMensajes;
     private ObservableList<Tarea> listaTareas;
     private ArrayList<MensajeInforme> listaMensajesInformesv2;
+    private ArrayList<MensajeInforme> listaMensajesInformesv2_carpeta;
+    private ArrayList<MensajeInforme> listaMensajesInformesv2_cuenta;
 
     private Store store;
 
@@ -35,8 +32,8 @@ public class Logica {
         listaMensajes = FXCollections.observableArrayList();
         listaTareas = FXCollections.observableArrayList();
         listaMensajesInformesv2 = new ArrayList<MensajeInforme>();
-        contTarea=0;
-        contborrar=0;
+        listaMensajesInformesv2_carpeta = new ArrayList<MensajeInforme>();
+        listaMensajesInformesv2_cuenta = new ArrayList<MensajeInforme>();
     }
 
     public static Logica getInstance() {
@@ -68,33 +65,7 @@ public class Logica {
 
     public void borrarTarea(Tarea tarea) {
         listaTareas.remove(tarea);
-        contborrar++;
     }
-
-    public int getContborrar() {
-        return contborrar;
-    }
-
-    public int getContTarea() {
-        return contTarea;
-    }
-
-    public void addContborrar(){
-        this.contborrar++;
-    }
-
-    public void disminuirContborrar(){
-        this.contborrar=this.contborrar-2;
-    }
-
-    public void addContTarea(){
-        this.contTarea++;
-    }
-
-    public void disminuirConttarea(){
-        this.contTarea--;
-    }
-
 
     public ArrayList<MensajeInforme> getListaMensajesInformesv2() {
         return listaMensajesInformesv2;
@@ -102,6 +73,14 @@ public class Logica {
 
     public void addMensajeInformev2(MensajeInforme mensajeInforme) {
         listaMensajesInformesv2.add(mensajeInforme);
+    }
+
+    public ArrayList<MensajeInforme> getListaMensajesInformesv2_carpeta() {
+        return listaMensajesInformesv2_carpeta;
+    }
+
+    public ArrayList<MensajeInforme> getListaMensajesInformesv2_cuenta() {
+        return listaMensajesInformesv2_cuenta;
     }
 
 
@@ -151,6 +130,44 @@ public class Logica {
             listaMensajesInformesv2.add(mi);
         }
     }
+
+    public void cargarCuentaGmailInformesv2_carpetas(EmailCuenta email, String s) throws MessagingException {
+        String imap = "imaps";
+        Properties properties = new Properties();
+        properties.setProperty("mail.store.protocol", imap);
+        Session session = Session.getInstance(properties);
+        store = session.getStore(imap);
+        store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
+        Folder folder = store.getFolder(s);
+        folder.open(Folder.READ_ONLY);
+        Message[] message = folder.getMessages();
+
+        for (int i = 0; i < message.length; i++) {
+            Mensaje m = new Mensaje(message[i]);
+            MensajeInforme mi = new MensajeInforme(m.getFecha(), m.getAsunto(), m.getRemitente(), m.getDestinatario()[0], m.getMessageContent());
+            listaMensajesInformesv2_carpeta.add(mi);
+        }
+    }
+
+    public void cargarCuentaGmailInformesv2_cuentas(EmailCuenta email, String s) throws MessagingException {
+        String imap = "imaps";
+        Properties properties = new Properties();
+        properties.setProperty("mail.store.protocol", imap);
+        Session session = Session.getInstance(properties);
+        store = session.getStore(imap);
+        store.connect("smtp.gmail.com", email.getDireccion(), email.getContrasena());
+        Folder folder = store.getFolder(s);
+        folder.open(Folder.READ_ONLY);
+        Message[] message = folder.getMessages();
+
+        for (int i = 0; i < message.length; i++) {
+            Mensaje m = new Mensaje(message[i]);
+            MensajeInforme mi = new MensajeInforme(m.getFecha(), m.getAsunto(), m.getRemitente(), m.getDestinatario()[0], m.getMessageContent());
+            listaMensajesInformesv2_cuenta.add(mi);
+        }
+    }
+
+
 
     public Folder getFolder() throws MessagingException {
         return store.getDefaultFolder();
