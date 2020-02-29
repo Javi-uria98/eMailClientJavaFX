@@ -342,7 +342,7 @@ public class MainWindowController implements Initializable {
                                     JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);
                                     Map<String, Object> parametros = new HashMap<>();
                                     try {
-                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
+                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Cherry.jasper"), parametros, jr);
                                         JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuenta.pdf");
                                     } catch (JRException e) {
                                         e.printStackTrace();
@@ -371,7 +371,7 @@ public class MainWindowController implements Initializable {
                                 JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_carpeta);
                                 Map<String, Object> parametros = new HashMap<>();
                                 try {
-                                    JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/RemitenteAsuntoyFecha.jasper"), parametros, jr);
+                                    JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Cherry.jasper"), parametros, jr);
                                     JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCarpeta.pdf");
                                 } catch (JRException e) {
                                     e.printStackTrace();
@@ -464,7 +464,7 @@ public class MainWindowController implements Initializable {
                                     JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme);
                                     Map<String, Object> parametros = new HashMap<>();
                                     try {
-                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/MensajesInformesv2.jasper"), parametros, jr);
+                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Silhouette_Landscape.jasper"), parametros, jr);
                                         JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajeUnico.pdf");
                                     } catch (JRException e) {
                                         e.printStackTrace();
