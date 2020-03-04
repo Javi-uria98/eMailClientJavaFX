@@ -361,17 +361,13 @@ public class MainWindowController implements Initializable {
                                 listaMensajesInforme_cuenta=Logica.getInstance().getListaMensajesInformesv2_cuenta();
                                 if (!listaMensajesInforme_cuenta.isEmpty()) {
                                     try {
-                                        JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta); //lista sería la colección a mostrar. Típicamente saldría de la lógica de nuestra aplicación
-                                        Map<String, Object> parametros = new HashMap<>(); //En este caso no hay parámetros, aunque podría haberlos
+                                        JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);
+                                        Map<String, Object> parametros = new HashMap<>();
                                         JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/agrupacion_carpeta.jasper"), parametros, jr);
                                         JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuentav2.pdf");
                                     } catch (JRException e) {
                                         e.printStackTrace();
                                     }
-                                } else {
-                                    Alert alerta = new Alert(Alert.AlertType.WARNING);
-                                    alerta.setContentText("No hay correos para mostrar");
-                                    alerta.showAndWait();
                                 }
 
                                 /*try {
