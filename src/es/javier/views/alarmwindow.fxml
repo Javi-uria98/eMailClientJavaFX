@@ -43,6 +43,7 @@
         </columns>
       </TableView>
       <Button layoutX="91.0" layoutY="336.0" mnemonicParsing="false" onAction="#fijarTarea" text="Aceptar" />
-      <Button layoutX="248.0" layoutY="336.0" mnemonicParsing="false" onAction="#borrarTarea" text="Borrar" />
+      <Button layoutX="180.0" layoutY="336.0" mnemonicParsing="false" onAction="#borrarTarea" text="Borrar" />
+      <Button layoutX="261.0" layoutY="336.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
    </children>
 </AnchorPane>

@@ -80,7 +80,10 @@ public class AlarmWindowController implements Initializable {
         String texto = getTexto();
         Tarea tarea = new Tarea(horas, minutos, segundos, texto);
         Logica.getInstance().addTarea(tarea);
+    }
 
+    @FXML
+    public void salir(ActionEvent actionEvent){
         Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
         stage.close();
     }
