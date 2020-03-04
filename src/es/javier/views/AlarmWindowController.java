@@ -101,9 +101,6 @@ public class AlarmWindowController implements Initializable {
             alerterror.show();
         }
 
-
-        Stage stage = ((Stage) ((Node) actionEvent.getSource()).getScene().getWindow());
-        stage.close();
     }
 
     private int getHoras() {

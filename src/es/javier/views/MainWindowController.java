@@ -269,19 +269,22 @@ public class MainWindowController implements Initializable {
 
             tarea = Logica.getInstance().getListaTareas().get(contTarea);
 
-            cp.registarTarea(tarea);
-            cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
-                @Override
-                public void ejecuta(Tarea tarea) {
-                    Alert alert = new Alert(Alert.AlertType.WARNING);
-                    alert.setTitle("Aviso");
-                    alert.setHeaderText("");
-                    alert.setContentText(tarea.getTextoAlarma());
-                    alert.showAndWait();
-                }
-            });
+            if (tarea != null) {
 
-            contTarea++;
+                cp.registarTarea(tarea);
+                cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
+                    @Override
+                    public void ejecuta(Tarea tarea) {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Aviso");
+                        alert.setHeaderText("");
+                        alert.setContentText(tarea.getTextoAlarma());
+                        alert.showAndWait();
+                    }
+                });
+
+                contTarea++;
+            }
         } catch (IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
         }
@@ -454,7 +457,7 @@ public class MainWindowController implements Initializable {
                                     String[] destinatarioInforme = t1.getDestinatario();
                                     String destinatarioFinal = destinatarioInforme[0];
                                     mensajeInforme = new MensajeInforme(t1.getFecha(), t1.getAsunto(), t1.getRemitente(), destinatarioFinal, t1.getMessageContent());
-                                    if (listaMensajesInforme==null) {
+                                    if (listaMensajesInforme == null) {
                                         listaMensajesInforme = Logica.getInstance().getListaMensajesInformesv2();
                                         Logica.getInstance().addMensajeInformev2(mensajeInforme);
                                     } else {
