@@ -6,6 +6,7 @@ module eMailClientJavaFX {
     requires javafx.fxml;
     requires java.mail;
     requires javafx.base;
+    requires org.docgene.help.jfx;
     requires RelojDigitalv2;
     requires jasperreports;
     requires java.sql;

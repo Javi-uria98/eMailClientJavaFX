@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -32,6 +33,8 @@ import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import org.docgene.help.JavaHelpFactory;
+import org.docgene.help.gui.jfx.JFXHelpContentViewer;
 
 import javax.mail.*;
 import java.io.IOException;
@@ -87,6 +90,9 @@ public class MainWindowController implements Initializable {
 
     @FXML
     private Button btnAlarma;
+
+    @FXML
+    private Button btnAyuda;
 
     @FXML
     void pantallaLogin(ActionEvent actionEvent) {
@@ -292,6 +298,20 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
+    void pantallaAyuda(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("helpwindow.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(new Scene(root, 300, 300));
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     private void generateTreeView() throws MessagingException {
         ObservableList<EmailCuenta> listaCuentas = Logica.getInstance().getListaEmail();
         EmailTreeItem root = new EmailTreeItem("Cuentas"); //elemento raíz de todoo el tableview
@@ -360,7 +380,7 @@ public class MainWindowController implements Initializable {
                                         }
                                     }
                                 }
-                                listaMensajesInforme_cuenta=Logica.getInstance().getListaMensajesInformesv2_cuenta();
+                                listaMensajesInforme_cuenta = Logica.getInstance().getListaMensajesInformesv2_cuenta();
                                 if (!listaMensajesInforme_cuenta.isEmpty()) {
                                     try {
                                         JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);

@@ -80,6 +80,7 @@
                                 <Button fx:id="btnAlarma" mnemonicParsing="false" onAction="#pantallaAlarma"
                                         text="Alarma"/>
                                 <Button fx:id="btnUnInforme" mnemonicParsing="false" text="Generar"/>
+                                <Button fx:id="btnAyuda" mnemonicParsing="false" text="Ayuda" onAction="#pantallaAyuda"/>
                                 <ComponenteReloj fx:id="cp" formato24h="true" prefHeight="17.0" prefWidth="83.0"/>
                             </items>
                         </ToolBar>
