@@ -300,13 +300,22 @@ public class MainWindowController implements Initializable {
     @FXML
     void pantallaAyuda(ActionEvent actionEvent) {
         try {
+            URL url = this.getClass().getResource("/help/articles.zip");
+            JavaHelpFactory factory = new JavaHelpFactory(url);
+            factory.create();
+            JFXHelpContentViewer viewer = new JFXHelpContentViewer();
+            factory.install(viewer);
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("helpwindow.fxml"));
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setScene(new Scene(root, 300, 300));
-            stage.showAndWait();
-        } catch (IOException e) {
+            //stage.initModality(Modality.APPLICATION_MODAL);
+            viewer.getHelpWindow(stage, "Help Content", 600, 700);
+            viewer.showHelpDialog(root);
+            //stage.setScene(new Scene(root, 300, 300));
+            //stage.showAndWait();
+
+        } catch (Throwable e) {
             e.printStackTrace();
         }
     }
@@ -391,27 +400,6 @@ public class MainWindowController implements Initializable {
                                         e.printStackTrace();
                                     }
                                 }
-
-                                /*try {
-                                    Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, "[Gmail]/Todos");
-                                    listaMensajesInforme_cuenta = Logica.getInstance().getListaMensajesInformesv2_cuenta();
-                                    JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);
-                                    Map<String, Object> parametros = new HashMap<>();
-                                    try {
-                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Cherry.jasper"), parametros, jr);
-                                        JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuenta.pdf");
-                                    } catch (JRException e) {
-                                        e.printStackTrace();
-                                    } catch (NullPointerException e) {
-                                        Alert alert = new Alert(Alert.AlertType.ERROR);
-                                        alert.setTitle("¡Error!");
-                                        alert.setHeaderText("");
-                                        alert.setContentText("Para generar el informe, seleccione un mensaje!");
-                                        alert.showAndWait();
-                                    }
-                                } catch (MessagingException e) {
-                                    e.printStackTrace();
-                                }*/
                             }
                         });
                     } else {
