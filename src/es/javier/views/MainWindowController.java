@@ -365,8 +365,8 @@ public class MainWindowController implements Initializable {
                                     try {
                                         JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);
                                         Map<String, Object> parametros = new HashMap<>();
-                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/agrupacion_carpeta.jasper"), parametros, jr);
-                                        JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuentav2.pdf");
+                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Cherry_Landscape.jasper"), parametros, jr);
+                                        JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuenta.pdf");
                                     } catch (JRException e) {
                                         e.printStackTrace();
                                     }
