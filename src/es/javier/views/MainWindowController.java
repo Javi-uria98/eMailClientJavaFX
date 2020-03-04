@@ -329,7 +329,6 @@ public class MainWindowController implements Initializable {
                 try {
                     EmailTreeItem selectedItem = (EmailTreeItem) newValue;
                     tableMessages.getItems().clear();
-                    System.out.println("Selected Text : " + selectedItem.getValue());
                     Logica.getInstance().cargarCuentaGmail(email, selectedItem.getFolder().toString()); //Importante el getFolder.toString(), pues devuelve el String de la ruta completa de la carpeta no como el getValue, que solo devuelve el String de la carpeta en sí y por eso no cargaba los mensajes
                     Logica.getInstance().cargarCuentaGmailInformesv2(email, selectedItem.getFolder().toString());
                     tableMessages.setItems(listaMensajes);
@@ -339,7 +338,43 @@ public class MainWindowController implements Initializable {
                         btnUnInforme.setOnAction(new EventHandler<ActionEvent>() {
                             @Override
                             public void handle(ActionEvent actionEvent) {
-                                try {
+                                for (int i = 1; i < treeViewEmail.getExpandedItemCount(); i++) {
+                                    if (treeViewEmail.getTreeItem(i).getValue().equals("INBOX")) {
+                                        try {
+                                            Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, "INBOX");
+                                        } catch (MessagingException e) {
+                                            e.printStackTrace();
+                                        }
+                                    } else {
+                                        if (treeViewEmail.getTreeItem(i).getValue().toString().contains("[Gmail]")) {
+                                            String carpeta = "[Gmail]/" + treeViewEmail.getTreeItem(i).getValue();
+                                            if (!carpeta.equals("[Gmail]/[Gmail]")) {
+                                                try {
+                                                    Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, carpeta);
+                                                } catch (MessagingException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                listaMensajesInforme_cuenta=Logica.getInstance().getListaMensajesInformesv2_cuenta();
+                                if (!listaMensajesInforme_cuenta.isEmpty()) {
+                                    try {
+                                        JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta); //lista sería la colección a mostrar. Típicamente saldría de la lógica de nuestra aplicación
+                                        Map<String, Object> parametros = new HashMap<>(); //En este caso no hay parámetros, aunque podría haberlos
+                                        JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/agrupacion_carpeta.jasper"), parametros, jr);
+                                        JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuentav2.pdf");
+                                    } catch (JRException e) {
+                                        e.printStackTrace();
+                                    }
+                                } else {
+                                    Alert alerta = new Alert(Alert.AlertType.WARNING);
+                                    alerta.setContentText("No hay correos para mostrar");
+                                    alerta.showAndWait();
+                                }
+
+                                /*try {
                                     Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, "[Gmail]/Todos");
                                     listaMensajesInforme_cuenta = Logica.getInstance().getListaMensajesInformesv2_cuenta();
                                     JRBeanCollectionDataSource jr = new JRBeanCollectionDataSource(listaMensajesInforme_cuenta);
@@ -358,7 +393,7 @@ public class MainWindowController implements Initializable {
                                     }
                                 } catch (MessagingException e) {
                                     e.printStackTrace();
-                                }
+                                }*/
                             }
                         });
                     } else {
