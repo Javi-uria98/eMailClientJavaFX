@@ -162,7 +162,7 @@ public class Logica {
 
         for (int i = 0; i < message.length; i++) {
             Mensaje m = new Mensaje(message[i]);
-            MensajeInforme mi = new MensajeInforme(getFolder().toString(), m.getFecha(), m.getAsunto(), m.getRemitente(), m.getDestinatario()[0], m.getMessageContent());
+            MensajeInforme mi = new MensajeInforme(s, m.getFecha(), m.getAsunto(), m.getRemitente(), m.getDestinatario()[0], m.getMessageContent());
             listaMensajesInformesv2_cuenta.add(mi);
         }
     }

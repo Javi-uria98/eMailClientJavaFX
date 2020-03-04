@@ -340,14 +340,16 @@ public class MainWindowController implements Initializable {
                             public void handle(ActionEvent actionEvent) {
                                 for (int i = 1; i < treeViewEmail.getExpandedItemCount(); i++) {
                                     if (treeViewEmail.getTreeItem(i).getValue().equals("INBOX")) {
+                                        System.out.println(treeViewEmail.getTreeItem(i).getValue());
                                         try {
                                             Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, "INBOX");
                                         } catch (MessagingException e) {
                                             e.printStackTrace();
                                         }
                                     } else {
-                                        if (treeViewEmail.getTreeItem(i).getValue().toString().contains("[Gmail]")) {
+                                        if (!treeViewEmail.getTreeItem(i).getValue().toString().contains("@")) {
                                             String carpeta = "[Gmail]/" + treeViewEmail.getTreeItem(i).getValue();
+                                            System.out.println(carpeta);
                                             if (!carpeta.equals("[Gmail]/[Gmail]")) {
                                                 try {
                                                     Logica.getInstance().cargarCuentaGmailInformesv2_cuentas(email, carpeta);
