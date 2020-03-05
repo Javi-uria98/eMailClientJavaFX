@@ -21,6 +21,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
@@ -37,6 +39,8 @@ import org.docgene.help.JavaHelpFactory;
 import org.docgene.help.gui.jfx.JFXHelpContentViewer;
 
 import javax.mail.*;
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -394,6 +398,13 @@ public class MainWindowController implements Initializable {
                                         Map<String, Object> parametros = new HashMap<>();
                                         JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Cherry_Landscape.jasper"), parametros, jr);
                                         JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCuenta.pdf");
+                                        new Thread(() -> {
+                                            try {
+                                                Desktop.getDesktop().open(new File("informes/InformeMensajesCuenta.pdf"));
+                                            } catch (IOException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }).start();
                                     } catch (JRException e) {
                                         e.printStackTrace();
                                     }
@@ -415,6 +426,13 @@ public class MainWindowController implements Initializable {
                                 try {
                                     JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Cherry.jasper"), parametros, jr);
                                     JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajesCarpeta.pdf");
+                                    new Thread(() -> {
+                                        try {
+                                            Desktop.getDesktop().open(new File("informes/InformeMensajesCarpeta.pdf"));
+                                        } catch (IOException e1) {
+                                            e1.printStackTrace();
+                                        }
+                                    }).start();
                                 } catch (JRException e) {
                                     e.printStackTrace();
                                 } catch (NullPointerException e) {
@@ -508,6 +526,13 @@ public class MainWindowController implements Initializable {
                                     try {
                                         JasperPrint print = JasperFillManager.fillReport(getClass().getResourceAsStream("/es/javier/jasper/Silhouette_Landscape.jasper"), parametros, jr);
                                         JasperExportManager.exportReportToPdfFile(print, "informes/InformeMensajeUnico.pdf");
+                                        new Thread(() -> {
+                                            try {
+                                                Desktop.getDesktop().open(new File("informes/InformeMensajeUnico.pdf"));
+                                            } catch (IOException e1) {
+                                                e1.printStackTrace();
+                                            }
+                                        }).start();
                                     } catch (JRException e) {
                                         e.printStackTrace();
                                     }

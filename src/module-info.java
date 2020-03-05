@@ -9,6 +9,7 @@ module eMailClientJavaFX {
     requires org.docgene.help.jfx;
     requires RelojDigitalv2;
     requires jasperreports;
+    requires java.desktop;
     requires java.sql;
     exports es.javier.views;
     exports es.javier;

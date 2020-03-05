@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact name="eMailClientJavaFX:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/eMailClientJavaFX_jar</output-path>
+    <root id="root">
+      <element id="archive" name="eMailClientJavaFX.jar">
+        <element id="module-output" name="eMailClientJavaFX" />
+        <element id="module-output" name="DataAdapter" />
+      </element>
+      <element id="file-copy" path="$USER_HOME$/Desktop/docGenerator-src/lib/json.jar" />
+      <element id="library" level="application" name="javafx.web" />
+      <element id="library" level="application" name="controlsfx-11.0.0" />
+      <element id="library" level="application" name="net.sf.jasperreports:jasperreports:6.11.0" />
+      <element id="library" level="application" name="commons-email-1.5" />
+      <element id="file-copy" path="$PROJECT_DIR$/../RelojDigitalv2/out/artifacts/RelojDigitalv2/RelojDigitalv2.jar" />
+      <element id="library" level="application" name="javax.mail" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/docGenerator-src/docGeneJFXHelp.jar" />
+      <element id="library" level="application" name="activation" />
+      <element id="file-copy" path="$USER_HOME$/Desktop/docGenerator-src/lib/elasticlunr.jar" />
+      <element id="library" level="application" name="org.testfx:testfx-junit5:4.0.16-alpha" />
+    </root>
+  </artifact>
+</component>
