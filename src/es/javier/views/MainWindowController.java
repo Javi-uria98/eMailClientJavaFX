@@ -23,7 +23,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -302,7 +301,7 @@ public class MainWindowController implements Initializable {
     @FXML
     void pantallaAyuda(ActionEvent actionEvent) {
         try {
-            URL url = this.getClass().getResource("/help/articlescorreo.zip");
+            URL url = new File("help/articlescorreo.zip").toURI().toURL();
             JavaHelpFactory factory = new JavaHelpFactory(url);
             factory.create();
             JFXHelpContentViewer viewer = new JFXHelpContentViewer();
