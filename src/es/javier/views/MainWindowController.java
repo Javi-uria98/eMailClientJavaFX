@@ -50,9 +50,8 @@ public class MainWindowController implements Initializable {
     private ArrayList<MensajeInforme> listaMensajesInforme_carpeta;
     private ArrayList<MensajeInforme> listaMensajesInforme_cuenta;
     private EmailCuenta email;
-    private Tarea tarea;
+    private ObservableList<Tarea> listaTareas;
     private int contLogin = 0;
-    private int contTarea;
     private MensajeInforme mensajeInforme;
 
     @FXML
@@ -273,11 +272,12 @@ public class MainWindowController implements Initializable {
             stage.setResizable(false);
             stage.showAndWait();
 
-            tarea = Logica.getInstance().getListaTareas().get(contTarea);
+            listaTareas = Logica.getInstance().getListaTareas();
 
-            if (tarea != null) {
-
-                cp.registarTarea(tarea);
+            if (!listaTareas.isEmpty()) {
+                for (int i = 0; i < listaTareas.size(); i++) {
+                    cp.registarTarea(Logica.getInstance().getListaTareas().get(i));
+                }
                 cp.addEnHoraQueCoincide(new EnHoraQueCoincide() {
                     @Override
                     public void ejecuta(Tarea tarea) {
@@ -288,8 +288,6 @@ public class MainWindowController implements Initializable {
                         alert.showAndWait();
                     }
                 });
-
-                contTarea++;
             }
         } catch (IOException | IndexOutOfBoundsException e) {
             e.printStackTrace();
