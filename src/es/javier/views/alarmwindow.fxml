@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,15 +11,17 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="es.javier.views.AlarmWindowController">
    <children>
-      <TextField fx:id="tfhoras" layoutX="153.0" layoutY="37.0" prefHeight="25.0" prefWidth="51.0" />
-      <Label layoutX="214.0" layoutY="41.0" text=":" />
-      <TextField fx:id="tfminutos" layoutX="227.0" layoutY="37.0" prefHeight="25.0" prefWidth="51.0" />
-      <Label layoutX="287.0" layoutY="41.0" text=":" />
-      <TextField fx:id="tfsegundos" layoutX="300.0" layoutY="37.0" prefHeight="25.0" prefWidth="51.0" />
+      <TextField fx:id="tfhoras" layoutX="178.0" layoutY="37.0" prefHeight="25.0" prefWidth="64.0" />
+      <Label layoutX="258.0" layoutY="41.0" text=":" />
+      <TextField fx:id="tfminutos" layoutX="274.0" layoutY="37.0" prefHeight="25.0" prefWidth="64.0" />
+      <Label layoutX="349.0" layoutY="41.0" text=":" />
+      <TextField fx:id="tfsegundos" layoutX="365.0" layoutY="37.0" prefHeight="25.0" prefWidth="64.0" />
       <Label layoutX="33.0" layoutY="41.0" prefHeight="17.0" prefWidth="103.0" text="Introduzca la hora " />
       <Label layoutX="33.0" layoutY="114.0" text="Introduzca el mensaje" />
-      <TextField fx:id="textoAlarma" layoutX="178.0" layoutY="110.0" prefHeight="25.0" prefWidth="173.0" />
-      <TableView fx:id="tablaAlarmas" layoutX="53.0" layoutY="157.0" prefHeight="159.0" prefWidth="302.0">
+      <TextField fx:id="textoAlarma" layoutX="178.0" layoutY="110.0" prefHeight="25.0" prefWidth="251.0" />
+      <DatePicker fx:id="dp" layoutX="178.0" layoutY="72.0" prefHeight="25.0" prefWidth="251.0" />
+      <Label layoutX="33.0" layoutY="76.0" text="Introduzca la fecha" />
+      <TableView fx:id="tablaAlarmas" layoutX="53.0" layoutY="157.0" prefHeight="159.0" prefWidth="377.0">
         <columns>
            <TableColumn prefWidth="75.0" text="Alarmas">
               <cellValueFactory>
@@ -40,10 +43,15 @@
                  <PropertyValueFactory property="segundos" />
               </cellValueFactory>
            </TableColumn>
+            <TableColumn prefWidth="75.0" text="Fecha" >
+               <cellValueFactory>
+                  <PropertyValueFactory property="fecha"/>
+               </cellValueFactory>
+            </TableColumn>
         </columns>
       </TableView>
       <Button layoutX="91.0" layoutY="336.0" mnemonicParsing="false" onAction="#fijarTarea" text="Aceptar" />
-      <Button layoutX="180.0" layoutY="336.0" mnemonicParsing="false" onAction="#borrarTarea" text="Borrar" />
-      <Button layoutX="261.0" layoutY="336.0" mnemonicParsing="false" onAction="#salir" text="Salir" />
+      <Button layoutX="214.0" layoutY="336.0" mnemonicParsing="false" onAction="#borrarTarea" prefHeight="25.0" prefWidth="57.0" text="Borrar" />
+      <Button layoutX="321.0" layoutY="336.0" mnemonicParsing="false" onAction="#salir" prefHeight="25.0" prefWidth="57.0" text="Salir" />
    </children>
 </AnchorPane>

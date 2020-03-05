@@ -3,8 +3,8 @@ import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import org.junit.Before;
 import org.junit.Test;
-//import org.testfx.framework.junit.ApplicationTest;
-import org.testfx.framework.junit5.ApplicationTest;
+import org.testfx.framework.junit.ApplicationTest;
+//import org.testfx.framework.junit5.ApplicationTest;
 import org.testfx.matcher.control.TableViewMatchers;
 
 import static org.testfx.api.FxAssert.verifyThat;

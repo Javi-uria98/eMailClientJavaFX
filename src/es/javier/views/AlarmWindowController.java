@@ -11,11 +11,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class AlarmWindowController implements Initializable {
@@ -37,8 +42,12 @@ public class AlarmWindowController implements Initializable {
     @FXML
     private TextField textoAlarma;
 
+    @FXML
+    private DatePicker dp;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         tfhoras.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(final ObservableValue<? extends String> ov, String oldValue, String newValue) {
@@ -69,6 +78,7 @@ public class AlarmWindowController implements Initializable {
             }
         });
 
+
         tablaAlarmas.setItems(Logica.getInstance().getListaTareas());
     }
 
@@ -78,7 +88,8 @@ public class AlarmWindowController implements Initializable {
         int minutos = getMinutos();
         int segundos = getSegundos();
         String texto = getTexto();
-        Tarea tarea = new Tarea(horas, minutos, segundos, texto);
+        LocalDate fecha= getFecha();
+        Tarea tarea = new Tarea(horas, minutos, segundos, texto, fecha);
         Logica.getInstance().addTarea(tarea);
     }
 
@@ -118,6 +129,8 @@ public class AlarmWindowController implements Initializable {
     private String getTexto() {
         return textoAlarma.getText();
     }
+
+    private LocalDate getFecha(){ return dp.getValue(); }
 
 
 }
