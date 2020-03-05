@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<article desc="second article">
+    Once logged, you will see you e-mail account with all its folders. 
+	By default, the INBOX folder is showed in a table, and, by selecting one of its messages, u can see its content.
+    <img id="image3" />
+         
+	Of course, by selecting another folder in the treeview, the table changes.
+	<img id="image4" />
+	
+	Link to the <ref id="first article" />
+	
+	Link to the <ref id="third article"/>
+	<cat id="articles"/>
+      </article>

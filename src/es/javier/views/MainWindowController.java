@@ -298,7 +298,7 @@ public class MainWindowController implements Initializable {
     @FXML
     void pantallaAyuda(ActionEvent actionEvent) {
         try {
-            URL url = this.getClass().getResource("/help/articles.zip");
+            URL url = this.getClass().getResource("/help/articlescorreo.zip");
             JavaHelpFactory factory = new JavaHelpFactory(url);
             factory.create();
             JFXHelpContentViewer viewer = new JFXHelpContentViewer();
@@ -308,7 +308,7 @@ public class MainWindowController implements Initializable {
             Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             //stage.initModality(Modality.APPLICATION_MODAL);
-            viewer.getHelpWindow(stage, "Help Content", 600, 700);
+            viewer.getHelpWindow(stage, "Help Content", 1500, 700);
             viewer.showHelpDialog(root);
             //stage.setScene(new Scene(root, 300, 300));
             //stage.showAndWait();

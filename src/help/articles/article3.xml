@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<article desc="third article">
+      To send an email, you have to click on the "Nuevo" button.
+      <img id="image6" />
+	  
+	  When you do that, a new window will appear, in which u can select the account from which you want to send the email from a combo, a textfield to write the account you want to send it to, and of course the subject and content
+	  <img id="image7"/>
+	  
+	  And after sending it, you can check in the "Enviados" folder to see if the email has been sent
+	  <img id="image8"/>
+	  
+	  Link to the <ref id="second article" />
+	  
+	  Link to the <ref id="first article" />
+	  <cat id="articles"/>
+         <cat id="othercategory"/>
+      </article>

@@ -1,0 +1,5 @@
+<?xml version="1.0" ?>
+<categories>
+         <category id="articles" desc="All the articles" />
+         <category id="othercategory" desc="The other category" />
+      </categories>

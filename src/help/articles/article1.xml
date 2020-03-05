@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<article desc="first article">
+      Lets get started with the email client. First of all, when you run the application, you will have to log in with a gmail account. 
+	  At first, the login button is disabled
+      <img id="image1" />
+	  
+	  That is, until you put your credentials
+	  <img id="image2"/>
+	  
+	  Link to the <ref id="second article" />
+	  
+	  Link to the <ref id="third article"/>
+	  <cat id="articles"/>
+         <cat id="othercategory"/>
+      </article>
