@@ -298,6 +298,10 @@ public class MainWindowController implements Initializable {
 
     }
 
+    public ComponenteReloj getCp(){
+        return cp;
+    }
+
     @FXML
     void pantallaAyuda(ActionEvent actionEvent) {
         try {
