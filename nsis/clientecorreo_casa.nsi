@@ -29,17 +29,17 @@ Section
   writeUninstaller "$INSTDIR\uninstall.exe"
   
   # Ponemos ahi el archivo test.txt
-  File /r "C:\Users\DAM\java\javafx-sdk-13"
-  File /r "C:\Program Files\Java\java-runtime"
-  File /r "C:\Users\DAM\IdeaProjects\eMailClientJavaFX\out\artifacts\eMailClientJavaFX_jar\"  #Estas tres rutas del proyecto hay que usar relativas, teniendo en cuenta que partimos del direcotorio nsis ../
-  File /r "C:\Users\DAM\IdeaProjects\eMailClientJavaFX\help"
-  File /r "C:\Users\DAM\IdeaProjects\eMailClientJavaFX\informes"
+  File /r "C:\Program Files\Java\javafx-sdk-13"
+  File /r "C:\Program Files\Java\jdk-13\bin\java-runtime"
+  File /r "C:\Users\Javi\IdeaProjects\eMailClientJavaFX\out\artifacts\eMailClientJavaFX_casa_jar"
+  File /r "C:\Users\Javi\IdeaProjects\eMailClientJavaFX\help"
+  File /r "C:\Users\Javi\IdeaProjects\eMailClientJavaFX\informes"
   
   # Creamos el acceso directo
   
-  createShortCut "$DESKTOP\Cliente Correo.lnk" "$INSTDIR\java-runtime\bin\java.exe" "--module-path $INSTDIR\javafx-sdk-13\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.web --add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens=javafx.graphics/com.sun.javafx.css=ALL-UNNAMED -jar $INSTDIR\eMailClientJavaFX.jar"
+  createShortCut "$DESKTOP\Cliente Correo.lnk" "$INSTDIR\java-runtime\bin\java.exe" "--module-path $INSTDIR\javafx-sdk-13\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.web --add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens=javafx.graphics/com.sun.javafx.css=ALL-UNNAMED -jar $INSTDIR\eMailClientJavaFX_casa_jar\eMailClientJavaFX.jar"
   
-  createShortCut "$SMPROGRAMS\Cliente Correo.lnk" "$INSTDIR\java-runtime\bin\java.exe" "--module-path $INSTDIR\javafx-sdk-13\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.web --add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens=javafx.graphics/com.sun.javafx.css=ALL-UNNAMED -jar $INSTDIR\eMailClientJavaFX.jar"
+  createShortCut "$SMPROGRAMS\Cliente Correo.lnk" "$INSTDIR\java-runtime\bin\java.exe" "--module-path $INSTDIR\javafx-sdk-13\lib --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.base,javafx.web --add-opens=javafx.graphics/javafx.scene=ALL-UNNAMED --add-opens=javafx.graphics/com.sun.javafx.css=ALL-UNNAMED -jar $INSTDIR\eMailClientJavaFX_casa_jar\eMailClientJavaFX.jar"
   
   #Añadimos información para que salga en el menú de desinstalar de Windows
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ClienteCorreo" \
@@ -66,7 +66,7 @@ section "uninstall"
 	# borramos el acceso directo del menu de inicio
 	delete "$SMPROGRAMS\Cliente Correo.lnk"
 	
-	RmDir /r "$INSTDIR" # IMPORTANTE!! cuando se borra el INSDIR, no se puede poner el /r, porque si, por ejemplo, el usuario elige como directorio directamente "C/:", un RmDir /r se carga el ordenador
+	RmDir /r "$INSTDIR"
 	
 	#Borramos la entrada del registro
 	DeleteRegKey HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\ClienteCorreo"
